@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>J.E.T. — Vos manuels prennent vie</title>
+    <meta name="description"
+        content="J.E.T. transforme vos manuels papier ennuyeux en tutoriels vidéo 3D générés par IA. Hollywood-level. En quelques minutes." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,400;1,500;1,600&display=swap"
+        rel="stylesheet" />
+    <style>
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --black: #000000;
+            --white: #ffffff;
+            --gray-300: #b0b0b0;
+            --gray-400: #9a9a9a;
+            --gray-500: #777777;
+            --gray-200: #e0e0e0;
+        }
+
+        html,
+        body {
+            background: var(--white);
+            color: var(--black);
+            font-family: 'DM Sans', sans-serif;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* ── NAV ──────────────────────────────────────── */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 18px 40px;
+            background: var(--white);
+        }
+
+        .nav-logo {
+            font-family: 'DM Sans', sans-serif;
+            font-weight: 400;
+            font-size: 15px;
+            letter-spacing: 0.04em;
+            color: var(--gray-400);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--gray-500);
+            font-size: 14px;
+            font-weight: 400;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--black);
+        }
+
+        .nav-right {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        /* Language toggle */
+        .lang-toggle {
+            display: flex;
+            align-items: center;
+            gap: 0;
+            border: 1px solid var(--gray-200);
+            border-radius: 100px;
+            overflow: hidden;
+        }
+
+        .lang-toggle button {
+            background: none;
+            border: none;
+            padding: 7px 13px;
+            cursor: pointer;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--gray-400);
+            transition: background 0.2s, color 0.2s;
+        }
+
+        .lang-toggle button.active {
+            background: var(--black);
+            color: var(--white);
+        }
+
+        .btn-cta {
+            background: #4F46E5;
+            color: var(--white);
+            font-family: 'DM Sans', sans-serif;
+            font-size: 13px;
+            font-weight: 500;
+            padding: 9px 20px;
+            border-radius: 100px;
+            border: none;
+            cursor: pointer;
+            transition: transform 0.2s, opacity 0.2s;
+        }
+
+        .btn-cta:hover {
+            transform: translateY(-1px);
+            opacity: 0.9;
+        }
+
+        /* ── HERO ─────────────────────────────────────── */
+        .hero {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 80px 24px;
+        }
+
+        .hero-text {
+            position: relative;
+            text-align: center;
+            line-height: 1;
+        }
+
+        /* Line 1 — sans-serif light */
+        .line {
+            display: block;
+            position: relative;
+        }
+
+        .line-1 {
+            font-family: 'DM Sans', sans-serif;
+            font-weight: 300;
+            font-size: clamp(54px, 8vw, 100px);
+            letter-spacing: -0.02em;
+            color: var(--black);
+            margin-bottom: 0.05em;
+        }
+
+        /* Line 2 — serif italic in parentheses */
+        .line-2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-weight: 500;
+            font-size: clamp(58px, 8.5vw, 108px);
+            letter-spacing: -0.01em;
+            color: var(--black);
+            margin-bottom: 0.02em;
+        }
+
+        /* Line 3 — sans-serif light */
+        .line-3 {
+            font-family: 'DM Sans', sans-serif;
+            font-weight: 300;
+            font-size: clamp(54px, 8vw, 100px);
+            letter-spacing: -0.02em;
+            color: var(--black);
+            margin-bottom: 0.05em;
+        }
+
+        /* Line 4 — serif italic */
+        .line-4 {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-weight: 500;
+            font-size: clamp(58px, 8.5vw, 108px);
+            letter-spacing: -0.01em;
+            color: var(--black);
+        }
+
+        /* Small side annotations — like "Or Camera" and "And Friends" */
+        .side-note {
+            position: absolute;
+            font-family: 'DM Sans', sans-serif;
+            font-weight: 400;
+            font-size: clamp(12px, 1.6vw, 16px);
+            color: var(--gray-400);
+            white-space: nowrap;
+        }
+
+        .side-note-1 {
+            right: -2%;
+            top: 26%;
+            transform: translateX(100%);
+            padding-left: 16px;
+        }
+
+        .side-note-2 {
+            right: 6%;
+            bottom: -2%;
+            transform: translateY(100%);
+            padding-top: 8px;
+        }
+
+        /* Stagger entry animations */
+        .line-1 {
+            animation: fadeUp 0.7s 0.1s ease both;
+        }
+
+        .line-2 {
+            animation: fadeUp 0.7s 0.25s ease both;
+        }
+
+        .line-3 {
+            animation: fadeUp 0.7s 0.4s ease both;
+        }
+
+        .line-4 {
+            animation: fadeUp 0.7s 0.55s ease both;
+        }
+
+        .side-note-1 {
+            animation: fadeIn 0.6s 0.7s ease both;
+        }
+
+        .side-note-2 {
+            animation: fadeIn 0.6s 0.85s ease both;
+        }
+
+        /* ── TRANSLATION / LOWER SECTION ──────────────── */
+        .section-lower {
+            background: var(--white);
+            border-top: 1px solid var(--gray-200);
+            padding: 80px 48px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 48px;
+        }
+
+        .section-lower h2 {
+            font-family: 'DM Sans', sans-serif;
+            font-weight: 300;
+            font-size: clamp(28px, 4vw, 52px);
+            letter-spacing: -0.02em;
+            text-align: center;
+        }
+
+        .section-lower h2 em {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-weight: 500;
+            font-size: 1.06em;
+        }
+
+        .translation-cards {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            max-width: 860px;
+            width: 100%;
+        }
+
+        .translation-card {
+            background: var(--white);
+            border: 1px solid var(--gray-200);
+            border-radius: 20px;
+            padding: 36px 32px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .translation-card .flag {
+            font-size: 34px;
+            line-height: 1;
+        }
+
+        .translation-card h3 {
+            font-family: 'DM Sans', sans-serif;
+            font-weight: 400;
+            font-size: 19px;
+        }
+
+        .translation-card p {
+            font-size: 14px;
+            font-weight: 300;
+            color: var(--gray-500);
+            line-height: 1.65;
+        }
+
+        .tag-row {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-top: 4px;
+        }
+
+        .tag {
+            font-size: 11px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            padding: 4px 12px;
+            border-radius: 100px;
+            border: 1px solid var(--gray-200);
+            color: var(--gray-500);
+        }
+
+        /* ── TICKER ────────────────────────────────────── */
+        .ticker-wrap {
+            border-top: 1px solid var(--gray-200);
+            background: var(--white);
+            padding: 14px 0;
+            overflow: hidden;
+        }
+
+        .ticker-track {
+            display: flex;
+            gap: 56px;
+            width: max-content;
+            animation: ticker 32s linear infinite;
+        }
+
+        .ticker-item {
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--gray-300);
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .ticker-item::before {
+            content: '✦';
+            font-size: 9px;
+            color: var(--gray-400);
+        }
+
+        /* ── ANIMATIONS ───────────────────────────────── */
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(28px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes ticker {
+            from {
+                transform: translateX(0);
+            }
+
+            to {
+                transform: translateX(-50%);
+            }
+        }
+
+        /* ── RESPONSIVE ───────────────────────────────── */
+        @media (max-width: 768px) {
+            nav {
+                padding: 14px 20px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .hero {
+                padding: 100px 20px 60px;
+            }
+
+            .side-note {
+                display: none;
+            }
+
+            .section-lower {
+                padding: 60px 20px;
+            }
+
+            .translation-cards {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- NAV -->
+    <nav>
+        <a class="nav-logo" href="#" data-fr="J.E.T." data-en="J.E.T.">J.E.T.</a>
+        <ul class="nav-links">
+            <li><a href="#" data-fr="Solutions" data-en="Solutions">Solutions</a></li>
+            <li><a href="#" data-fr="Comment ça marche" data-en="How it works">Comment ça marche</a></li>
+            <li><a href="#translation" data-fr="Langues" data-en="Languages">Langues</a></li>
+            <li><a href="#" data-fr="Contact" data-en="Contact">Contact</a></li>
+        </ul>
+        <div class="nav-right">
+            <div class="lang-toggle" role="group" aria-label="Changer la langue">
+                <button id="btn-fr" class="active" onclick="setLang('fr')">FR</button>
+                <button id="btn-en" onclick="setLang('en')">EN</button>
+            </div>
+            <button class="btn-cta" data-fr="Commencer" data-en="Get Started">Commencer</button>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="hero-text">
+            <span class="line line-1" data-fr="Vos manuels" data-en="Your manuals">Vos manuels</span>
+            <span class="line line-2" data-fr="(étaient des hiéroglyphes)" data-en="(were hieroglyphs)">(étaient des
+                hiéroglyphes)</span>
+
+            <!-- Side annotation 1 -->
+            <span class="side-note side-note-1" data-fr="Ou des PDF illisibles" data-en="Or unreadable PDFs">Ou des PDF
+                illisibles</span>
+
+            <span class="line line-3" data-fr="on leur donne" data-en="we give them">on leur donne</span>
+            <span class="line line-4" data-fr="vie." data-en="life.">vie.</span>
+
+            <!-- Side annotation 2 -->
+            <span class="side-note side-note-2" data-fr="En vidéo 3D + Chatbot IA" data-en="As 3D video + AI Chatbot">En
+                vidéo 3D + Chatbot IA</span>
+        </div>
+    </section>
+
+    <!-- TRANSLATION SECTION -->
+    <section class="section-lower" id="translation">
+        <h2>Disponible en <em>Français</em> &amp; <em>Anglais</em></h2>
+
+        <div class="translation-cards">
+            <div class="translation-card">
+                <div class="flag">🇫🇷</div>
+                <h3 data-fr="Version Française" data-en="French Version">Version Française</h3>
+                <p data-fr="L'intégralité de la plateforme — vidéos, chatbot et interface — est disponible en français. Parfait pour les équipes francophones."
+                    data-en="The entire platform — videos, chatbot, and interface — is available in French. Perfect for French-speaking teams.">
+                    L'intégralité de la plateforme — vidéos, chatbot et interface — est disponible en français. Parfait
+                    pour les équipes francophones.
+                </p>
+                <div class="tag-row">
+                    <span class="tag">Interface FR</span>
+                    <span class="tag">Vidéos FR</span>
+                    <span class="tag" data-fr="Chatbot FR" data-en="FR Chatbot">Chatbot FR</span>
+                </div>
+            </div>
+
+            <div class="translation-card">
+                <div class="flag">🇬🇧</div>
+                <h3 data-fr="Version Anglaise" data-en="English Version">Version Anglaise</h3>
+                <p data-fr="Basculez en un clic vers la version anglaise. Idéal pour les équipes internationales ou les contenus multilingues."
+                    data-en="Switch to the English version in one click. Ideal for international teams or multilingual content.">
+                    Basculez en un clic vers la version anglaise. Idéal pour les équipes internationales ou les contenus
+                    multilingues.
+                </p>
+                <div class="tag-row">
+                    <span class="tag">EN Interface</span>
+                    <span class="tag">EN Videos</span>
+                    <span class="tag">EN Chatbot</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TICKER -->
+    <div class="ticker-wrap" aria-hidden="true">
+        <div class="ticker-track">
+            <span class="ticker-item" data-fr="Tutoriels 3D" data-en="3D Tutorials">Tutoriels 3D</span>
+            <span class="ticker-item" data-fr="Chatbot Expert IA" data-en="Expert AI Chatbot">Chatbot Expert IA</span>
+            <span class="ticker-item" data-fr="PDF → Vidéo en minutes" data-en="PDF → Video in Minutes">PDF → Vidéo en
+                minutes</span>
+            <span class="ticker-item" data-fr="Style Hollywood" data-en="Hollywood-Level">Style Hollywood</span>
+            <span class="ticker-item" data-fr="Support IA 24/7" data-en="24/7 AI Support">Support IA 24/7</span>
+            <span class="ticker-item" data-fr="Aucune formation requise" data-en="Zero Training Required">Aucune
+                formation requise</span>
+            <span class="ticker-item" data-fr="Multilingue" data-en="Multi-Language">Multilingue</span>
+            <span class="ticker-item" data-fr="Entreprise" data-en="Enterprise Ready">Entreprise</span>
+            <!-- duplicate for seamless loop -->
+            <span class="ticker-item" data-fr="Tutoriels 3D" data-en="3D Tutorials">Tutoriels 3D</span>
+            <span class="ticker-item" data-fr="Chatbot Expert IA" data-en="Expert AI Chatbot">Chatbot Expert IA</span>
+            <span class="ticker-item" data-fr="PDF → Vidéo en minutes" data-en="PDF → Video in Minutes">PDF → Vidéo en
+                minutes</span>
+            <span class="ticker-item" data-fr="Style Hollywood" data-en="Hollywood-Level">Style Hollywood</span>
+            <span class="ticker-item" data-fr="Support IA 24/7" data-en="24/7 AI Support">Support IA 24/7</span>
+            <span class="ticker-item" data-fr="Aucune formation requise" data-en="Zero Training Required">Aucune
+                formation requise</span>
+            <span class="ticker-item" data-fr="Multilingue" data-en="Multi-Language">Multilingue</span>
+            <span class="ticker-item" data-fr="Entreprise" data-en="Enterprise Ready">Entreprise</span>
+        </div>
+    </div>
+
+    <script>
+        let currentLang = 'fr';
+
+        function setLang(lang) {
+            currentLang = lang;
+            document.getElementById('btn-fr').classList.toggle('active', lang === 'fr');
+            document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+            document.querySelectorAll('[data-fr]').forEach(el => {
+                const val = el.getAttribute('data-' + lang);
+                if (val) el.textContent = val;
+            });
+            document.documentElement.lang = lang;
+        }
+    </script>
+</body>
+
+</html>
