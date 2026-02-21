@@ -414,38 +414,117 @@
             line-height: 1.65;
         }
 
-
-        /* ── TICKER ────────────────────────────────────── */
-        .ticker-wrap {
-            border-top: 1px solid var(--gray-200);
+        /* ── LOGO SLIDER ────────────────────────────── */
+        .logo-slider-section {
             background: var(--white);
-            padding: 14px 0;
+            border-top: 1px solid var(--gray-200);
+            padding: 56px 0 64px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 40px;
             overflow: hidden;
         }
 
-        .ticker-track {
-            display: flex;
-            gap: 56px;
-            width: max-content;
-            animation: ticker 32s linear infinite;
-        }
-
-        .ticker-item {
+        .logo-slider-label {
             font-size: 11px;
             font-weight: 500;
-            letter-spacing: 0.1em;
+            letter-spacing: 0.14em;
             text-transform: uppercase;
-            color: var(--gray-300);
-            white-space: nowrap;
-            display: flex;
-            align-items: center;
-            gap: 10px;
+            color: var(--gray-400);
         }
 
-        .ticker-item::before {
-            content: '✦';
-            font-size: 9px;
-            color: var(--gray-400);
+        .logo-slider-rows {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 28px;
+        }
+
+        .logo-slider-track-wrap {
+            overflow: hidden;
+            width: 100%;
+            position: relative;
+        }
+
+
+        .logo-slider-track-wrap::before,
+        .logo-slider-track-wrap::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 120px;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .logo-slider-track-wrap::before {
+            left: 0;
+            background: linear-gradient(to right, #fff 0%, transparent 100%);
+        }
+
+        .logo-slider-track-wrap::after {
+            right: 0;
+            background: linear-gradient(to left, #fff 0%, transparent 100%);
+        }
+
+        .logo-slider-track {
+            display: flex;
+            width: max-content;
+            gap: 64px;
+            align-items: center;
+        }
+
+        .logo-slider-track.forward {
+            animation: logoSlideLeft 30s linear infinite;
+        }
+
+        .logo-slider-track.reverse {
+            animation: logoSlideRight 34s linear infinite;
+        }
+
+        .logo-slider-track:hover {
+            animation-play-state: paused;
+        }
+
+        @keyframes logoSlideLeft {
+            from {
+                transform: translateX(0);
+            }
+
+            to {
+                transform: translateX(-50%);
+            }
+        }
+
+        @keyframes logoSlideRight {
+            from {
+                transform: translateX(-50%);
+            }
+
+            to {
+                transform: translateX(0);
+            }
+        }
+
+        .logo-item {
+            display: flex;
+            align-items: center;
+            height: 32px;
+            opacity: 0.78;
+            transition: opacity 0.3s ease, transform 0.2s ease;
+            flex-shrink: 0;
+        }
+
+        .logo-item:hover {
+            opacity: 1;
+            transform: scale(1.06);
+        }
+
+        .logo-item svg {
+            height: 100%;
+            width: auto;
         }
 
         /* ── BOOKING SECTION CTA ──────────────────────── */
@@ -976,10 +1055,13 @@
         }
 
         /* ── RESPONSIVE ──────────────────────────────── */
+        /* ═══════ RESPONSIVE ─ 768px ═══════════════════ */
         @media (max-width: 768px) {
+
+            /* NAV */
             nav {
                 padding: 14px 20px;
-                background: rgba(255, 255, 255, 0.9);
+                background: rgba(255, 255, 255, 0.95);
                 backdrop-filter: blur(12px);
                 -webkit-backdrop-filter: blur(12px);
             }
@@ -988,16 +1070,14 @@
                 display: none;
             }
 
-            /* ── Hero video mobile ── */
+            /* HERO */
             .hero {
-                padding: 120px 20px 80px;
-                align-items: center;
+                padding: 100px 20px 60px;
+                align-items: flex-start;
                 min-height: 100svh;
                 background: #fff;
-                /* white behind the contained video */
             }
 
-            /* Mobile: show full video without cropping */
             .hero-video {
                 position: absolute;
                 top: 50%;
@@ -1006,29 +1086,123 @@
                 height: 100%;
                 transform: translate(-50%, -50%) translateZ(0);
                 object-fit: contain;
-                /* no crop — full subject visible */
                 object-position: center center;
             }
 
-            /* Very white overlay so video is subtle, text pops cleanly */
             .hero-overlay {
                 background: rgba(255, 255, 255, 0.88);
             }
 
             .hero-text {
-                padding: 0 8px;
+                padding: 0;
+                align-items: flex-start;
+                text-align: left;
             }
 
-            .section-lower {
-                padding: 60px 20px;
+            .hero-eyebrow {
+                font-size: 10px;
             }
 
-            .translation-cards {
+            .hero-badges {
+                flex-wrap: wrap;
+                gap: 8px;
+            }
+
+            .hero-actions {
+                flex-direction: column;
+                gap: 12px;
+                width: 100%;
+            }
+
+            .hero-actions .btn-book,
+            .hero-actions .btn-demo {
+                width: 100%;
+                text-align: center;
+                justify-content: center;
+            }
+
+            /* SOLUTION SECTION */
+            .section-solution {
+                padding: 64px 20px;
+                gap: 36px;
+            }
+
+            .feature-grid {
                 grid-template-columns: 1fr;
+                gap: 14px;
             }
 
+            /* HOW IT WORKS */
+            .section-how {
+                padding: 64px 20px;
+                gap: 40px;
+            }
+
+            .steps-grid {
+                grid-template-columns: 1fr;
+                gap: 0;
+                max-width: 360px;
+            }
+
+            .steps-grid::before {
+                display: none;
+            }
+
+            .step-item {
+                flex-direction: row;
+                align-items: flex-start;
+                text-align: left;
+                padding: 0 0 32px 0;
+                gap: 20px;
+                position: relative;
+            }
+
+            .step-item:not(:last-child)::after {
+                content: '';
+                position: absolute;
+                left: 27px;
+                top: 56px;
+                bottom: 0;
+                width: 1px;
+                background: var(--gray-200);
+            }
+
+            .step-item .step-number {
+                flex-shrink: 0;
+            }
+
+            .step-item>div:last-child {
+                flex: 1;
+            }
+
+            /* LOGO SLIDER */
+            .logo-slider-section {
+                padding: 40px 0 48px;
+                gap: 24px;
+            }
+
+            .logo-slider-rows {
+                gap: 20px;
+            }
+
+            .logo-slider-track {
+                gap: 40px;
+            }
+
+            /* hide second row on small screens */
+            .logo-slider-rows>div:last-child {
+                display: none;
+            }
+
+            /* BOOKING CTA */
+            .section-booking-cta {
+                padding: 72px 24px;
+            }
+
+            /* MODAL */
             .modal-box {
                 padding: 32px 20px 28px;
+                border-radius: 18px;
             }
 
             .form-row {
@@ -1039,19 +1213,38 @@
                 grid-template-columns: repeat(3, 1fr);
             }
 
-            .section-booking-cta {
-                padding: 80px 24px;
-            }
-
+            /* FOOTER */
             footer {
                 flex-direction: column;
                 gap: 8px;
                 text-align: center;
+                padding: 20px;
             }
         }
 
-        /* Extra small phones */
+        /* ═══════ EXTRA SMALL ─ 430px ══════════════════ */
         @media (max-width: 430px) {
+            .hero {
+                padding: 90px 16px 56px;
+            }
+
+            .section-solution,
+            .section-how {
+                padding: 56px 16px;
+            }
+
+            .section-heading {
+                font-size: clamp(24px, 7vw, 36px);
+            }
+
+            .logo-slider-track {
+                gap: 28px;
+            }
+
+            .logo-item {
+                height: 24px;
+            }
+
             .calendar-grid .cal-day {
                 font-size: 11px;
             }
@@ -1177,32 +1370,281 @@
         </div>
     </section>
 
-    <!-- TICKER -->
-    <div class="ticker-wrap" aria-hidden="true">
-        <div class="ticker-track">
-            <span class="ticker-item" data-fr="Tutoriels 3D" data-en="3D Tutorials">Tutoriels 3D</span>
-            <span class="ticker-item" data-fr="Chatbot Expert IA" data-en="Expert AI Chatbot">Chatbot Expert IA</span>
-            <span class="ticker-item" data-fr="PDF → Vidéo en minutes" data-en="PDF → Video in Minutes">PDF → Vidéo en
-                minutes</span>
-            <span class="ticker-item" data-fr="Style Hollywood" data-en="Hollywood-Level">Style Hollywood</span>
-            <span class="ticker-item" data-fr="Support IA 24/7" data-en="24/7 AI Support">Support IA 24/7</span>
-            <span class="ticker-item" data-fr="Aucune formation requise" data-en="Zero Training Required">Aucune
-                formation requise</span>
-            <span class="ticker-item" data-fr="Multilingue" data-en="Multi-Language">Multilingue</span>
-            <span class="ticker-item" data-fr="Entreprise" data-en="Enterprise Ready">Entreprise</span>
-            <!-- duplicate for seamless loop -->
-            <span class="ticker-item" data-fr="Tutoriels 3D" data-en="3D Tutorials">Tutoriels 3D</span>
-            <span class="ticker-item" data-fr="Chatbot Expert IA" data-en="Expert AI Chatbot">Chatbot Expert IA</span>
-            <span class="ticker-item" data-fr="PDF → Vidéo en minutes" data-en="PDF → Video in Minutes">PDF → Vidéo en
-                minutes</span>
-            <span class="ticker-item" data-fr="Style Hollywood" data-en="Hollywood-Level">Style Hollywood</span>
-            <span class="ticker-item" data-fr="Support IA 24/7" data-en="24/7 AI Support">Support IA 24/7</span>
-            <span class="ticker-item" data-fr="Aucune formation requise" data-en="Zero Training Required">Aucune
-                formation requise</span>
-            <span class="ticker-item" data-fr="Multilingue" data-en="Multi-Language">Multilingue</span>
-            <span class="ticker-item" data-fr="Entreprise" data-en="Enterprise Ready">Entreprise</span>
+    <!-- LOGO SLIDER: In process with -->
+    <div class="logo-slider-section" aria-label="Secteurs utilisateurs">
+        <span class="logo-slider-label">Utilisé dans les secteurs</span>
+
+        <div class="logo-slider-rows">
+
+            <!-- Row 1 — scrolls left -->
+            <div class="logo-slider-track-wrap">
+                <div class="logo-slider-track forward">
+
+                    <!-- Airbus -->
+                    <div class="logo-item">
+                        <svg viewBox="0 0 110 36" xmlns="http://www.w3.org/2000/svg">
+                            <text x="0" y="27" font-family="Arial,sans-serif" font-size="22" font-weight="900"
+                                fill="#00205B">air</text>
+                            <text x="42" y="27" font-family="Arial,sans-serif" font-size="22" font-weight="900"
+                                fill="#00AEEF">bus</text>
+                        </svg>
+                    </div>
+
+                    <!-- Safran -->
+                    <div class="logo-item">
+                        <svg viewBox="0 0 100 36" xmlns="http://www.w3.org/2000/svg">
+                            <text x="0" y="27" font-family="Arial,sans-serif" font-size="22" font-weight="800"
+                                fill="#E8002D">safran</text>
+                        </svg>
+                    </div>
+
+                    <!-- Renault -->
+                    <div class="logo-item">
+                        <svg viewBox="0 0 110 36" xmlns="http://www.w3.org/2000/svg">
+                            <text x="0" y="27" font-family="Arial,sans-serif" font-size="21" font-weight="900"
+                                fill="#EFCA00" stroke="#333" stroke-width="0.4">RENAULT</text>
+                        </svg>
+                    </div>
+
+                    <!-- Siemens -->
+                    <div class="logo-item">
+                        <svg viewBox="0 0 110 36" xmlns="http://www.w3.org/2000/svg">
+                            <text x="0" y="27" font-family="Arial,sans-serif" font-size="21" font-weight="700"
+                                fill="#009999">Siemens</text>
+                        </svg>
+                    </div>
+
+                    <!-- Michelin -->
+                    <div class="logo-item">
+                        <svg viewBox="0 0 115 36" xmlns="http://www.w3.org/2000/svg">
+                            <text x="0" y="27" font-family="Arial,sans-serif" font-size="20" font-weight="800"
+                                fill="#003189">Michelin</text>
+                        </svg>
+                    </div>
+
+                    <!-- Schneider Electric -->
+                    <div class="logo-item">
+                        <svg viewBox="0 0 185 36" xmlns="http://www.w3.org/2000/svg">
+                            <text x="0" y="24" font-family="Arial,sans-serif" font-size="18" font-weight="700"
+                                fill="#3DCD58">Schneider</text>
+                            <text x="0" y="38" font-family="Arial,sans-serif" font-size="11" font-weight="500"
+                                fill="#3DCD58" letter-spacing="0.05em">ELECTRIC</text>
+                        </svg>
+                    </div>
+
+                    <!-- Valeo -->
+                    <div class="logo-item">
+                        <svg viewBox="0 0 90 36" xmlns="http://www.w3.org/2000/svg">
+                            <text x="0" y="27" font-family="Arial,sans-serif" font-size="22" font-weight="800"
+                                fill="#005BAC">Valeo</text>
+                        </svg>
+                    </div>
+
+                    <!-- TotalEnergies -->
+                    <div class="logo-item">
+                        <svg viewBox="0 0 160 36" xmlns="http://www.w3.org/2000/svg">
+                            <text x="0" y="17" font-family="Arial,sans-serif" font-size="14" font-weight="900"
+                                fill="#CC0001">Total</text>
+                            <text x="52" y="17" font-family="Arial,sans-serif" font-size="14" font-weight="900"
+                                fill="#F7941D">Energies</text>
+                        </svg>
+                    </div>
+
+                    <!-- DUPLICATE -->
+                    <div class="logo-item">
+                        <svg viewBox="0 0 110 36" xmlns="http://www.w3.org/2000/svg">
+                            <text x="0" y="27" font-family="Arial,sans-serif" font-size="22" font-weight="900"
+                                fill="#00205B">air</text>
+                            <text x="42" y="27" font-family="Arial,sans-serif" font-size="22" font-weight="900"
+                                fill="#00AEEF">bus</text>
+                        </svg>
+                    </div>
+                    <div class="logo-item">
+                        <svg viewBox="0 0 100 36" xmlns="http://www.w3.org/2000/svg">
+                            <text x="0" y="27" font-family="Arial,sans-serif" font-size="22" font-weight="800"
+                                fill="#E8002D">safran</text>
+                        </svg>
+                    </div>
+                    <div class="logo-item">
+                        <svg viewBox="0 0 110 36" xmlns="http://www.w3.org/2000/svg">
+                            <text x="0" y="27" font-family="Arial,sans-serif" font-size="21" font-weight="900"
+                                fill="#EFCA00" stroke="#333" stroke-width="0.4">RENAULT</text>
+                        </svg>
+                    </div>
+                    <div class="logo-item">
+                        <svg viewBox="0 0 110 36" xmlns="http://www.w3.org/2000/svg">
+                            <text x="0" y="27" font-family="Arial,sans-serif" font-size="21" font-weight="700"
+                                fill="#009999">Siemens</text>
+                        </svg>
+                    </div>
+                    <div class="logo-item">
+                        <svg viewBox="0 0 115 36" xmlns="http://www.w3.org/2000/svg">
+                            <text x="0" y="27" font-family="Arial,sans-serif" font-size="20" font-weight="800"
+                                fill="#003189">Michelin</text>
+                        </svg>
+                    </div>
+                    <div class="logo-item">
+                        <svg viewBox="0 0 185 36" xmlns="http://www.w3.org/2000/svg">
+                            <text x="0" y="24" font-family="Arial,sans-serif" font-size="18" font-weight="700"
+                                fill="#3DCD58">Schneider</text>
+                            <text x="0" y="38" font-family="Arial,sans-serif" font-size="11" font-weight="500"
+                                fill="#3DCD58" letter-spacing="0.05em">ELECTRIC</text>
+                        </svg>
+                    </div>
+                    <div class="logo-item">
+                        <svg viewBox="0 0 90 36" xmlns="http://www.w3.org/2000/svg">
+                            <text x="0" y="27" font-family="Arial,sans-serif" font-size="22" font-weight="800"
+                                fill="#005BAC">Valeo</text>
+                        </svg>
+                    </div>
+                    <div class="logo-item">
+                        <svg viewBox="0 0 160 36" xmlns="http://www.w3.org/2000/svg">
+                            <text x="0" y="17" font-family="Arial,sans-serif" font-size="14" font-weight="900"
+                                fill="#CC0001">Total</text>
+                            <text x="52" y="17" font-family="Arial,sans-serif" font-size="14" font-weight="900"
+                                fill="#F7941D">Energies</text>
+                        </svg>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Row 2 — scrolls right -->
+            <div class="logo-slider-track-wrap">
+                <div class="logo-slider-track reverse">
+
+                    <!-- Thales -->
+                    <div class="logo-item">
+                        <svg viewBox="0 0 100 36" xmlns="http://www.w3.org/2000/svg">
+                            <text x="0" y="27" font-family="Arial,sans-serif" font-size="22" font-weight="800"
+                                fill="#004C97">thales</text>
+                        </svg>
+                    </div>
+
+                    <!-- Alstom -->
+                    <div class="logo-item">
+                        <svg viewBox="0 0 100 36" xmlns="http://www.w3.org/2000/svg">
+                            <text x="0" y="27" font-family="Arial,sans-serif" font-size="21" font-weight="800"
+                                fill="#0033A0">Alstom</text>
+                        </svg>
+                    </div>
+
+                    <!-- Bosch -->
+                    <div class="logo-item">
+                        <svg viewBox="0 0 95 36" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="0" y="2" width="88" height="26" rx="13" fill="#EA0016" />
+                            <text x="12" y="21" font-family="Arial,sans-serif" font-size="16" font-weight="700"
+                                fill="white">BOSCH</text>
+                        </svg>
+                    </div>
+
+                    <!-- Naval Group -->
+                    <div class="logo-item">
+                        <svg viewBox="0 0 140 36" xmlns="http://www.w3.org/2000/svg">
+                            <text x="0" y="22" font-family="Arial,sans-serif" font-size="16" font-weight="800"
+                                fill="#003F8A">Naval</text>
+                            <text x="64" y="22" font-family="Arial,sans-serif" font-size="16" font-weight="400"
+                                fill="#003F8A">Group</text>
+                        </svg>
+                    </div>
+
+                    <!-- EDF -->
+                    <div class="logo-item">
+                        <svg viewBox="0 0 70 36" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="0" y="3" width="62" height="26" rx="4" fill="#F7A600" />
+                            <text x="8" y="23" font-family="Arial,sans-serif" font-size="17" font-weight="900"
+                                fill="#002169">EDF</text>
+                        </svg>
+                    </div>
+
+                    <!-- Faurecia -->
+                    <div class="logo-item">
+                        <svg viewBox="0 0 110 36" xmlns="http://www.w3.org/2000/svg">
+                            <text x="0" y="27" font-family="Arial,sans-serif" font-size="21" font-weight="700"
+                                fill="#8B0000">Faurecia</text>
+                        </svg>
+                    </div>
+
+                    <!-- ABB -->
+                    <div class="logo-item">
+                        <svg viewBox="0 0 75 36" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="0" y="3" width="68" height="26" rx="4" fill="#FF000F" />
+                            <text x="9" y="23" font-family="Arial,sans-serif" font-size="17" font-weight="900"
+                                fill="white">ABB</text>
+                        </svg>
+                    </div>
+
+                    <!-- SNCF -->
+                    <div class="logo-item">
+                        <svg viewBox="0 0 90 36" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="0" y="3" width="82" height="26" rx="4" fill="#E2001A" />
+                            <text x="8" y="23" font-family="Arial,sans-serif" font-size="16" font-weight="900"
+                                fill="white">SNCF</text>
+                        </svg>
+                    </div>
+
+                    <!-- DUPLICATE -->
+                    <div class="logo-item">
+                        <svg viewBox="0 0 100 36" xmlns="http://www.w3.org/2000/svg">
+                            <text x="0" y="27" font-family="Arial,sans-serif" font-size="22" font-weight="800"
+                                fill="#004C97">thales</text>
+                        </svg>
+                    </div>
+                    <div class="logo-item">
+                        <svg viewBox="0 0 100 36" xmlns="http://www.w3.org/2000/svg">
+                            <text x="0" y="27" font-family="Arial,sans-serif" font-size="21" font-weight="800"
+                                fill="#0033A0">Alstom</text>
+                        </svg>
+                    </div>
+                    <div class="logo-item">
+                        <svg viewBox="0 0 95 36" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="0" y="2" width="88" height="26" rx="13" fill="#EA0016" />
+                            <text x="12" y="21" font-family="Arial,sans-serif" font-size="16" font-weight="700"
+                                fill="white">BOSCH</text>
+                        </svg>
+                    </div>
+                    <div class="logo-item">
+                        <svg viewBox="0 0 140 36" xmlns="http://www.w3.org/2000/svg">
+                            <text x="0" y="22" font-family="Arial,sans-serif" font-size="16" font-weight="800"
+                                fill="#003F8A">Naval</text>
+                            <text x="64" y="22" font-family="Arial,sans-serif" font-size="16" font-weight="400"
+                                fill="#003F8A">Group</text>
+                        </svg>
+                    </div>
+                    <div class="logo-item">
+                        <svg viewBox="0 0 70 36" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="0" y="3" width="62" height="26" rx="4" fill="#F7A600" />
+                            <text x="8" y="23" font-family="Arial,sans-serif" font-size="17" font-weight="900"
+                                fill="#002169">EDF</text>
+                        </svg>
+                    </div>
+                    <div class="logo-item">
+                        <svg viewBox="0 0 110 36" xmlns="http://www.w3.org/2000/svg">
+                            <text x="0" y="27" font-family="Arial,sans-serif" font-size="21" font-weight="700"
+                                fill="#8B0000">Faurecia</text>
+                        </svg>
+                    </div>
+                    <div class="logo-item">
+                        <svg viewBox="0 0 75 36" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="0" y="3" width="68" height="26" rx="4" fill="#FF000F" />
+                            <text x="9" y="23" font-family="Arial,sans-serif" font-size="17" font-weight="900"
+                                fill="white">ABB</text>
+                        </svg>
+                    </div>
+                    <div class="logo-item">
+                        <svg viewBox="0 0 90 36" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="0" y="3" width="82" height="26" rx="4" fill="#E2001A" />
+                            <text x="8" y="23" font-family="Arial,sans-serif" font-size="16" font-weight="900"
+                                fill="white">SNCF</text>
+                        </svg>
+                    </div>
+
+                </div>
+            </div>
+
         </div>
     </div>
+
 
     <!-- BOOKING CTA SECTION -->
     <section class="section-booking-cta" id="booking-cta">
