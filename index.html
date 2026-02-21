@@ -163,7 +163,9 @@
         .hero-overlay {
             position: absolute;
             inset: 0;
-            background: rgba(255, 255, 255, 0.72);
+            background: rgba(255, 255, 255, 0.35);
+            backdrop-filter: saturate(1.8) blur(1px);
+            -webkit-backdrop-filter: saturate(1.8) blur(1px);
             z-index: 1;
             pointer-events: none;
         }
@@ -774,6 +776,7 @@
 
         .form-group select {
             -webkit-appearance: none;
+            appearance: none;
             background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23999' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
             background-repeat: no-repeat;
             background-position: right 14px center;
@@ -1090,7 +1093,9 @@
             }
 
             .hero-overlay {
-                background: rgba(255, 255, 255, 0.88);
+                background: rgba(255, 255, 255, 0.45);
+                backdrop-filter: saturate(1.6) blur(1px);
+                -webkit-backdrop-filter: saturate(1.6) blur(1px);
             }
 
             .hero-text {
@@ -1262,9 +1267,9 @@
     <nav>
         <a class="nav-logo" href="#" data-fr="Notice.AI" data-en="Notice.AI">Notice.AI</a>
         <ul class="nav-links">
-            <li><a href="#solution">Solution</a></li>
-            <li><a href="#how-it-works">Comment ça marche</a></li>
-            <li><a href="#booking-cta">Contact</a></li>
+            <li><a href="#solution" data-fr="Solution" data-en="Solution">Solution</a></li>
+            <li><a href="#how-it-works" data-fr="Comment ça marche" data-en="How it works">Comment ça marche</a></li>
+            <li><a href="#booking-cta" data-fr="Contact" data-en="Contact">Contact</a></li>
         </ul>
         <div class="nav-right">
             <div class="lang-toggle" role="group" aria-label="Changer la langue">
@@ -1291,51 +1296,67 @@
 
     <!-- SOLUTION SECTION -->
     <section class="section-solution" id="solution">
-        <p class="section-eyebrow">La Solution</p>
-        <h2 class="section-heading">Transformez vos manuels en <em>expériences visuelles</em></h2>
+        <p class="section-eyebrow" data-fr="La Solution" data-en="The Solution">La Solution</p>
+        <h2 class="section-heading" data-fr="Transformez vos manuels en <em>expériences visuelles</em>"
+            data-en="Turn your manuals into <em>visual experiences</em>">Transformez vos manuels en <em>expériences
+                visuelles</em></h2>
         <div class="feature-grid">
             <div class="feature-card">
                 <div class="feature-icon">📄</div>
-                <h3>Import instantané</h3>
-                <p>Importez n'importe quel manuel PDF ou document technique. Notre IA analyse le contenu en quelques
+                <h3 data-fr="Import instantané" data-en="Instant Import">Import instantané</h3>
+                <p data-fr="Importez n'importe quel manuel PDF ou document technique. Notre IA analyse le contenu en quelques secondes."
+                    data-en="Import any PDF manual or technical document. Our AI analyzes the content in seconds.">
+                    Importez n'importe quel manuel PDF ou document technique. Notre IA analyse le contenu en quelques
                     secondes.</p>
                 <div class="tag-row"><span class="tag">PDF</span><span class="tag">Word</span><span
                         class="tag">Images</span></div>
             </div>
             <div class="feature-card">
                 <div class="feature-icon">🎬</div>
-                <h3>Vidéos 3D générées par IA</h3>
-                <p>Notice.AI convertit automatiquement vos procédures en tutoriels vidéo 3D de qualité studio, sans
+                <h3 data-fr="Vidéos 3D générées par IA" data-en="AI-Generated 3D Videos">Vidéos 3D générées par IA</h3>
+                <p data-fr="Notice.AI convertit automatiquement vos procédures en tutoriels vidéo 3D de qualité studio, sans aucune compétence technique."
+                    data-en="Notice.AI automatically converts your procedures into studio-quality 3D video tutorials — no technical skill needed.">
+                    Notice.AI convertit automatiquement vos procédures en tutoriels vidéo 3D de qualité studio, sans
                     aucune compétence technique.</p>
-                <div class="tag-row"><span class="tag">Qualité Studio</span><span class="tag">3D</span><span
-                        class="tag">IA</span></div>
+                <div class="tag-row"><span class="tag" data-fr="Qualité Studio" data-en="Studio Quality">Qualité
+                        Studio</span><span class="tag">3D</span><span class="tag">IA</span></div>
             </div>
             <div class="feature-card">
                 <div class="feature-icon">🤖</div>
-                <h3>Chatbot Expert intégré</h3>
-                <p>Un assistant IA formé sur vos documents répond aux questions de vos techniciens en temps réel,
+                <h3 data-fr="Chatbot Expert intégré" data-en="Built-in Expert Chatbot">Chatbot Expert intégré</h3>
+                <p data-fr="Un assistant IA formé sur vos documents répond aux questions de vos techniciens en temps réel, 24h/24."
+                    data-en="An AI assistant trained on your documents answers your technicians' questions in real time, 24/7.">
+                    Un assistant IA formé sur vos documents répond aux questions de vos techniciens en temps réel,
                     24h/24.</p>
-                <div class="tag-row"><span class="tag">24/7</span><span class="tag">Multilingue</span></div>
+                <div class="tag-row"><span class="tag">24/7</span><span class="tag" data-fr="Multilingue"
+                        data-en="Multilingual">Multilingue</span></div>
             </div>
             <div class="feature-card">
                 <div class="feature-icon">📊</div>
-                <h3>Tableau de bord analytique</h3>
-                <p>Suivez en temps réel quelles procédures sont consultées, identifiez les points de friction et
+                <h3 data-fr="Tableau de bord analytique" data-en="Analytics Dashboard">Tableau de bord analytique</h3>
+                <p data-fr="Suivez en temps réel quelles procédures sont consultées, identifiez les points de friction et optimisez la formation."
+                    data-en="Track in real time which procedures are viewed, identify friction points, and optimize training.">
+                    Suivez en temps réel quelles procédures sont consultées, identifiez les points de friction et
                     optimisez la formation.</p>
-                <div class="tag-row"><span class="tag">Analytics</span><span class="tag">Temps réel</span></div>
+                <div class="tag-row"><span class="tag">Analytics</span><span class="tag" data-fr="Temps réel"
+                        data-en="Real-time">Temps réel</span></div>
             </div>
             <div class="feature-card">
                 <div class="feature-icon">🔒</div>
-                <h3>Sécurité entreprise</h3>
-                <p>Vos données restent privées. Conformité RGPD, chiffrement bout-en-bout, hébergement en France.</p>
-                <div class="tag-row"><span class="tag">RGPD</span><span class="tag">Chiffré</span><span class="tag">🇫🇷
-                        France</span></div>
+                <h3 data-fr="Sécurité entreprise" data-en="Enterprise Security">Sécurité entreprise</h3>
+                <p data-fr="Vos données restent privées. Conformité RGPD, chiffrement bout-en-bout, hébergement en France."
+                    data-en="Your data stays private. GDPR compliance, end-to-end encryption, hosted in France.">Vos
+                    données restent privées. Conformité RGPD, chiffrement bout-en-bout, hébergement en France.</p>
+                <div class="tag-row"><span class="tag">RGPD</span><span class="tag" data-fr="Chiffré"
+                        data-en="Encrypted">Chiffré</span><span class="tag">🇫🇷 France</span></div>
             </div>
             <div class="feature-card">
                 <div class="feature-icon">⚡</div>
-                <h3>Déploiement ultra-rapide</h3>
-                <p>Mise en production en moins de 48h. Aucune infrastructure à gérer. Intégration dans vos outils
-                    existants.</p>
+                <h3 data-fr="Déploiement ultra-rapide" data-en="Ultra-fast Deployment">Déploiement ultra-rapide</h3>
+                <p data-fr="Mise en production en moins de 48h. Aucune infrastructure à gérer. Intégration dans vos outils existants."
+                    data-en="Live in under 48h. No infrastructure to manage. Integrates with your existing tools.">Mise
+                    en production en moins de 48h. Aucune infrastructure à gérer. Intégration dans vos outils existants.
+                </p>
                 <div class="tag-row"><span class="tag">ERP</span><span class="tag">LMS</span><span
                         class="tag">API</span></div>
             </div>
@@ -1344,307 +1365,313 @@
 
     <!-- HOW IT WORKS SECTION -->
     <section class="section-how" id="how-it-works">
-        <p class="section-eyebrow">Comment ça marche</p>
-        <h2 class="section-heading">De votre notice à la vidéo en <em>4 étapes</em></h2>
+        <p class="section-eyebrow" data-fr="Comment ça marche" data-en="How it works">Comment ça marche</p>
+        <h2 class="section-heading" data-fr="De votre notice à la vidéo en <em>4 étapes</em>"
+            data-en="From manual to video in <em>4 steps</em>">De votre notice à la vidéo en <em>4 étapes</em></h2>
         <div class="steps-grid">
             <div class="step-item">
                 <div class="step-number">1</div>
-                <h3>Importez</h3>
-                <p>Déposez votre manuel PDF, notice technique ou procédure interne sur la plateforme.</p>
+                <div>
+                    <h3 data-fr="Importez" data-en="Import">Importez</h3>
+                    <p data-fr="Déposez votre manuel PDF, notice technique ou procédure interne sur la plateforme."
+                        data-en="Upload your PDF manual, technical notice or internal procedure to the platform.">
+                        Déposez votre manuel PDF, notice technique ou procédure interne sur la plateforme.</p>
+                </div>
             </div>
             <div class="step-item">
                 <div class="step-number">2</div>
-                <h3>L'IA analyse</h3>
-                <p>Notice.AI découpe, comprend et structure automatiquement chaque étape de votre procédure.</p>
+                <div>
+                    <h3 data-fr="L'IA analyse" data-en="AI Analysis">L'IA analyse</h3>
+                    <p data-fr="Notice.AI découpe, comprend et structure automatiquement chaque étape de votre procédure."
+                        data-en="Notice.AI automatically splits, understands and structures each step of your procedure.">
+                        Notice.AI découpe, comprend et structure automatiquement chaque étape de votre procédure.</p>
+                </div>
             </div>
             <div class="step-item">
                 <div class="step-number">3</div>
-                <h3>Génération vidéo</h3>
-                <p>Un tutoriel vidéo 3D est généré automatiquement — narration, animations et sous-titres inclus.</p>
+                <div>
+                    <h3 data-fr="Génération vidéo" data-en="Video Generation">Génération vidéo</h3>
+                    <p data-fr="Un tutoriel vidéo 3D est généré automatiquement — narration, animations et sous-titres inclus."
+                        data-en="A 3D video tutorial is automatically generated — narration, animations and subtitles included.">
+                        Un tutoriel vidéo 3D est généré automatiquement — narration, animations et sous-titres inclus.
+                    </p>
+                </div>
             </div>
             <div class="step-item">
                 <div class="step-number">4</div>
-                <h3>Déployez</h3>
-                <p>Partagez avec vos équipes via lien, QR code ou intégration directe dans votre LMS ou intranet.</p>
+                <div>
+                    <h3 data-fr="Déployez" data-en="Deploy">Déployez</h3>
+                    <p data-fr="Partagez avec vos équipes via lien, QR code ou intégration directe dans votre LMS ou intranet."
+                        data-en="Share with your teams via link, QR code or direct integration into your LMS or intranet.">
+                        Partagez avec vos équipes via lien, QR code ou intégration directe dans votre LMS ou intranet.
+                    </p>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- LOGO SLIDER: In process with -->
+    <!-- LOGO SLIDER -->
     <div class="logo-slider-section" aria-label="Secteurs utilisateurs">
-        <span class="logo-slider-label">Utilisé dans les secteurs</span>
+        <span class="logo-slider-label" data-fr="En process" data-en="In process">En process</span>
 
         <div class="logo-slider-rows">
-
-            <!-- Row 1 — scrolls left -->
             <div class="logo-slider-track-wrap">
                 <div class="logo-slider-track forward">
 
                     <!-- Airbus -->
                     <div class="logo-item">
-                        <svg viewBox="0 0 110 36" xmlns="http://www.w3.org/2000/svg">
-                            <text x="0" y="27" font-family="Arial,sans-serif" font-size="22" font-weight="900"
+                        <svg viewBox="0 0 130 48" xmlns="http://www.w3.org/2000/svg">
+                            <text x="0" y="36" font-family="Arial,sans-serif" font-size="30" font-weight="900"
                                 fill="#00205B">air</text>
-                            <text x="42" y="27" font-family="Arial,sans-serif" font-size="22" font-weight="900"
+                            <text x="54" y="36" font-family="Arial,sans-serif" font-size="30" font-weight="900"
                                 fill="#00AEEF">bus</text>
                         </svg>
                     </div>
 
                     <!-- Safran -->
                     <div class="logo-item">
-                        <svg viewBox="0 0 100 36" xmlns="http://www.w3.org/2000/svg">
-                            <text x="0" y="27" font-family="Arial,sans-serif" font-size="22" font-weight="800"
+                        <svg viewBox="0 0 140 48" xmlns="http://www.w3.org/2000/svg">
+                            <text x="0" y="36" font-family="Arial,sans-serif" font-size="30" font-weight="800"
                                 fill="#E8002D">safran</text>
                         </svg>
                     </div>
 
                     <!-- Renault -->
                     <div class="logo-item">
-                        <svg viewBox="0 0 110 36" xmlns="http://www.w3.org/2000/svg">
-                            <text x="0" y="27" font-family="Arial,sans-serif" font-size="21" font-weight="900"
-                                fill="#EFCA00" stroke="#333" stroke-width="0.4">RENAULT</text>
+                        <svg viewBox="0 0 155 48" xmlns="http://www.w3.org/2000/svg">
+                            <text x="0" y="36" font-family="Arial,sans-serif" font-size="28" font-weight="900"
+                                fill="#EFCA00" stroke="#555" stroke-width="0.6">RENAULT</text>
                         </svg>
                     </div>
 
                     <!-- Siemens -->
                     <div class="logo-item">
-                        <svg viewBox="0 0 110 36" xmlns="http://www.w3.org/2000/svg">
-                            <text x="0" y="27" font-family="Arial,sans-serif" font-size="21" font-weight="700"
+                        <svg viewBox="0 0 150 48" xmlns="http://www.w3.org/2000/svg">
+                            <text x="0" y="36" font-family="Arial,sans-serif" font-size="29" font-weight="700"
                                 fill="#009999">Siemens</text>
                         </svg>
                     </div>
 
                     <!-- Michelin -->
                     <div class="logo-item">
-                        <svg viewBox="0 0 115 36" xmlns="http://www.w3.org/2000/svg">
-                            <text x="0" y="27" font-family="Arial,sans-serif" font-size="20" font-weight="800"
+                        <svg viewBox="0 0 148 48" xmlns="http://www.w3.org/2000/svg">
+                            <text x="0" y="36" font-family="Arial,sans-serif" font-size="28" font-weight="800"
                                 fill="#003189">Michelin</text>
                         </svg>
                     </div>
 
-                    <!-- Schneider Electric -->
+                    <!-- Schneider -->
                     <div class="logo-item">
-                        <svg viewBox="0 0 185 36" xmlns="http://www.w3.org/2000/svg">
-                            <text x="0" y="24" font-family="Arial,sans-serif" font-size="18" font-weight="700"
+                        <svg viewBox="0 0 160 48" xmlns="http://www.w3.org/2000/svg">
+                            <text x="0" y="26" font-family="Arial,sans-serif" font-size="22" font-weight="700"
                                 fill="#3DCD58">Schneider</text>
-                            <text x="0" y="38" font-family="Arial,sans-serif" font-size="11" font-weight="500"
-                                fill="#3DCD58" letter-spacing="0.05em">ELECTRIC</text>
+                            <text x="1" y="43" font-family="Arial,sans-serif" font-size="13" font-weight="600"
+                                fill="#3DCD58" letter-spacing="0.1em">ELECTRIC</text>
                         </svg>
                     </div>
 
                     <!-- Valeo -->
                     <div class="logo-item">
-                        <svg viewBox="0 0 90 36" xmlns="http://www.w3.org/2000/svg">
-                            <text x="0" y="27" font-family="Arial,sans-serif" font-size="22" font-weight="800"
+                        <svg viewBox="0 0 110 48" xmlns="http://www.w3.org/2000/svg">
+                            <text x="0" y="36" font-family="Arial,sans-serif" font-size="30" font-weight="800"
                                 fill="#005BAC">Valeo</text>
                         </svg>
                     </div>
 
                     <!-- TotalEnergies -->
                     <div class="logo-item">
-                        <svg viewBox="0 0 160 36" xmlns="http://www.w3.org/2000/svg">
-                            <text x="0" y="17" font-family="Arial,sans-serif" font-size="14" font-weight="900"
+                        <svg viewBox="0 0 175 48" xmlns="http://www.w3.org/2000/svg">
+                            <text x="0" y="26" font-family="Arial,sans-serif" font-size="20" font-weight="900"
                                 fill="#CC0001">Total</text>
-                            <text x="52" y="17" font-family="Arial,sans-serif" font-size="14" font-weight="900"
+                            <text x="68" y="26" font-family="Arial,sans-serif" font-size="20" font-weight="900"
                                 fill="#F7941D">Energies</text>
                         </svg>
                     </div>
-
-                    <!-- DUPLICATE -->
-                    <div class="logo-item">
-                        <svg viewBox="0 0 110 36" xmlns="http://www.w3.org/2000/svg">
-                            <text x="0" y="27" font-family="Arial,sans-serif" font-size="22" font-weight="900"
-                                fill="#00205B">air</text>
-                            <text x="42" y="27" font-family="Arial,sans-serif" font-size="22" font-weight="900"
-                                fill="#00AEEF">bus</text>
-                        </svg>
-                    </div>
-                    <div class="logo-item">
-                        <svg viewBox="0 0 100 36" xmlns="http://www.w3.org/2000/svg">
-                            <text x="0" y="27" font-family="Arial,sans-serif" font-size="22" font-weight="800"
-                                fill="#E8002D">safran</text>
-                        </svg>
-                    </div>
-                    <div class="logo-item">
-                        <svg viewBox="0 0 110 36" xmlns="http://www.w3.org/2000/svg">
-                            <text x="0" y="27" font-family="Arial,sans-serif" font-size="21" font-weight="900"
-                                fill="#EFCA00" stroke="#333" stroke-width="0.4">RENAULT</text>
-                        </svg>
-                    </div>
-                    <div class="logo-item">
-                        <svg viewBox="0 0 110 36" xmlns="http://www.w3.org/2000/svg">
-                            <text x="0" y="27" font-family="Arial,sans-serif" font-size="21" font-weight="700"
-                                fill="#009999">Siemens</text>
-                        </svg>
-                    </div>
-                    <div class="logo-item">
-                        <svg viewBox="0 0 115 36" xmlns="http://www.w3.org/2000/svg">
-                            <text x="0" y="27" font-family="Arial,sans-serif" font-size="20" font-weight="800"
-                                fill="#003189">Michelin</text>
-                        </svg>
-                    </div>
-                    <div class="logo-item">
-                        <svg viewBox="0 0 185 36" xmlns="http://www.w3.org/2000/svg">
-                            <text x="0" y="24" font-family="Arial,sans-serif" font-size="18" font-weight="700"
-                                fill="#3DCD58">Schneider</text>
-                            <text x="0" y="38" font-family="Arial,sans-serif" font-size="11" font-weight="500"
-                                fill="#3DCD58" letter-spacing="0.05em">ELECTRIC</text>
-                        </svg>
-                    </div>
-                    <div class="logo-item">
-                        <svg viewBox="0 0 90 36" xmlns="http://www.w3.org/2000/svg">
-                            <text x="0" y="27" font-family="Arial,sans-serif" font-size="22" font-weight="800"
-                                fill="#005BAC">Valeo</text>
-                        </svg>
-                    </div>
-                    <div class="logo-item">
-                        <svg viewBox="0 0 160 36" xmlns="http://www.w3.org/2000/svg">
-                            <text x="0" y="17" font-family="Arial,sans-serif" font-size="14" font-weight="900"
-                                fill="#CC0001">Total</text>
-                            <text x="52" y="17" font-family="Arial,sans-serif" font-size="14" font-weight="900"
-                                fill="#F7941D">Energies</text>
-                        </svg>
-                    </div>
-
-                </div>
-            </div>
-
-            <!-- Row 2 — scrolls right -->
-            <div class="logo-slider-track-wrap">
-                <div class="logo-slider-track reverse">
 
                     <!-- Thales -->
                     <div class="logo-item">
-                        <svg viewBox="0 0 100 36" xmlns="http://www.w3.org/2000/svg">
-                            <text x="0" y="27" font-family="Arial,sans-serif" font-size="22" font-weight="800"
+                        <svg viewBox="0 0 130 48" xmlns="http://www.w3.org/2000/svg">
+                            <text x="0" y="36" font-family="Arial,sans-serif" font-size="30" font-weight="800"
                                 fill="#004C97">thales</text>
                         </svg>
                     </div>
 
                     <!-- Alstom -->
                     <div class="logo-item">
-                        <svg viewBox="0 0 100 36" xmlns="http://www.w3.org/2000/svg">
-                            <text x="0" y="27" font-family="Arial,sans-serif" font-size="21" font-weight="800"
+                        <svg viewBox="0 0 130 48" xmlns="http://www.w3.org/2000/svg">
+                            <text x="0" y="36" font-family="Arial,sans-serif" font-size="29" font-weight="800"
                                 fill="#0033A0">Alstom</text>
                         </svg>
                     </div>
 
                     <!-- Bosch -->
                     <div class="logo-item">
-                        <svg viewBox="0 0 95 36" xmlns="http://www.w3.org/2000/svg">
-                            <rect x="0" y="2" width="88" height="26" rx="13" fill="#EA0016" />
-                            <text x="12" y="21" font-family="Arial,sans-serif" font-size="16" font-weight="700"
+                        <svg viewBox="0 0 120 48" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="0" y="4" width="112" height="34" rx="17" fill="#EA0016" />
+                            <text x="16" y="29" font-family="Arial,sans-serif" font-size="20" font-weight="700"
                                 fill="white">BOSCH</text>
-                        </svg>
-                    </div>
-
-                    <!-- Naval Group -->
-                    <div class="logo-item">
-                        <svg viewBox="0 0 140 36" xmlns="http://www.w3.org/2000/svg">
-                            <text x="0" y="22" font-family="Arial,sans-serif" font-size="16" font-weight="800"
-                                fill="#003F8A">Naval</text>
-                            <text x="64" y="22" font-family="Arial,sans-serif" font-size="16" font-weight="400"
-                                fill="#003F8A">Group</text>
                         </svg>
                     </div>
 
                     <!-- EDF -->
                     <div class="logo-item">
-                        <svg viewBox="0 0 70 36" xmlns="http://www.w3.org/2000/svg">
-                            <rect x="0" y="3" width="62" height="26" rx="4" fill="#F7A600" />
-                            <text x="8" y="23" font-family="Arial,sans-serif" font-size="17" font-weight="900"
+                        <svg viewBox="0 0 90 48" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="0" y="4" width="80" height="34" rx="5" fill="#F7A600" />
+                            <text x="10" y="29" font-family="Arial,sans-serif" font-size="22" font-weight="900"
                                 fill="#002169">EDF</text>
-                        </svg>
-                    </div>
-
-                    <!-- Faurecia -->
-                    <div class="logo-item">
-                        <svg viewBox="0 0 110 36" xmlns="http://www.w3.org/2000/svg">
-                            <text x="0" y="27" font-family="Arial,sans-serif" font-size="21" font-weight="700"
-                                fill="#8B0000">Faurecia</text>
                         </svg>
                     </div>
 
                     <!-- ABB -->
                     <div class="logo-item">
-                        <svg viewBox="0 0 75 36" xmlns="http://www.w3.org/2000/svg">
-                            <rect x="0" y="3" width="68" height="26" rx="4" fill="#FF000F" />
-                            <text x="9" y="23" font-family="Arial,sans-serif" font-size="17" font-weight="900"
+                        <svg viewBox="0 0 95 48" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="0" y="4" width="86" height="34" rx="5" fill="#FF000F" />
+                            <text x="11" y="29" font-family="Arial,sans-serif" font-size="21" font-weight="900"
                                 fill="white">ABB</text>
                         </svg>
                     </div>
 
                     <!-- SNCF -->
                     <div class="logo-item">
-                        <svg viewBox="0 0 90 36" xmlns="http://www.w3.org/2000/svg">
-                            <rect x="0" y="3" width="82" height="26" rx="4" fill="#E2001A" />
-                            <text x="8" y="23" font-family="Arial,sans-serif" font-size="16" font-weight="900"
+                        <svg viewBox="0 0 110 48" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="0" y="4" width="100" height="34" rx="5" fill="#E2001A" />
+                            <text x="10" y="29" font-family="Arial,sans-serif" font-size="20" font-weight="900"
                                 fill="white">SNCF</text>
                         </svg>
                     </div>
 
-                    <!-- DUPLICATE -->
+                    <!-- Naval Group -->
                     <div class="logo-item">
-                        <svg viewBox="0 0 100 36" xmlns="http://www.w3.org/2000/svg">
-                            <text x="0" y="27" font-family="Arial,sans-serif" font-size="22" font-weight="800"
+                        <svg viewBox="0 0 165 48" xmlns="http://www.w3.org/2000/svg">
+                            <text x="0" y="30" font-family="Arial,sans-serif" font-size="20" font-weight="800"
+                                fill="#003F8A">Naval</text>
+                            <text x="78" y="30" font-family="Arial,sans-serif" font-size="20" font-weight="400"
+                                fill="#003F8A">Group</text>
+                        </svg>
+                    </div>
+
+                    <!-- Faurecia -->
+                    <div class="logo-item">
+                        <svg viewBox="0 0 140 48" xmlns="http://www.w3.org/2000/svg">
+                            <text x="0" y="36" font-family="Arial,sans-serif" font-size="28" font-weight="700"
+                                fill="#8B0000">Faurecia</text>
+                        </svg>
+                    </div>
+
+                    <!-- === DUPLICATE for seamless loop === -->
+                    <div class="logo-item">
+                        <svg viewBox="0 0 130 48" xmlns="http://www.w3.org/2000/svg">
+                            <text x="0" y="36" font-family="Arial,sans-serif" font-size="30" font-weight="900"
+                                fill="#00205B">air</text>
+                            <text x="54" y="36" font-family="Arial,sans-serif" font-size="30" font-weight="900"
+                                fill="#00AEEF">bus</text>
+                        </svg>
+                    </div>
+                    <div class="logo-item">
+                        <svg viewBox="0 0 140 48" xmlns="http://www.w3.org/2000/svg">
+                            <text x="0" y="36" font-family="Arial,sans-serif" font-size="30" font-weight="800"
+                                fill="#E8002D">safran</text>
+                        </svg>
+                    </div>
+                    <div class="logo-item">
+                        <svg viewBox="0 0 155 48" xmlns="http://www.w3.org/2000/svg">
+                            <text x="0" y="36" font-family="Arial,sans-serif" font-size="28" font-weight="900"
+                                fill="#EFCA00" stroke="#555" stroke-width="0.6">RENAULT</text>
+                        </svg>
+                    </div>
+                    <div class="logo-item">
+                        <svg viewBox="0 0 150 48" xmlns="http://www.w3.org/2000/svg">
+                            <text x="0" y="36" font-family="Arial,sans-serif" font-size="29" font-weight="700"
+                                fill="#009999">Siemens</text>
+                        </svg>
+                    </div>
+                    <div class="logo-item">
+                        <svg viewBox="0 0 148 48" xmlns="http://www.w3.org/2000/svg">
+                            <text x="0" y="36" font-family="Arial,sans-serif" font-size="28" font-weight="800"
+                                fill="#003189">Michelin</text>
+                        </svg>
+                    </div>
+                    <div class="logo-item">
+                        <svg viewBox="0 0 160 48" xmlns="http://www.w3.org/2000/svg">
+                            <text x="0" y="26" font-family="Arial,sans-serif" font-size="22" font-weight="700"
+                                fill="#3DCD58">Schneider</text>
+                            <text x="1" y="43" font-family="Arial,sans-serif" font-size="13" font-weight="600"
+                                fill="#3DCD58" letter-spacing="0.1em">ELECTRIC</text>
+                        </svg>
+                    </div>
+                    <div class="logo-item">
+                        <svg viewBox="0 0 110 48" xmlns="http://www.w3.org/2000/svg">
+                            <text x="0" y="36" font-family="Arial,sans-serif" font-size="30" font-weight="800"
+                                fill="#005BAC">Valeo</text>
+                        </svg>
+                    </div>
+                    <div class="logo-item">
+                        <svg viewBox="0 0 175 48" xmlns="http://www.w3.org/2000/svg">
+                            <text x="0" y="26" font-family="Arial,sans-serif" font-size="20" font-weight="900"
+                                fill="#CC0001">Total</text>
+                            <text x="68" y="26" font-family="Arial,sans-serif" font-size="20" font-weight="900"
+                                fill="#F7941D">Energies</text>
+                        </svg>
+                    </div>
+                    <div class="logo-item">
+                        <svg viewBox="0 0 130 48" xmlns="http://www.w3.org/2000/svg">
+                            <text x="0" y="36" font-family="Arial,sans-serif" font-size="30" font-weight="800"
                                 fill="#004C97">thales</text>
                         </svg>
                     </div>
                     <div class="logo-item">
-                        <svg viewBox="0 0 100 36" xmlns="http://www.w3.org/2000/svg">
-                            <text x="0" y="27" font-family="Arial,sans-serif" font-size="21" font-weight="800"
+                        <svg viewBox="0 0 130 48" xmlns="http://www.w3.org/2000/svg">
+                            <text x="0" y="36" font-family="Arial,sans-serif" font-size="29" font-weight="800"
                                 fill="#0033A0">Alstom</text>
                         </svg>
                     </div>
                     <div class="logo-item">
-                        <svg viewBox="0 0 95 36" xmlns="http://www.w3.org/2000/svg">
-                            <rect x="0" y="2" width="88" height="26" rx="13" fill="#EA0016" />
-                            <text x="12" y="21" font-family="Arial,sans-serif" font-size="16" font-weight="700"
+                        <svg viewBox="0 0 120 48" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="0" y="4" width="112" height="34" rx="17" fill="#EA0016" />
+                            <text x="16" y="29" font-family="Arial,sans-serif" font-size="20" font-weight="700"
                                 fill="white">BOSCH</text>
                         </svg>
                     </div>
                     <div class="logo-item">
-                        <svg viewBox="0 0 140 36" xmlns="http://www.w3.org/2000/svg">
-                            <text x="0" y="22" font-family="Arial,sans-serif" font-size="16" font-weight="800"
-                                fill="#003F8A">Naval</text>
-                            <text x="64" y="22" font-family="Arial,sans-serif" font-size="16" font-weight="400"
-                                fill="#003F8A">Group</text>
-                        </svg>
-                    </div>
-                    <div class="logo-item">
-                        <svg viewBox="0 0 70 36" xmlns="http://www.w3.org/2000/svg">
-                            <rect x="0" y="3" width="62" height="26" rx="4" fill="#F7A600" />
-                            <text x="8" y="23" font-family="Arial,sans-serif" font-size="17" font-weight="900"
+                        <svg viewBox="0 0 90 48" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="0" y="4" width="80" height="34" rx="5" fill="#F7A600" />
+                            <text x="10" y="29" font-family="Arial,sans-serif" font-size="22" font-weight="900"
                                 fill="#002169">EDF</text>
                         </svg>
                     </div>
                     <div class="logo-item">
-                        <svg viewBox="0 0 110 36" xmlns="http://www.w3.org/2000/svg">
-                            <text x="0" y="27" font-family="Arial,sans-serif" font-size="21" font-weight="700"
-                                fill="#8B0000">Faurecia</text>
-                        </svg>
-                    </div>
-                    <div class="logo-item">
-                        <svg viewBox="0 0 75 36" xmlns="http://www.w3.org/2000/svg">
-                            <rect x="0" y="3" width="68" height="26" rx="4" fill="#FF000F" />
-                            <text x="9" y="23" font-family="Arial,sans-serif" font-size="17" font-weight="900"
+                        <svg viewBox="0 0 95 48" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="0" y="4" width="86" height="34" rx="5" fill="#FF000F" />
+                            <text x="11" y="29" font-family="Arial,sans-serif" font-size="21" font-weight="900"
                                 fill="white">ABB</text>
                         </svg>
                     </div>
                     <div class="logo-item">
-                        <svg viewBox="0 0 90 36" xmlns="http://www.w3.org/2000/svg">
-                            <rect x="0" y="3" width="82" height="26" rx="4" fill="#E2001A" />
-                            <text x="8" y="23" font-family="Arial,sans-serif" font-size="16" font-weight="900"
+                        <svg viewBox="0 0 110 48" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="0" y="4" width="100" height="34" rx="5" fill="#E2001A" />
+                            <text x="10" y="29" font-family="Arial,sans-serif" font-size="20" font-weight="900"
                                 fill="white">SNCF</text>
+                        </svg>
+                    </div>
+                    <div class="logo-item">
+                        <svg viewBox="0 0 165 48" xmlns="http://www.w3.org/2000/svg">
+                            <text x="0" y="30" font-family="Arial,sans-serif" font-size="20" font-weight="800"
+                                fill="#003F8A">Naval</text>
+                            <text x="78" y="30" font-family="Arial,sans-serif" font-size="20" font-weight="400"
+                                fill="#003F8A">Group</text>
+                        </svg>
+                    </div>
+                    <div class="logo-item">
+                        <svg viewBox="0 0 140 48" xmlns="http://www.w3.org/2000/svg">
+                            <text x="0" y="36" font-family="Arial,sans-serif" font-size="28" font-weight="700"
+                                fill="#8B0000">Faurecia</text>
                         </svg>
                     </div>
 
                 </div>
             </div>
-
         </div>
     </div>
-
 
     <!-- BOOKING CTA SECTION -->
     <section class="section-booking-cta" id="booking-cta">
@@ -1660,7 +1687,8 @@
 
     <!-- FOOTER -->
     <footer>
-        <p>© 2025 Notice.AI — Tous droits réservés</p>
+        <p data-fr="© 2025 Notice.AI — Tous droits réservés" data-en="© 2025 Notice.AI — All rights reserved">© 2025
+            Notice.AI — Tous droits réservés</p>
         <p style="color:#ccc;" data-fr="Fait avec ❤ en France" data-en="Made with ❤ in France">Fait avec ❤ en France</p>
     </footer>
 
