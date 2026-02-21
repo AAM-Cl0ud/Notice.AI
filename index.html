@@ -154,13 +154,11 @@
             z-index: 0;
         }
 
-        /* Subtle dark vignette — preserves original video colors */
+        /* Dark overlay — video visible but text pops */
         .hero-overlay {
             position: absolute;
             inset: 0;
-            background:
-                radial-gradient(ellipse 75% 70% at 52% 52%, transparent 20%, rgba(0, 0, 0, 0.4) 100%),
-                linear-gradient(to bottom, rgba(0, 0, 0, 0.12) 0%, transparent 25%, transparent 75%, rgba(0, 0, 0, 0.2) 100%);
+            background: rgba(0, 0, 0, 0.45);
             z-index: 1;
             pointer-events: none;
         }
@@ -185,7 +183,7 @@
             letter-spacing: -0.02em;
             color: var(--white);
             margin-bottom: 0.05em;
-            text-shadow: 0 2px 24px rgba(0, 0, 0, 0.35);
+            text-shadow: 0 2px 30px rgba(0, 0, 0, 0.7), 0 0 10px rgba(0, 0, 0, 0.4);
         }
 
         /* Line 2 — serif italic in parentheses */
@@ -197,7 +195,7 @@
             letter-spacing: -0.01em;
             color: var(--white);
             margin-bottom: 0.02em;
-            text-shadow: 0 2px 24px rgba(0, 0, 0, 0.35);
+            text-shadow: 0 2px 30px rgba(0, 0, 0, 0.7), 0 0 10px rgba(0, 0, 0, 0.4);
         }
 
         /* Line 3 — sans-serif light */
@@ -208,7 +206,7 @@
             letter-spacing: -0.02em;
             color: var(--white);
             margin-bottom: 0.05em;
-            text-shadow: 0 2px 24px rgba(0, 0, 0, 0.35);
+            text-shadow: 0 2px 30px rgba(0, 0, 0, 0.7), 0 0 10px rgba(0, 0, 0, 0.4);
         }
 
         /* Line 4 — serif italic */
@@ -219,33 +217,10 @@
             font-size: clamp(58px, 8.5vw, 108px);
             letter-spacing: -0.01em;
             color: var(--white);
-            text-shadow: 0 2px 24px rgba(0, 0, 0, 0.35);
+            text-shadow: 0 2px 30px rgba(0, 0, 0, 0.7), 0 0 10px rgba(0, 0, 0, 0.4);
         }
 
-        /* Small side annotations */
-        .side-note {
-            position: absolute;
-            font-family: 'DM Sans', sans-serif;
-            font-weight: 400;
-            font-size: clamp(12px, 1.6vw, 16px);
-            color: rgba(255, 255, 255, 0.6);
-            white-space: nowrap;
-            text-shadow: 0 1px 12px rgba(0, 0, 0, 0.3);
-        }
 
-        .side-note-1 {
-            right: -2%;
-            top: 26%;
-            transform: translateX(100%);
-            padding-left: 16px;
-        }
-
-        .side-note-2 {
-            right: 6%;
-            bottom: -2%;
-            transform: translateY(100%);
-            padding-top: 8px;
-        }
 
         /* Stagger entry animations */
         .line-1 {
@@ -264,13 +239,7 @@
             animation: fadeUp 0.7s 0.55s ease both;
         }
 
-        .side-note-1 {
-            animation: fadeIn 0.6s 0.7s ease both;
-        }
 
-        .side-note-2 {
-            animation: fadeIn 0.6s 0.85s ease both;
-        }
 
         /* ── TRANSLATION / LOWER SECTION ──────────────── */
         .section-lower {
@@ -432,9 +401,7 @@
                 padding: 100px 20px 60px;
             }
 
-            .side-note {
-                display: none;
-            }
+
 
             .section-lower {
                 padding: 60px 20px;
@@ -477,15 +444,11 @@
             <span class="line line-1" data-fr="Ne déchiffrez" data-en="Stop decoding">Ne déchiffrez</span>
             <span class="line line-2" data-fr="plus." data-en="manuals.">plus.</span>
 
-            <!-- Side annotation 1 -->
-            <span class="side-note side-note-1" data-fr="Fini les hiéroglyphes" data-en="No more hieroglyphs">Fini les
-                hiéroglyphes</span>
+
 
             <span class="line line-3" data-fr="Visualisez." data-en="Visualize.">Visualisez.</span>
 
-            <!-- Side annotation 2 -->
-            <span class="side-note side-note-2" data-fr="Vidéo 3D + Chatbot IA" data-en="3D Video + AI Chatbot">Vidéo 3D
-                + Chatbot IA</span>
+
         </div>
     </section>
 
