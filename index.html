@@ -237,66 +237,31 @@
             animation: fadeUp 0.7s 0.55s ease both;
         }
 
-        /* ── TRANSLATION / LOWER SECTION ──────────────── */
-        .section-lower {
-            background: var(--white);
-            border-top: 1px solid var(--gray-200);
-            padding: 80px 48px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 48px;
-        }
-
-        .section-lower h2 {
-            font-family: 'DM Sans', sans-serif;
-            font-weight: 300;
-            font-size: clamp(28px, 4vw, 52px);
-            letter-spacing: -0.02em;
+        /* ── SECTION ATOMS ─────────────────────────────── */
+        .section-eyebrow {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--indigo);
             text-align: center;
         }
 
-        .section-lower h2 em {
+        .section-heading {
+            font-family: 'DM Sans', sans-serif;
+            font-weight: 300;
+            font-size: clamp(30px, 4.5vw, 52px);
+            letter-spacing: -0.02em;
+            text-align: center;
+            line-height: 1.1;
+            max-width: 680px;
+        }
+
+        .section-heading em {
             font-family: 'Cormorant Garamond', serif;
             font-style: italic;
             font-weight: 500;
             font-size: 1.06em;
-        }
-
-        .translation-cards {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 24px;
-            max-width: 860px;
-            width: 100%;
-        }
-
-        .translation-card {
-            background: var(--white);
-            border: 1px solid var(--gray-200);
-            border-radius: 20px;
-            padding: 36px 32px;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .translation-card .flag {
-            font-size: 34px;
-            line-height: 1;
-        }
-
-        .translation-card h3 {
-            font-family: 'DM Sans', sans-serif;
-            font-weight: 400;
-            font-size: 19px;
-        }
-
-        .translation-card p {
-            font-size: 14px;
-            font-weight: 300;
-            color: var(--gray-500);
-            line-height: 1.65;
         }
 
         .tag-row {
@@ -316,6 +281,139 @@
             border: 1px solid var(--gray-200);
             color: var(--gray-500);
         }
+
+        /* ── SOLUTION SECTION ───────────────────────────── */
+        .section-solution {
+            background: var(--white);
+            border-top: 1px solid var(--gray-200);
+            padding: 96px 48px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 56px;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            max-width: 1000px;
+            width: 100%;
+        }
+
+        .feature-card {
+            background: var(--white);
+            border: 1px solid var(--gray-200);
+            border-radius: 20px;
+            padding: 32px 28px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+        }
+
+        .feature-card:hover {
+            border-color: #c7c0fa;
+            box-shadow: 0 8px 32px rgba(79, 70, 229, 0.07);
+            transform: translateY(-3px);
+        }
+
+        .feature-icon {
+            font-size: 30px;
+            line-height: 1;
+        }
+
+        .feature-card h3 {
+            font-family: 'DM Sans', sans-serif;
+            font-weight: 400;
+            font-size: 17px;
+            letter-spacing: -0.01em;
+        }
+
+        .feature-card p {
+            font-size: 13px;
+            font-weight: 300;
+            color: var(--gray-500);
+            line-height: 1.7;
+        }
+
+        .feature-card .tag-row {
+            margin-top: auto;
+        }
+
+        /* ── HOW IT WORKS SECTION ───────────────────────── */
+        .section-how {
+            background: #fafafa;
+            border-top: 1px solid var(--gray-200);
+            padding: 96px 48px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 64px;
+        }
+
+        .steps-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0;
+            max-width: 1000px;
+            width: 100%;
+            position: relative;
+        }
+
+        .steps-grid::before {
+            content: '';
+            position: absolute;
+            top: 28px;
+            left: calc(12.5% + 28px);
+            right: calc(12.5% + 28px);
+            height: 1px;
+            background: var(--gray-200);
+            z-index: 0;
+        }
+
+        .step-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+            text-align: center;
+            padding: 0 16px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .step-number {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: #fff;
+            border: 1px solid var(--gray-200);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-size: 22px;
+            font-weight: 500;
+            color: var(--indigo);
+            flex-shrink: 0;
+        }
+
+        .step-item h3 {
+            font-family: 'DM Sans', sans-serif;
+            font-weight: 400;
+            font-size: 15px;
+            letter-spacing: -0.01em;
+        }
+
+        .step-item p {
+            font-size: 12px;
+            font-weight: 300;
+            color: var(--gray-500);
+            line-height: 1.65;
+        }
+
 
         /* ── TICKER ────────────────────────────────────── */
         .ticker-wrap {
@@ -971,10 +1069,9 @@
     <nav>
         <a class="nav-logo" href="#" data-fr="Notice.AI" data-en="Notice.AI">Notice.AI</a>
         <ul class="nav-links">
-            <li><a href="#" data-fr="Solutions" data-en="Solutions">Solutions</a></li>
-            <li><a href="#" data-fr="Comment ça marche" data-en="How it works">Comment ça marche</a></li>
-            <li><a href="#translation" data-fr="Langues" data-en="Languages">Langues</a></li>
-            <li><a href="#booking-cta" data-fr="Contact" data-en="Contact">Contact</a></li>
+            <li><a href="#solution">Solution</a></li>
+            <li><a href="#how-it-works">Comment ça marche</a></li>
+            <li><a href="#booking-cta">Contact</a></li>
         </ul>
         <div class="nav-right">
             <div class="lang-toggle" role="group" aria-label="Changer la langue">
@@ -999,39 +1096,83 @@
         </div>
     </section>
 
-    <!-- TRANSLATION SECTION -->
-    <section class="section-lower" id="translation">
-        <h2>Disponible en <em>Français</em> &amp; <em>Anglais</em></h2>
-
-        <div class="translation-cards">
-            <div class="translation-card">
-                <div class="flag">🇫🇷</div>
-                <h3 data-fr="Version Française" data-en="French Version">Version Française</h3>
-                <p data-fr="L'intégralité de la plateforme — vidéos, chatbot et interface — est disponible en français. Parfait pour les équipes francophones."
-                    data-en="The entire platform — videos, chatbot, and interface — is available in French. Perfect for French-speaking teams.">
-                    L'intégralité de la plateforme — vidéos, chatbot et interface — est disponible en français. Parfait
-                    pour les équipes francophones.
-                </p>
-                <div class="tag-row">
-                    <span class="tag">Interface FR</span>
-                    <span class="tag">Vidéos FR</span>
-                    <span class="tag" data-fr="Chatbot FR" data-en="FR Chatbot">Chatbot FR</span>
-                </div>
+    <!-- SOLUTION SECTION -->
+    <section class="section-solution" id="solution">
+        <p class="section-eyebrow">La Solution</p>
+        <h2 class="section-heading">Transformez vos manuels en <em>expériences visuelles</em></h2>
+        <div class="feature-grid">
+            <div class="feature-card">
+                <div class="feature-icon">📄</div>
+                <h3>Import instantané</h3>
+                <p>Importez n'importe quel manuel PDF ou document technique. Notre IA analyse le contenu en quelques
+                    secondes.</p>
+                <div class="tag-row"><span class="tag">PDF</span><span class="tag">Word</span><span
+                        class="tag">Images</span></div>
             </div>
+            <div class="feature-card">
+                <div class="feature-icon">🎬</div>
+                <h3>Vidéos 3D générées par IA</h3>
+                <p>Notice.AI convertit automatiquement vos procédures en tutoriels vidéo 3D de qualité studio, sans
+                    aucune compétence technique.</p>
+                <div class="tag-row"><span class="tag">Qualité Studio</span><span class="tag">3D</span><span
+                        class="tag">IA</span></div>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🤖</div>
+                <h3>Chatbot Expert intégré</h3>
+                <p>Un assistant IA formé sur vos documents répond aux questions de vos techniciens en temps réel,
+                    24h/24.</p>
+                <div class="tag-row"><span class="tag">24/7</span><span class="tag">Multilingue</span></div>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📊</div>
+                <h3>Tableau de bord analytique</h3>
+                <p>Suivez en temps réel quelles procédures sont consultées, identifiez les points de friction et
+                    optimisez la formation.</p>
+                <div class="tag-row"><span class="tag">Analytics</span><span class="tag">Temps réel</span></div>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🔒</div>
+                <h3>Sécurité entreprise</h3>
+                <p>Vos données restent privées. Conformité RGPD, chiffrement bout-en-bout, hébergement en France.</p>
+                <div class="tag-row"><span class="tag">RGPD</span><span class="tag">Chiffré</span><span class="tag">🇫🇷
+                        France</span></div>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">⚡</div>
+                <h3>Déploiement ultra-rapide</h3>
+                <p>Mise en production en moins de 48h. Aucune infrastructure à gérer. Intégration dans vos outils
+                    existants.</p>
+                <div class="tag-row"><span class="tag">ERP</span><span class="tag">LMS</span><span
+                        class="tag">API</span></div>
+            </div>
+        </div>
+    </section>
 
-            <div class="translation-card">
-                <div class="flag">🇬🇧</div>
-                <h3 data-fr="Version Anglaise" data-en="English Version">Version Anglaise</h3>
-                <p data-fr="Basculez en un clic vers la version anglaise. Idéal pour les équipes internationales ou les contenus multilingues."
-                    data-en="Switch to the English version in one click. Ideal for international teams or multilingual content.">
-                    Basculez en un clic vers la version anglaise. Idéal pour les équipes internationales ou les contenus
-                    multilingues.
-                </p>
-                <div class="tag-row">
-                    <span class="tag">EN Interface</span>
-                    <span class="tag">EN Videos</span>
-                    <span class="tag">EN Chatbot</span>
-                </div>
+    <!-- HOW IT WORKS SECTION -->
+    <section class="section-how" id="how-it-works">
+        <p class="section-eyebrow">Comment ça marche</p>
+        <h2 class="section-heading">De votre notice à la vidéo en <em>4 étapes</em></h2>
+        <div class="steps-grid">
+            <div class="step-item">
+                <div class="step-number">1</div>
+                <h3>Importez</h3>
+                <p>Déposez votre manuel PDF, notice technique ou procédure interne sur la plateforme.</p>
+            </div>
+            <div class="step-item">
+                <div class="step-number">2</div>
+                <h3>L'IA analyse</h3>
+                <p>Notice.AI découpe, comprend et structure automatiquement chaque étape de votre procédure.</p>
+            </div>
+            <div class="step-item">
+                <div class="step-number">3</div>
+                <h3>Génération vidéo</h3>
+                <p>Un tutoriel vidéo 3D est généré automatiquement — narration, animations et sous-titres inclus.</p>
+            </div>
+            <div class="step-item">
+                <div class="step-number">4</div>
+                <h3>Déployez</h3>
+                <p>Partagez avec vos équipes via lien, QR code ou intégration directe dans votre LMS ou intranet.</p>
             </div>
         </div>
     </section>
