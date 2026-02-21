@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>J.E.T. — Vos manuels prennent vie</title>
+    <title>Notice.AI — Vos manuels prennent vie</title>
     <meta name="description"
         content="J.E.T. transforme vos manuels papier ennuyeux en tutoriels vidéo 3D générés par IA. Hollywood-level. En quelques minutes." />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -59,7 +59,7 @@
             font-weight: 400;
             font-size: 15px;
             letter-spacing: 0.04em;
-            color: rgba(255, 255, 255, 0.7);
+            color: rgba(0, 0, 0, 0.75);
             text-decoration: none;
         }
 
@@ -71,14 +71,14 @@
 
         .nav-links a {
             text-decoration: none;
-            color: rgba(255, 255, 255, 0.6);
+            color: rgba(0, 0, 0, 0.55);
             font-size: 14px;
             font-weight: 400;
             transition: color 0.2s;
         }
 
         .nav-links a:hover {
-            color: var(--white);
+            color: var(--black);
         }
 
         .nav-right {
@@ -92,7 +92,7 @@
             display: flex;
             align-items: center;
             gap: 0;
-            border: 1px solid rgba(255, 255, 255, 0.25);
+            border: 1px solid rgba(0, 0, 0, 0.18);
             border-radius: 100px;
             overflow: hidden;
         }
@@ -105,13 +105,13 @@
             font-family: 'DM Sans', sans-serif;
             font-size: 12px;
             font-weight: 500;
-            color: rgba(255, 255, 255, 0.5);
+            color: rgba(0, 0, 0, 0.45);
             transition: background 0.2s, color 0.2s;
         }
 
         .lang-toggle button.active {
-            background: rgba(255, 255, 255, 0.9);
-            color: var(--black);
+            background: var(--black);
+            color: var(--white);
         }
 
         .btn-cta {
@@ -157,7 +157,7 @@
         .hero-overlay {
             position: absolute;
             inset: 0;
-            background: rgba(0, 0, 0, 0.45);
+            background: rgba(255, 255, 255, 0.72);
             z-index: 1;
             pointer-events: none;
         }
@@ -179,9 +179,9 @@
             font-weight: 300;
             font-size: clamp(54px, 8vw, 100px);
             letter-spacing: -0.02em;
-            color: var(--white);
+            color: var(--black);
             margin-bottom: 0.05em;
-            text-shadow: 0 2px 30px rgba(0, 0, 0, 0.7), 0 0 10px rgba(0, 0, 0, 0.4);
+            text-shadow: none;
         }
 
         .line-2 {
@@ -190,9 +190,9 @@
             font-weight: 500;
             font-size: clamp(58px, 8.5vw, 108px);
             letter-spacing: -0.01em;
-            color: var(--white);
+            color: var(--black);
             margin-bottom: 0.02em;
-            text-shadow: 0 2px 30px rgba(0, 0, 0, 0.7), 0 0 10px rgba(0, 0, 0, 0.4);
+            text-shadow: none;
         }
 
         .line-3 {
@@ -200,9 +200,9 @@
             font-weight: 300;
             font-size: clamp(54px, 8vw, 100px);
             letter-spacing: -0.02em;
-            color: var(--white);
+            color: var(--black);
             margin-bottom: 0.05em;
-            text-shadow: 0 2px 30px rgba(0, 0, 0, 0.7), 0 0 10px rgba(0, 0, 0, 0.4);
+            text-shadow: none;
         }
 
         .line-4 {
@@ -211,14 +211,25 @@
             font-weight: 500;
             font-size: clamp(58px, 8.5vw, 108px);
             letter-spacing: -0.01em;
-            color: var(--white);
-            text-shadow: 0 2px 30px rgba(0, 0, 0, 0.7), 0 0 10px rgba(0, 0, 0, 0.4);
+            color: var(--black);
+            text-shadow: none;
         }
 
-        .line-1 { animation: fadeUp 0.7s 0.1s ease both; }
-        .line-2 { animation: fadeUp 0.7s 0.25s ease both; }
-        .line-3 { animation: fadeUp 0.7s 0.4s ease both; }
-        .line-4 { animation: fadeUp 0.7s 0.55s ease both; }
+        .line-1 {
+            animation: fadeUp 0.7s 0.1s ease both;
+        }
+
+        .line-2 {
+            animation: fadeUp 0.7s 0.25s ease both;
+        }
+
+        .line-3 {
+            animation: fadeUp 0.7s 0.4s ease both;
+        }
+
+        .line-4 {
+            animation: fadeUp 0.7s 0.55s ease both;
+        }
 
         /* ── TRANSLATION / LOWER SECTION ──────────────── */
         .section-lower {
@@ -363,7 +374,7 @@
         .section-booking-cta p {
             font-size: 15px;
             font-weight: 300;
-            color: rgba(255,255,255,0.55);
+            color: rgba(255, 255, 255, 0.55);
             max-width: 420px;
             line-height: 1.7;
         }
@@ -384,14 +395,14 @@
 
         .btn-book-large:hover {
             transform: translateY(-2px);
-            box-shadow: 0 12px 40px rgba(255,255,255,0.15);
+            box-shadow: 0 12px 40px rgba(255, 255, 255, 0.15);
         }
 
         /* ── BOOKING MODAL ──────────────────────────────── */
         .modal-backdrop {
             position: fixed;
             inset: 0;
-            background: rgba(0,0,0,0.6);
+            background: rgba(0, 0, 0, 0.6);
             backdrop-filter: blur(8px);
             -webkit-backdrop-filter: blur(8px);
             z-index: 9999;
@@ -415,16 +426,29 @@
             overflow-y: auto;
             padding: 48px 44px 44px;
             position: relative;
-            animation: slideUp 0.38s cubic-bezier(.22,.68,0,1.15) both;
+            animation: slideUp 0.38s cubic-bezier(.22, .68, 0, 1.15) both;
             scrollbar-width: thin;
         }
 
-        .modal-box::-webkit-scrollbar { width: 4px; }
-        .modal-box::-webkit-scrollbar-thumb { background: #e0e0e0; border-radius: 99px; }
+        .modal-box::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .modal-box::-webkit-scrollbar-thumb {
+            background: #e0e0e0;
+            border-radius: 99px;
+        }
 
         @keyframes slideUp {
-            from { opacity:0; transform: translateY(36px) scale(0.96); }
-            to   { opacity:1; transform: translateY(0) scale(1); }
+            from {
+                opacity: 0;
+                transform: translateY(36px) scale(0.96);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
         }
 
         .modal-close {
@@ -445,7 +469,11 @@
             align-items: center;
             justify-content: center;
         }
-        .modal-close:hover { background: #e0e0e0; color: #111; }
+
+        .modal-close:hover {
+            background: #e0e0e0;
+            color: #111;
+        }
 
         /* Progress dots */
         .modal-progress {
@@ -454,6 +482,7 @@
             margin-bottom: 28px;
             align-items: center;
         }
+
         .modal-progress span {
             width: 6px;
             height: 6px;
@@ -461,12 +490,26 @@
             background: #e0e0e0;
             transition: background 0.25s, width 0.3s;
         }
-        .modal-progress span.done  { background: var(--indigo); }
-        .modal-progress span.active { background: var(--indigo); width: 22px; border-radius: 100px; }
+
+        .modal-progress span.done {
+            background: var(--indigo);
+        }
+
+        .modal-progress span.active {
+            background: var(--indigo);
+            width: 22px;
+            border-radius: 100px;
+        }
 
         /* Step visibility */
-        .modal-step { display: none; }
-        .modal-step.active { display: block; animation: fadeIn 0.28s ease both; }
+        .modal-step {
+            display: none;
+        }
+
+        .modal-step.active {
+            display: block;
+            animation: fadeIn 0.28s ease both;
+        }
 
         /* Typography */
         .modal-eyebrow {
@@ -486,6 +529,7 @@
             line-height: 1.15;
             margin-bottom: 8px;
         }
+
         .modal-title em {
             font-family: 'Cormorant Garamond', serif;
             font-style: italic;
@@ -502,7 +546,9 @@
         }
 
         /* Form elements */
-        .form-group { margin-bottom: 16px; }
+        .form-group {
+            margin-bottom: 16px;
+        }
 
         .form-group label {
             display: block;
@@ -529,17 +575,20 @@
             transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
             outline: none;
         }
+
         .form-group input:focus,
         .form-group select:focus,
         .form-group textarea:focus {
             border-color: var(--indigo);
-            box-shadow: 0 0 0 3px rgba(79,70,229,0.1);
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
             background: #fff;
         }
+
         .form-group textarea {
             resize: vertical;
             min-height: 88px;
         }
+
         .form-group select {
             -webkit-appearance: none;
             background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23999' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
@@ -556,8 +605,16 @@
         }
 
         /* Pill radio buttons */
-        .pill-group { display: flex; flex-wrap: wrap; gap: 8px; }
-        .pill-group input[type="radio"] { display: none; }
+        .pill-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .pill-group input[type="radio"] {
+            display: none;
+        }
+
         .pill-group label {
             display: inline-flex;
             align-items: center;
@@ -573,7 +630,8 @@
             text-transform: none;
             letter-spacing: 0;
         }
-        .pill-group input[type="radio"]:checked + label {
+
+        .pill-group input[type="radio"]:checked+label {
             background: var(--indigo);
             border-color: var(--indigo);
             color: #fff;
@@ -586,6 +644,7 @@
             justify-content: space-between;
             margin-bottom: 10px;
         }
+
         .cal-nav button {
             background: none;
             border: 1px solid #e8e8e8;
@@ -600,14 +659,25 @@
             align-items: center;
             justify-content: center;
         }
-        .cal-nav button:hover { background: var(--indigo); color: #fff; border-color: var(--indigo); }
-        .cal-month { font-size: 14px; font-weight: 500; color: #111; }
+
+        .cal-nav button:hover {
+            background: var(--indigo);
+            color: #fff;
+            border-color: var(--indigo);
+        }
+
+        .cal-month {
+            font-size: 14px;
+            font-weight: 500;
+            color: #111;
+        }
 
         .calendar-grid {
             display: grid;
             grid-template-columns: repeat(7, 1fr);
             gap: 3px;
         }
+
         .cal-header {
             font-size: 10px;
             font-weight: 600;
@@ -617,6 +687,7 @@
             text-align: center;
             padding: 6px 0;
         }
+
         .cal-day {
             aspect-ratio: 1;
             display: flex;
@@ -630,11 +701,30 @@
             border: 1px solid transparent;
             font-weight: 300;
         }
-        .cal-day:hover:not(.disabled):not(.empty) { background: #eeedfd; }
-        .cal-day.selected { background: var(--indigo); color: #fff; font-weight: 500; }
-        .cal-day.today { border-color: var(--indigo); font-weight: 500; }
-        .cal-day.disabled { color: #ddd; cursor: default; }
-        .cal-day.empty { cursor: default; }
+
+        .cal-day:hover:not(.disabled):not(.empty) {
+            background: #eeedfd;
+        }
+
+        .cal-day.selected {
+            background: var(--indigo);
+            color: #fff;
+            font-weight: 500;
+        }
+
+        .cal-day.today {
+            border-color: var(--indigo);
+            font-weight: 500;
+        }
+
+        .cal-day.disabled {
+            color: #ddd;
+            cursor: default;
+        }
+
+        .cal-day.empty {
+            cursor: default;
+        }
 
         /* Time slots */
         .time-slots {
@@ -643,6 +733,7 @@
             gap: 7px;
             margin-top: 8px;
         }
+
         .time-slot {
             padding: 10px 6px;
             border: 1px solid #e8e8e8;
@@ -654,8 +745,19 @@
             transition: all 0.15s;
             font-weight: 300;
         }
-        .time-slot:hover { border-color: var(--indigo); color: var(--indigo); background: #eeedfd; }
-        .time-slot.selected { background: var(--indigo); border-color: var(--indigo); color: white; font-weight: 500; }
+
+        .time-slot:hover {
+            border-color: var(--indigo);
+            color: var(--indigo);
+            background: #eeedfd;
+        }
+
+        .time-slot.selected {
+            background: var(--indigo);
+            border-color: var(--indigo);
+            color: white;
+            font-weight: 500;
+        }
 
         /* Action buttons */
         .modal-actions {
@@ -663,6 +765,7 @@
             gap: 10px;
             margin-top: 24px;
         }
+
         .btn-back {
             flex: 0 0 auto;
             background: none;
@@ -676,7 +779,12 @@
             cursor: pointer;
             transition: all 0.2s;
         }
-        .btn-back:hover { border-color: #999; color: #111; }
+
+        .btn-back:hover {
+            border-color: #999;
+            color: #111;
+        }
+
         .btn-next {
             flex: 1;
             background: var(--indigo);
@@ -690,8 +798,17 @@
             cursor: pointer;
             transition: transform 0.2s, opacity 0.2s;
         }
-        .btn-next:hover { transform: translateY(-1px); opacity: 0.88; }
-        .btn-next:disabled { opacity: 0.35; cursor: not-allowed; transform: none; }
+
+        .btn-next:hover {
+            transform: translateY(-1px);
+            opacity: 0.88;
+        }
+
+        .btn-next:disabled {
+            opacity: 0.35;
+            cursor: not-allowed;
+            transform: none;
+        }
 
         /* Success */
         .success-icon {
@@ -714,6 +831,7 @@
             align-items: center;
             justify-content: space-between;
         }
+
         footer p {
             font-size: 12px;
             color: #aaa;
@@ -722,30 +840,80 @@
 
         /* ── ANIMATIONS ──────────────────────────────── */
         @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(28px); }
-            to   { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(28px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
+
         @keyframes fadeIn {
-            from { opacity: 0; }
-            to   { opacity: 1; }
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
         }
+
         @keyframes ticker {
-            from { transform: translateX(0); }
-            to   { transform: translateX(-50%); }
+            from {
+                transform: translateX(0);
+            }
+
+            to {
+                transform: translateX(-50%);
+            }
         }
 
         /* ── RESPONSIVE ──────────────────────────────── */
         @media (max-width: 768px) {
-            nav { padding: 14px 20px; }
-            .nav-links { display: none; }
-            .hero { padding: 100px 20px 60px; }
-            .section-lower { padding: 60px 20px; }
-            .translation-cards { grid-template-columns: 1fr; }
-            .modal-box { padding: 32px 20px 28px; }
-            .form-row { grid-template-columns: 1fr; }
-            .time-slots { grid-template-columns: repeat(3, 1fr); }
-            .section-booking-cta { padding: 80px 24px; }
-            footer { flex-direction: column; gap: 8px; text-align: center; }
+            nav {
+                padding: 14px 20px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .hero {
+                padding: 100px 20px 60px;
+            }
+
+            .section-lower {
+                padding: 60px 20px;
+            }
+
+            .translation-cards {
+                grid-template-columns: 1fr;
+            }
+
+            .modal-box {
+                padding: 32px 20px 28px;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .time-slots {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .section-booking-cta {
+                padding: 80px 24px;
+            }
+
+            footer {
+                flex-direction: column;
+                gap: 8px;
+                text-align: center;
+            }
         }
     </style>
 </head>
@@ -754,7 +922,7 @@
 
     <!-- NAV -->
     <nav>
-        <a class="nav-logo" href="#" data-fr="J.E.T." data-en="J.E.T.">J.E.T.</a>
+        <a class="nav-logo" href="#" data-fr="Notice.AI" data-en="Notice.AI">Notice.AI</a>
         <ul class="nav-links">
             <li><a href="#" data-fr="Solutions" data-en="Solutions">Solutions</a></li>
             <li><a href="#" data-fr="Comment ça marche" data-en="How it works">Comment ça marche</a></li>
@@ -766,7 +934,8 @@
                 <button id="btn-fr" class="active" onclick="setLang('fr')">FR</button>
                 <button id="btn-en" onclick="setLang('en')">EN</button>
             </div>
-            <button class="btn-cta" id="btn-nav-rdv" onclick="openBooking()" data-fr="Prendre RDV" data-en="Book a Call">Prendre RDV</button>
+            <button class="btn-cta" id="btn-nav-rdv" onclick="openBooking()" data-fr="Prendre RDV"
+                data-en="Book a Call">Prendre RDV</button>
         </div>
     </nav>
 
@@ -825,19 +994,23 @@
         <div class="ticker-track">
             <span class="ticker-item" data-fr="Tutoriels 3D" data-en="3D Tutorials">Tutoriels 3D</span>
             <span class="ticker-item" data-fr="Chatbot Expert IA" data-en="Expert AI Chatbot">Chatbot Expert IA</span>
-            <span class="ticker-item" data-fr="PDF → Vidéo en minutes" data-en="PDF → Video in Minutes">PDF → Vidéo en minutes</span>
+            <span class="ticker-item" data-fr="PDF → Vidéo en minutes" data-en="PDF → Video in Minutes">PDF → Vidéo en
+                minutes</span>
             <span class="ticker-item" data-fr="Style Hollywood" data-en="Hollywood-Level">Style Hollywood</span>
             <span class="ticker-item" data-fr="Support IA 24/7" data-en="24/7 AI Support">Support IA 24/7</span>
-            <span class="ticker-item" data-fr="Aucune formation requise" data-en="Zero Training Required">Aucune formation requise</span>
+            <span class="ticker-item" data-fr="Aucune formation requise" data-en="Zero Training Required">Aucune
+                formation requise</span>
             <span class="ticker-item" data-fr="Multilingue" data-en="Multi-Language">Multilingue</span>
             <span class="ticker-item" data-fr="Entreprise" data-en="Enterprise Ready">Entreprise</span>
             <!-- duplicate for seamless loop -->
             <span class="ticker-item" data-fr="Tutoriels 3D" data-en="3D Tutorials">Tutoriels 3D</span>
             <span class="ticker-item" data-fr="Chatbot Expert IA" data-en="Expert AI Chatbot">Chatbot Expert IA</span>
-            <span class="ticker-item" data-fr="PDF → Vidéo en minutes" data-en="PDF → Video in Minutes">PDF → Vidéo en minutes</span>
+            <span class="ticker-item" data-fr="PDF → Vidéo en minutes" data-en="PDF → Video in Minutes">PDF → Vidéo en
+                minutes</span>
             <span class="ticker-item" data-fr="Style Hollywood" data-en="Hollywood-Level">Style Hollywood</span>
             <span class="ticker-item" data-fr="Support IA 24/7" data-en="24/7 AI Support">Support IA 24/7</span>
-            <span class="ticker-item" data-fr="Aucune formation requise" data-en="Zero Training Required">Aucune formation requise</span>
+            <span class="ticker-item" data-fr="Aucune formation requise" data-en="Zero Training Required">Aucune
+                formation requise</span>
             <span class="ticker-item" data-fr="Multilingue" data-en="Multi-Language">Multilingue</span>
             <span class="ticker-item" data-fr="Entreprise" data-en="Enterprise Ready">Entreprise</span>
         </div>
@@ -845,17 +1018,19 @@
 
     <!-- BOOKING CTA SECTION -->
     <section class="section-booking-cta" id="booking-cta">
-        <h2 data-fr="Prenez rendez-vous avec <em>notre équipe</em>" data-en="Schedule a call with <em>our team</em>">Prenez rendez-vous avec <em>notre équipe</em></h2>
+        <h2 data-fr="Prenez rendez-vous avec <em>notre équipe</em>" data-en="Schedule a call with <em>our team</em>">
+            Prenez rendez-vous avec <em>notre équipe</em></h2>
         <p data-fr="En 15 minutes, nous analysons votre cas et vous proposons une démo personnalisée. Sans engagement."
-           data-en="In 15 minutes, we analyze your case and build a personalized demo. No commitment required.">
+            data-en="In 15 minutes, we analyze your case and build a personalized demo. No commitment required.">
             En 15 minutes, nous analysons votre cas et vous proposons une démo personnalisée. Sans engagement.
         </p>
-        <button class="btn-book-large" onclick="openBooking()" data-fr="📅 Choisir un créneau" data-en="📅 Pick a time slot">📅 Choisir un créneau</button>
+        <button class="btn-book-large" onclick="openBooking()" data-fr="📅 Choisir un créneau"
+            data-en="📅 Pick a time slot">📅 Choisir un créneau</button>
     </section>
 
     <!-- FOOTER -->
     <footer>
-        <p>© 2025 J.E.T. — Tous droits réservés</p>
+        <p>© 2025 Notice.AI — Tous droits réservés</p>
         <p style="color:#ccc;" data-fr="Fait avec ❤ en France" data-en="Made with ❤ in France">Fait avec ❤ en France</p>
     </footer>
 
@@ -874,8 +1049,10 @@
             <!-- ─── STEP 1 — Your Info ─── -->
             <div class="modal-step active" id="step-1">
                 <p class="modal-eyebrow" data-fr="Étape 1 / 3" data-en="Step 1 / 3">Étape 1 / 3</p>
-                <h2 class="modal-title" id="modal-heading" data-fr="Parlez-nous de <em>vous</em>" data-en="Tell us about <em>you</em>">Parlez-nous de <em>vous</em></h2>
-                <p class="modal-subtitle" data-fr="Quelques infos pour préparer notre échange." data-en="A few details to prepare our conversation.">Quelques infos pour préparer notre échange.</p>
+                <h2 class="modal-title" id="modal-heading" data-fr="Parlez-nous de <em>vous</em>"
+                    data-en="Tell us about <em>you</em>">Parlez-nous de <em>vous</em></h2>
+                <p class="modal-subtitle" data-fr="Quelques infos pour préparer notre échange."
+                    data-en="A few details to prepare our conversation.">Quelques infos pour préparer notre échange.</p>
 
                 <div class="form-row">
                     <div class="form-group">
@@ -901,45 +1078,59 @@
                 <div class="form-group">
                     <label for="sector" data-fr="Secteur d'activité" data-en="Industry">Secteur d'activité</label>
                     <select id="sector">
-                        <option value="" disabled selected data-fr="Sélectionner..." data-en="Select...">Sélectionner...</option>
-                        <option value="Industrie" data-fr="Industrie / Manufacturing" data-en="Industry / Manufacturing">Industrie / Manufacturing</option>
+                        <option value="" disabled selected data-fr="Sélectionner..." data-en="Select...">Sélectionner...
+                        </option>
+                        <option value="Industrie" data-fr="Industrie / Manufacturing"
+                            data-en="Industry / Manufacturing">Industrie / Manufacturing</option>
                         <option value="Santé" data-fr="Santé" data-en="Healthcare">Santé</option>
-                        <option value="BTP" data-fr="BTP / Construction" data-en="Construction / BTP">BTP / Construction</option>
-                        <option value="Logistique" data-fr="Logistique / Transport" data-en="Logistics / Transport">Logistique / Transport</option>
-                        <option value="Énergie" data-fr="Énergie / Utilities" data-en="Energy / Utilities">Énergie / Utilities</option>
+                        <option value="BTP" data-fr="BTP / Construction" data-en="Construction / BTP">BTP / Construction
+                        </option>
+                        <option value="Logistique" data-fr="Logistique / Transport" data-en="Logistics / Transport">
+                            Logistique / Transport</option>
+                        <option value="Énergie" data-fr="Énergie / Utilities" data-en="Energy / Utilities">Énergie /
+                            Utilities</option>
                         <option value="Autre" data-fr="Autre" data-en="Other">Autre</option>
                     </select>
                 </div>
 
                 <div class="modal-actions">
-                    <button class="btn-next" onclick="goStep(2)" data-fr="Continuer →" data-en="Continue →">Continuer →</button>
+                    <button class="btn-next" onclick="goStep(2)" data-fr="Continuer →" data-en="Continue →">Continuer
+                        →</button>
                 </div>
             </div>
 
             <!-- ─── STEP 2 — Your Needs ─── -->
             <div class="modal-step" id="step-2">
                 <p class="modal-eyebrow" data-fr="Étape 2 / 3" data-en="Step 2 / 3">Étape 2 / 3</p>
-                <h2 class="modal-title" data-fr="Votre <em>besoin</em>" data-en="Your <em>need</em>">Votre <em>besoin</em></h2>
-                <p class="modal-subtitle" data-fr="Aidez-nous à comprendre votre situation." data-en="Help us understand your situation.">Aidez-nous à comprendre votre situation.</p>
+                <h2 class="modal-title" data-fr="Votre <em>besoin</em>" data-en="Your <em>need</em>">Votre
+                    <em>besoin</em>
+                </h2>
+                <p class="modal-subtitle" data-fr="Aidez-nous à comprendre votre situation."
+                    data-en="Help us understand your situation.">Aidez-nous à comprendre votre situation.</p>
 
                 <div class="form-group">
                     <label data-fr="Type de projet" data-en="Project type">Type de projet</label>
                     <div class="pill-group">
                         <input type="radio" name="project-type" id="pt-new" value="Nouveau projet">
-                        <label for="pt-new" data-fr="🚀 Nouveau projet" data-en="🚀 New project">🚀 Nouveau projet</label>
+                        <label for="pt-new" data-fr="🚀 Nouveau projet" data-en="🚀 New project">🚀 Nouveau
+                            projet</label>
                         <input type="radio" name="project-type" id="pt-existing" value="Projet existant">
-                        <label for="pt-existing" data-fr="🔄 Projet existant" data-en="🔄 Existing project">🔄 Projet existant</label>
+                        <label for="pt-existing" data-fr="🔄 Projet existant" data-en="🔄 Existing project">🔄 Projet
+                            existant</label>
                         <input type="radio" name="project-type" id="pt-demo" value="Démonstration">
-                        <label for="pt-demo" data-fr="🎬 Démonstration" data-en="🎬 Demo request">🎬 Démonstration</label>
+                        <label for="pt-demo" data-fr="🎬 Démonstration" data-en="🎬 Demo request">🎬
+                            Démonstration</label>
                         <input type="radio" name="project-type" id="pt-pricing" value="Tarifs">
-                        <label for="pt-pricing" data-fr="💬 Question tarifaire" data-en="💬 Pricing question">💬 Question tarifaire</label>
+                        <label for="pt-pricing" data-fr="💬 Question tarifaire" data-en="💬 Pricing question">💬
+                            Question tarifaire</label>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label for="team-size" data-fr="Taille de l'équipe" data-en="Team size">Taille de l'équipe</label>
                     <select id="team-size">
-                        <option value="" disabled selected data-fr="Sélectionner..." data-en="Select...">Sélectionner...</option>
+                        <option value="" disabled selected data-fr="Sélectionner..." data-en="Select...">Sélectionner...
+                        </option>
                         <option value="1–10">1 – 10 personnes</option>
                         <option value="11–50">11 – 50 personnes</option>
                         <option value="51–200">51 – 200 personnes</option>
@@ -948,21 +1139,28 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="message" data-fr="Message (optionnel)" data-en="Message (optional)">Message (optionnel)</label>
-                    <textarea id="message" data-placeholder-fr="Décrivez brièvement votre contexte ou vos questions..." data-placeholder-en="Briefly describe your context or questions..." placeholder="Décrivez brièvement votre contexte ou vos questions..."></textarea>
+                    <label for="message" data-fr="Message (optionnel)" data-en="Message (optional)">Message
+                        (optionnel)</label>
+                    <textarea id="message" data-placeholder-fr="Décrivez brièvement votre contexte ou vos questions..."
+                        data-placeholder-en="Briefly describe your context or questions..."
+                        placeholder="Décrivez brièvement votre contexte ou vos questions..."></textarea>
                 </div>
 
                 <div class="modal-actions">
                     <button class="btn-back" onclick="goStep(1)" data-fr="← Retour" data-en="← Back">← Retour</button>
-                    <button class="btn-next" onclick="goStep(3)" data-fr="Continuer →" data-en="Continue →">Continuer →</button>
+                    <button class="btn-next" onclick="goStep(3)" data-fr="Continuer →" data-en="Continue →">Continuer
+                        →</button>
                 </div>
             </div>
 
             <!-- ─── STEP 3 — Date & Time ─── -->
             <div class="modal-step" id="step-3">
                 <p class="modal-eyebrow" data-fr="Étape 3 / 3" data-en="Step 3 / 3">Étape 3 / 3</p>
-                <h2 class="modal-title" data-fr="Choisissez <em>votre créneau</em>" data-en="Pick <em>your slot</em>">Choisissez <em>votre créneau</em></h2>
-                <p class="modal-subtitle" data-fr="Sélectionnez une date puis un horaire qui vous convient." data-en="Select a date, then a time that works for you.">Sélectionnez une date puis un horaire qui vous convient.</p>
+                <h2 class="modal-title" data-fr="Choisissez <em>votre créneau</em>" data-en="Pick <em>your slot</em>">
+                    Choisissez <em>votre créneau</em></h2>
+                <p class="modal-subtitle" data-fr="Sélectionnez une date puis un horaire qui vous convient."
+                    data-en="Select a date, then a time that works for you.">Sélectionnez une date puis un horaire qui
+                    vous convient.</p>
 
                 <div class="form-group">
                     <label data-fr="Calendrier" data-en="Calendar">Calendrier</label>
@@ -981,18 +1179,22 @@
 
                 <div class="modal-actions">
                     <button class="btn-back" onclick="goStep(2)" data-fr="← Retour" data-en="← Back">← Retour</button>
-                    <button class="btn-next" id="btn-submit" onclick="submitBooking()" data-fr="Envoyer la demande ✉" data-en="Send Request ✉" disabled>Envoyer la demande ✉</button>
+                    <button class="btn-next" id="btn-submit" onclick="submitBooking()" data-fr="Envoyer la demande ✉"
+                        data-en="Send Request ✉" disabled>Envoyer la demande ✉</button>
                 </div>
             </div>
 
             <!-- ─── SUCCESS ─── -->
             <div class="modal-step" id="step-success">
                 <div class="success-icon">✅</div>
-                <h2 class="modal-title" data-fr="Demande <em>envoyée !</em>" data-en="Request <em>sent!</em>">Demande <em>envoyée !</em></h2>
+                <h2 class="modal-title" data-fr="Demande <em>envoyée !</em>" data-en="Request <em>sent!</em>">Demande
+                    <em>envoyée !</em>
+                </h2>
                 <p class="modal-subtitle" style="margin-bottom:0"
                     data-fr="Votre email a été préparé dans votre client mail. Nous vous recontacterons rapidement pour confirmer le créneau."
                     data-en="Your email has been opened in your mail client. We'll get back to you shortly to confirm the slot.">
-                    Votre email a été préparé dans votre client mail. Nous vous recontacterons rapidement pour confirmer le créneau.
+                    Votre email a été préparé dans votre client mail. Nous vous recontacterons rapidement pour confirmer
+                    le créneau.
                 </p>
                 <div class="modal-actions" style="margin-top:32px;">
                     <button class="btn-next" onclick="closeBooking()" data-fr="Fermer" data-en="Close">Fermer</button>
@@ -1028,18 +1230,18 @@
         let selectedTime = null;
         let calYear, calMonth;
 
-        const TIMES = ['09:00','09:30','10:00','10:30','11:00','11:30','14:00','14:30','15:00','15:30','16:00','16:30'];
-        const MONTHS_FR = ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
-        const MONTHS_EN = ['January','February','March','April','May','June','July','August','September','October','November','December'];
-        const DAYS_FR = ['Lun','Mar','Mer','Jeu','Ven','Sam','Dim'];
-        const DAYS_EN = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+        const TIMES = ['09:00', '09:30', '10:00', '10:30', '11:00', '11:30', '14:00', '14:30', '15:00', '15:30', '16:00', '16:30'];
+        const MONTHS_FR = ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'];
+        const MONTHS_EN = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+        const DAYS_FR = ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam', 'Dim'];
+        const DAYS_EN = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
         function openBooking() {
             const modal = document.getElementById('bookingModal');
             modal.classList.add('open');
             document.body.style.overflow = 'hidden';
             const now = new Date();
-            calYear  = now.getFullYear();
+            calYear = now.getFullYear();
             calMonth = now.getMonth();
             renderCalendar();
             goStep(1);
@@ -1051,12 +1253,12 @@
         }
 
         // Close on backdrop click
-        document.getElementById('bookingModal').addEventListener('click', function(e) {
+        document.getElementById('bookingModal').addEventListener('click', function (e) {
             if (e.target === this) closeBooking();
         });
 
         // Close on Escape
-        document.addEventListener('keydown', function(e) {
+        document.addEventListener('keydown', function (e) {
             if (e.key === 'Escape') closeBooking();
         });
 
@@ -1085,7 +1287,7 @@
         /* ── CALENDAR ── */
         function renderCalendar() {
             const months = currentLang === 'fr' ? MONTHS_FR : MONTHS_EN;
-            const days   = currentLang === 'fr' ? DAYS_FR   : DAYS_EN;
+            const days = currentLang === 'fr' ? DAYS_FR : DAYS_EN;
 
             document.getElementById('cal-month-label').textContent = months[calMonth] + ' ' + calYear;
 
@@ -1101,7 +1303,7 @@
             });
 
             const today = new Date();
-            today.setHours(0,0,0,0);
+            today.setHours(0, 0, 0, 0);
 
             // Monday-first offset
             const firstDay = new Date(calYear, calMonth, 1);
@@ -1116,7 +1318,7 @@
             const daysInMonth = new Date(calYear, calMonth + 1, 0).getDate();
             for (let d = 1; d <= daysInMonth; d++) {
                 const date = new Date(calYear, calMonth, d);
-                const isPast    = date < today;
+                const isPast = date < today;
                 const isWeekend = date.getDay() === 0 || date.getDay() === 6;
                 const el = document.createElement('div');
                 el.className = 'cal-day';
@@ -1125,7 +1327,7 @@
                 if (isPast || isWeekend) {
                     el.classList.add('disabled');
                 } else {
-                    const dateStr = calYear + '-' + String(calMonth+1).padStart(2,'0') + '-' + String(d).padStart(2,'0');
+                    const dateStr = calYear + '-' + String(calMonth + 1).padStart(2, '0') + '-' + String(d).padStart(2, '0');
                     if (dateStr === selectedDate) el.classList.add('selected');
                     if (date.getTime() === today.getTime()) el.classList.add('today');
                     el.addEventListener('click', () => selectDate(dateStr, el));
@@ -1187,14 +1389,14 @@
 
         /* ── SUBMIT → MAILTO ── */
         function submitBooking() {
-            const fname   = document.getElementById('fname').value.trim();
-            const lname   = document.getElementById('lname').value.trim();
-            const email   = document.getElementById('email').value.trim();
+            const fname = document.getElementById('fname').value.trim();
+            const lname = document.getElementById('lname').value.trim();
+            const email = document.getElementById('email').value.trim();
             const company = document.getElementById('company').value.trim();
-            const sector  = document.getElementById('sector').value  || '—';
-            const ptype   = document.querySelector('input[name="project-type"]:checked')?.value || '—';
-            const tsize   = document.getElementById('team-size').value || '—';
-            const msg     = document.getElementById('message').value.trim();
+            const sector = document.getElementById('sector').value || '—';
+            const ptype = document.querySelector('input[name="project-type"]:checked')?.value || '—';
+            const tsize = document.getElementById('team-size').value || '—';
+            const msg = document.getElementById('message').value.trim();
 
             // ← Remplacez par votre vraie adresse email
             const DEST_EMAIL = 'contact@notice-ai.com';
@@ -1203,18 +1405,18 @@
                 ? new Date(selectedDate + 'T12:00:00').toLocaleDateString(
                     currentLang === 'fr' ? 'fr-FR' : 'en-GB',
                     { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }
-                  )
+                )
                 : '—';
 
             const subject = currentLang === 'fr'
-                ? `Demande de RDV — ${fname} ${lname} (${company})`
-                : `Meeting Request — ${fname} ${lname} (${company})`;
+                ? `Demande de RDV Notice.AI — ${fname} ${lname} (${company})`
+                : `Notice.AI Meeting Request — ${fname} ${lname} (${company})`;
 
             const body = currentLang === 'fr'
                 ? [
                     `Bonjour,`,
                     ``,
-                    `${fname} ${lname} souhaite prendre rendez-vous avec l'équipe J.E.T.`,
+                    `${fname} ${lname} souhaite prendre rendez-vous avec l'équipe Notice.AI`,
                     ``,
                     `━━ COORDONNÉES ━━`,
                     `Nom       : ${fname} ${lname}`,
@@ -1233,11 +1435,11 @@
                     ``,
                     `Cordialement,`,
                     `${fname} ${lname}`,
-                  ].join('\n')
+                ].join('\n')
                 : [
                     `Hello,`,
                     ``,
-                    `${fname} ${lname} would like to schedule a meeting with the J.E.T. team.`,
+                    `${fname} ${lname} would like to schedule a meeting with the Notice.AI team.`,
                     ``,
                     `━━ CONTACT INFO ━━`,
                     `Name    : ${fname} ${lname}`,
@@ -1256,7 +1458,7 @@
                     ``,
                     `Best regards,`,
                     `${fname} ${lname}`,
-                  ].join('\n');
+                ].join('\n');
 
             const mailto = `mailto:${DEST_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
             window.location.href = mailto;
