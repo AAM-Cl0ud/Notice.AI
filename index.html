@@ -50,7 +50,7 @@
             align-items: center;
             justify-content: space-between;
             padding: 18px 40px;
-            background: var(--white);
+            background: transparent;
         }
 
         .nav-logo {
@@ -58,7 +58,7 @@
             font-weight: 400;
             font-size: 15px;
             letter-spacing: 0.04em;
-            color: var(--gray-400);
+            color: rgba(255, 255, 255, 0.7);
             text-decoration: none;
         }
 
@@ -70,14 +70,14 @@
 
         .nav-links a {
             text-decoration: none;
-            color: var(--gray-500);
+            color: rgba(255, 255, 255, 0.6);
             font-size: 14px;
             font-weight: 400;
             transition: color 0.2s;
         }
 
         .nav-links a:hover {
-            color: var(--black);
+            color: var(--white);
         }
 
         .nav-right {
@@ -91,7 +91,7 @@
             display: flex;
             align-items: center;
             gap: 0;
-            border: 1px solid var(--gray-200);
+            border: 1px solid rgba(255, 255, 255, 0.25);
             border-radius: 100px;
             overflow: hidden;
         }
@@ -104,13 +104,13 @@
             font-family: 'DM Sans', sans-serif;
             font-size: 12px;
             font-weight: 500;
-            color: var(--gray-400);
+            color: rgba(255, 255, 255, 0.5);
             transition: background 0.2s, color 0.2s;
         }
 
         .lang-toggle button.active {
-            background: var(--black);
-            color: var(--white);
+            background: rgba(255, 255, 255, 0.9);
+            color: var(--black);
         }
 
         .btn-cta {
@@ -133,15 +133,41 @@
 
         /* ── HERO ─────────────────────────────────────── */
         .hero {
+            position: relative;
             display: flex;
             align-items: center;
             justify-content: center;
             min-height: 100vh;
             padding: 80px 24px;
+            overflow: hidden;
+            background: #000;
+        }
+
+        /* Background video — full screen */
+        .hero-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 0;
+        }
+
+        /* Subtle dark vignette — preserves original video colors */
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(ellipse 75% 70% at 52% 52%, transparent 20%, rgba(0, 0, 0, 0.4) 100%),
+                linear-gradient(to bottom, rgba(0, 0, 0, 0.12) 0%, transparent 25%, transparent 75%, rgba(0, 0, 0, 0.2) 100%);
+            z-index: 1;
+            pointer-events: none;
         }
 
         .hero-text {
             position: relative;
+            z-index: 2;
             text-align: center;
             line-height: 1;
         }
@@ -157,8 +183,9 @@
             font-weight: 300;
             font-size: clamp(54px, 8vw, 100px);
             letter-spacing: -0.02em;
-            color: var(--black);
+            color: var(--white);
             margin-bottom: 0.05em;
+            text-shadow: 0 2px 24px rgba(0, 0, 0, 0.35);
         }
 
         /* Line 2 — serif italic in parentheses */
@@ -168,8 +195,9 @@
             font-weight: 500;
             font-size: clamp(58px, 8.5vw, 108px);
             letter-spacing: -0.01em;
-            color: var(--black);
+            color: var(--white);
             margin-bottom: 0.02em;
+            text-shadow: 0 2px 24px rgba(0, 0, 0, 0.35);
         }
 
         /* Line 3 — sans-serif light */
@@ -178,8 +206,9 @@
             font-weight: 300;
             font-size: clamp(54px, 8vw, 100px);
             letter-spacing: -0.02em;
-            color: var(--black);
+            color: var(--white);
             margin-bottom: 0.05em;
+            text-shadow: 0 2px 24px rgba(0, 0, 0, 0.35);
         }
 
         /* Line 4 — serif italic */
@@ -189,17 +218,19 @@
             font-weight: 500;
             font-size: clamp(58px, 8.5vw, 108px);
             letter-spacing: -0.01em;
-            color: var(--black);
+            color: var(--white);
+            text-shadow: 0 2px 24px rgba(0, 0, 0, 0.35);
         }
 
-        /* Small side annotations — like "Or Camera" and "And Friends" */
+        /* Small side annotations */
         .side-note {
             position: absolute;
             font-family: 'DM Sans', sans-serif;
             font-weight: 400;
             font-size: clamp(12px, 1.6vw, 16px);
-            color: var(--gray-400);
+            color: rgba(255, 255, 255, 0.6);
             white-space: nowrap;
+            text-shadow: 0 1px 12px rgba(0, 0, 0, 0.3);
         }
 
         .side-note-1 {
@@ -438,21 +469,23 @@
 
     <!-- HERO -->
     <section class="hero">
+        <video class="hero-video" autoplay muted loop playsinline>
+            <source src="hero-bg.mp4" type="video/mp4">
+        </video>
+        <div class="hero-overlay"></div>
         <div class="hero-text">
-            <span class="line line-1" data-fr="Vos manuels" data-en="Your manuals">Vos manuels</span>
-            <span class="line line-2" data-fr="(étaient des hiéroglyphes)" data-en="(were hieroglyphs)">(étaient des
-                hiéroglyphes)</span>
+            <span class="line line-1" data-fr="Ne déchiffrez" data-en="Stop decoding">Ne déchiffrez</span>
+            <span class="line line-2" data-fr="plus." data-en="manuals.">plus.</span>
 
             <!-- Side annotation 1 -->
-            <span class="side-note side-note-1" data-fr="Ou des PDF illisibles" data-en="Or unreadable PDFs">Ou des PDF
-                illisibles</span>
+            <span class="side-note side-note-1" data-fr="Fini les hiéroglyphes" data-en="No more hieroglyphs">Fini les
+                hiéroglyphes</span>
 
-            <span class="line line-3" data-fr="on leur donne" data-en="we give them">on leur donne</span>
-            <span class="line line-4" data-fr="vie." data-en="life.">vie.</span>
+            <span class="line line-3" data-fr="Visualisez." data-en="Visualize.">Visualisez.</span>
 
             <!-- Side annotation 2 -->
-            <span class="side-note side-note-2" data-fr="En vidéo 3D + Chatbot IA" data-en="As 3D video + AI Chatbot">En
-                vidéo 3D + Chatbot IA</span>
+            <span class="side-note side-note-2" data-fr="Vidéo 3D + Chatbot IA" data-en="3D Video + AI Chatbot">Vidéo 3D
+                + Chatbot IA</span>
         </div>
     </section>
 
