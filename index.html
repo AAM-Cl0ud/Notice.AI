@@ -513,20 +513,29 @@
         .logo-item {
             display: flex;
             align-items: center;
-            height: 32px;
-            opacity: 0.78;
+            height: 40px;
+            min-width: 80px;
+            opacity: 0.72;
             transition: opacity 0.3s ease, transform 0.2s ease;
             flex-shrink: 0;
         }
 
         .logo-item:hover {
             opacity: 1;
-            transform: scale(1.06);
+            transform: scale(1.05);
         }
 
         .logo-item svg {
             height: 100%;
             width: auto;
+            max-width: 160px;
+        }
+
+        .logo-item img {
+            height: 100%;
+            width: auto;
+            max-width: 120px;
+            display: block;
         }
 
         /* ── BOOKING SECTION CTA ──────────────────────── */
@@ -1063,10 +1072,11 @@
 
             /* NAV */
             nav {
-                padding: 14px 20px;
-                background: rgba(255, 255, 255, 0.95);
-                backdrop-filter: blur(12px);
-                -webkit-backdrop-filter: blur(12px);
+                padding: 14px 18px;
+                background: rgba(255, 255, 255, 0.96);
+                backdrop-filter: blur(16px);
+                -webkit-backdrop-filter: blur(16px);
+                border-bottom: 1px solid rgba(0, 0, 0, 0.06);
             }
 
             .nav-links {
@@ -1075,78 +1085,74 @@
 
             /* HERO */
             .hero {
-                padding: 100px 20px 60px;
-                align-items: flex-start;
+                padding: 0;
+                align-items: center;
+                justify-content: center;
                 min-height: 100svh;
-                background: #fff;
+                min-height: 100dvh;
+                background: #000;
             }
 
             .hero-video {
                 position: absolute;
-                top: 50%;
-                left: 50%;
+                top: 0;
+                left: 0;
                 width: 100%;
                 height: 100%;
-                transform: translate(-50%, -50%) translateZ(0);
-                object-fit: contain;
+                transform: translateZ(0);
+                object-fit: cover;
                 object-position: center center;
             }
 
             .hero-overlay {
-                background: rgba(255, 255, 255, 0.45);
-                backdrop-filter: saturate(1.6) blur(1px);
-                -webkit-backdrop-filter: saturate(1.6) blur(1px);
+                background: rgba(255, 255, 255, 0.38);
+                backdrop-filter: saturate(1.6) blur(1.5px);
+                -webkit-backdrop-filter: saturate(1.6) blur(1.5px);
             }
 
             .hero-text {
-                padding: 0;
-                align-items: flex-start;
-                text-align: left;
-            }
-
-            .hero-eyebrow {
-                font-size: 10px;
-            }
-
-            .hero-badges {
-                flex-wrap: wrap;
-                gap: 8px;
-            }
-
-            .hero-actions {
-                flex-direction: column;
-                gap: 12px;
-                width: 100%;
-            }
-
-            .hero-actions .btn-book,
-            .hero-actions .btn-demo {
-                width: 100%;
+                padding: 80px 20px 40px;
+                align-items: center;
                 text-align: center;
-                justify-content: center;
+                width: 100%;
+            }
+
+            .line-1,
+            .line-3 {
+                font-size: clamp(38px, 11vw, 60px);
+            }
+
+            .line-2,
+            .line-4 {
+                font-size: clamp(42px, 12vw, 68px);
             }
 
             /* SOLUTION SECTION */
             .section-solution {
-                padding: 64px 20px;
-                gap: 36px;
+                padding: 56px 18px;
+                gap: 32px;
             }
 
             .feature-grid {
                 grid-template-columns: 1fr;
-                gap: 14px;
+                gap: 12px;
+            }
+
+            .feature-card {
+                padding: 24px 20px;
+                gap: 12px;
             }
 
             /* HOW IT WORKS */
             .section-how {
-                padding: 64px 20px;
-                gap: 40px;
+                padding: 56px 18px;
+                gap: 36px;
             }
 
             .steps-grid {
                 grid-template-columns: 1fr;
                 gap: 0;
-                max-width: 360px;
+                max-width: 100%;
             }
 
             .steps-grid::before {
@@ -1157,8 +1163,8 @@
                 flex-direction: row;
                 align-items: flex-start;
                 text-align: left;
-                padding: 0 0 32px 0;
-                gap: 20px;
+                padding: 0 0 28px 0;
+                gap: 18px;
                 position: relative;
             }
 
@@ -1182,26 +1188,40 @@
 
             /* LOGO SLIDER */
             .logo-slider-section {
-                padding: 40px 0 48px;
-                gap: 24px;
+                padding: 36px 0 44px;
+                gap: 20px;
+                overflow: hidden;
             }
 
             .logo-slider-rows {
-                gap: 20px;
+                gap: 18px;
+                width: 100%;
+            }
+
+            .logo-slider-track-wrap {
+                width: 100%;
+                overflow: hidden;
             }
 
             .logo-slider-track {
-                gap: 40px;
+                gap: 36px;
             }
 
-            /* hide second row on small screens */
-            .logo-slider-rows>div:last-child {
-                display: none;
+            .logo-item {
+                height: 36px;
+                min-width: 70px;
+                opacity: 0.75;
+            }
+
+            .logo-item svg {
+                height: 100%;
+                width: auto;
+                max-width: 140px;
             }
 
             /* BOOKING CTA */
             .section-booking-cta {
-                padding: 72px 24px;
+                padding: 64px 20px;
             }
 
             /* MODAL */
@@ -1229,17 +1249,27 @@
 
         /* ═══════ EXTRA SMALL ─ 430px ══════════════════ */
         @media (max-width: 430px) {
-            .hero {
-                padding: 90px 16px 56px;
+            .hero-text {
+                padding: 70px 16px 36px;
+            }
+
+            .line-1,
+            .line-3 {
+                font-size: clamp(32px, 10.5vw, 48px);
+            }
+
+            .line-2,
+            .line-4 {
+                font-size: clamp(36px, 11.5vw, 54px);
             }
 
             .section-solution,
             .section-how {
-                padding: 56px 16px;
+                padding: 48px 16px;
             }
 
             .section-heading {
-                font-size: clamp(24px, 7vw, 36px);
+                font-size: clamp(22px, 7vw, 34px);
             }
 
             .logo-slider-track {
@@ -1247,7 +1277,12 @@
             }
 
             .logo-item {
-                height: 24px;
+                height: 30px;
+                min-width: 60px;
+            }
+
+            .logo-item svg {
+                max-width: 120px;
             }
 
             .calendar-grid .cal-day {
@@ -1415,265 +1450,379 @@
         <span class="logo-slider-label" data-fr="En process" data-en="In process">En process</span>
 
         <div class="logo-slider-rows">
+
+            <!-- ── ROW 1: forward ── -->
             <div class="logo-slider-track-wrap">
                 <div class="logo-slider-track forward">
 
-                    <!-- Airbus -->
-                    <div class="logo-item">
-                        <svg viewBox="0 0 130 48" xmlns="http://www.w3.org/2000/svg">
-                            <text x="0" y="36" font-family="Arial,sans-serif" font-size="30" font-weight="900"
-                                fill="#00205B">air</text>
-                            <text x="54" y="36" font-family="Arial,sans-serif" font-size="30" font-weight="900"
-                                fill="#00AEEF">bus</text>
+                    <!-- AIRBUS -->
+                    <div class="logo-item" title="Airbus">
+                        <svg viewBox="0 0 130 36" xmlns="http://www.w3.org/2000/svg">
+                            <text x="0" y="28" font-family="'Arial Narrow',Arial,sans-serif" font-size="30"
+                                font-weight="700" fill="#00205B" letter-spacing="0.5">AIRBUS</text>
                         </svg>
                     </div>
 
-                    <!-- Safran -->
-                    <div class="logo-item">
-                        <svg viewBox="0 0 140 48" xmlns="http://www.w3.org/2000/svg">
-                            <text x="0" y="36" font-family="Arial,sans-serif" font-size="30" font-weight="800"
-                                fill="#E8002D">safran</text>
+                    <!-- SAFRAN -->
+                    <div class="logo-item" title="Safran">
+                        <svg viewBox="0 0 132 36" xmlns="http://www.w3.org/2000/svg">
+                            <text x="0" y="29" font-family="Arial,sans-serif" font-size="29" font-weight="900"
+                                fill="#E8002D" letter-spacing="1">SAFRAN</text>
                         </svg>
                     </div>
 
-                    <!-- Renault -->
-                    <div class="logo-item">
-                        <svg viewBox="0 0 155 48" xmlns="http://www.w3.org/2000/svg">
-                            <text x="0" y="36" font-family="Arial,sans-serif" font-size="28" font-weight="900"
-                                fill="#EFCA00" stroke="#555" stroke-width="0.6">RENAULT</text>
+                    <!-- RENAULT -->
+                    <div class="logo-item" title="Renault">
+                        <svg viewBox="0 0 148 36" xmlns="http://www.w3.org/2000/svg">
+                            <text x="0" y="28" font-family="Arial,sans-serif" font-size="26" font-weight="800"
+                                fill="#EFCD00" stroke="#222" stroke-width="0.5" letter-spacing="1.5">RENAULT</text>
                         </svg>
                     </div>
 
-                    <!-- Siemens -->
-                    <div class="logo-item">
-                        <svg viewBox="0 0 150 48" xmlns="http://www.w3.org/2000/svg">
-                            <text x="0" y="36" font-family="Arial,sans-serif" font-size="29" font-weight="700"
-                                fill="#009999">Siemens</text>
+                    <!-- SIEMENS -->
+                    <div class="logo-item" title="Siemens">
+                        <svg viewBox="0 0 152 36" xmlns="http://www.w3.org/2000/svg">
+                            <text x="0" y="28" font-family="Arial,sans-serif" font-size="27" font-weight="700"
+                                fill="#009999" letter-spacing="1">SIEMENS</text>
                         </svg>
                     </div>
 
-                    <!-- Michelin -->
-                    <div class="logo-item">
-                        <svg viewBox="0 0 148 48" xmlns="http://www.w3.org/2000/svg">
-                            <text x="0" y="36" font-family="Arial,sans-serif" font-size="28" font-weight="800"
-                                fill="#003189">Michelin</text>
+                    <!-- MICHELIN -->
+                    <div class="logo-item" title="Michelin">
+                        <svg viewBox="0 0 150 36" xmlns="http://www.w3.org/2000/svg">
+                            <text x="0" y="28" font-family="Arial,sans-serif" font-size="27" font-weight="800"
+                                fill="#003189" letter-spacing="1">MICHELIN</text>
                         </svg>
                     </div>
 
-                    <!-- Schneider -->
-                    <div class="logo-item">
-                        <svg viewBox="0 0 160 48" xmlns="http://www.w3.org/2000/svg">
-                            <text x="0" y="26" font-family="Arial,sans-serif" font-size="22" font-weight="700"
-                                fill="#3DCD58">Schneider</text>
-                            <text x="1" y="43" font-family="Arial,sans-serif" font-size="13" font-weight="600"
-                                fill="#3DCD58" letter-spacing="0.1em">ELECTRIC</text>
+                    <!-- SCHNEIDER ELECTRIC -->
+                    <div class="logo-item" title="Schneider Electric">
+                        <svg viewBox="0 0 200 36" xmlns="http://www.w3.org/2000/svg">
+                            <text x="0" y="22" font-family="Arial,sans-serif" font-size="18" font-weight="800"
+                                fill="#3DCD58" letter-spacing="0.5">SCHNEIDER</text>
+                            <text x="0" y="36" font-family="Arial,sans-serif" font-size="12" font-weight="400"
+                                fill="#555" letter-spacing="2">ELECTRIC</text>
                         </svg>
                     </div>
 
-                    <!-- Valeo -->
-                    <div class="logo-item">
-                        <svg viewBox="0 0 110 48" xmlns="http://www.w3.org/2000/svg">
-                            <text x="0" y="36" font-family="Arial,sans-serif" font-size="30" font-weight="800"
+                    <!-- VALEO -->
+                    <div class="logo-item" title="Valeo">
+                        <svg viewBox="0 0 100 36" xmlns="http://www.w3.org/2000/svg">
+                            <text x="0" y="29" font-family="Arial,sans-serif" font-size="30" font-weight="800"
                                 fill="#005BAC">Valeo</text>
                         </svg>
                     </div>
 
-                    <!-- TotalEnergies -->
-                    <div class="logo-item">
-                        <svg viewBox="0 0 175 48" xmlns="http://www.w3.org/2000/svg">
-                            <text x="0" y="26" font-family="Arial,sans-serif" font-size="20" font-weight="900"
+                    <!-- TOTALENERGIES -->
+                    <div class="logo-item" title="TotalEnergies">
+                        <svg viewBox="0 0 180 36" xmlns="http://www.w3.org/2000/svg">
+                            <text x="0" y="28" font-family="Arial,sans-serif" font-size="24" font-weight="900"
                                 fill="#CC0001">Total</text>
-                            <text x="68" y="26" font-family="Arial,sans-serif" font-size="20" font-weight="900"
+                            <text x="72" y="28" font-family="Arial,sans-serif" font-size="24" font-weight="900"
                                 fill="#F7941D">Energies</text>
                         </svg>
                     </div>
 
-                    <!-- Thales -->
-                    <div class="logo-item">
-                        <svg viewBox="0 0 130 48" xmlns="http://www.w3.org/2000/svg">
-                            <text x="0" y="36" font-family="Arial,sans-serif" font-size="30" font-weight="800"
-                                fill="#004C97">thales</text>
+                    <!-- THALES -->
+                    <div class="logo-item" title="Thales">
+                        <svg viewBox="0 0 120 36" xmlns="http://www.w3.org/2000/svg">
+                            <text x="0" y="29" font-family="Arial,sans-serif" font-size="29" font-weight="800"
+                                fill="#004C97" letter-spacing="1.5">THALES</text>
                         </svg>
                     </div>
 
-                    <!-- Alstom -->
-                    <div class="logo-item">
-                        <svg viewBox="0 0 130 48" xmlns="http://www.w3.org/2000/svg">
-                            <text x="0" y="36" font-family="Arial,sans-serif" font-size="29" font-weight="800"
-                                fill="#0033A0">Alstom</text>
+                    <!-- ALSTOM -->
+                    <div class="logo-item" title="Alstom">
+                        <svg viewBox="0 0 124 36" xmlns="http://www.w3.org/2000/svg">
+                            <text x="0" y="29" font-family="Arial,sans-serif" font-size="29" font-weight="800"
+                                fill="#0033A0" letter-spacing="1">ALSTOM</text>
                         </svg>
                     </div>
 
-                    <!-- Bosch -->
-                    <div class="logo-item">
-                        <svg viewBox="0 0 120 48" xmlns="http://www.w3.org/2000/svg">
-                            <rect x="0" y="4" width="112" height="34" rx="17" fill="#EA0016" />
-                            <text x="16" y="29" font-family="Arial,sans-serif" font-size="20" font-weight="700"
-                                fill="white">BOSCH</text>
+                    <!-- BOSCH -->
+                    <div class="logo-item" title="Bosch">
+                        <svg viewBox="0 0 108 36" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="0" y="2" width="104" height="32" rx="16" fill="#EA0016" />
+                            <text x="13" y="24" font-family="Arial,sans-serif" font-size="19" font-weight="700"
+                                fill="#fff" letter-spacing="0.5">BOSCH</text>
                         </svg>
                     </div>
 
                     <!-- EDF -->
-                    <div class="logo-item">
-                        <svg viewBox="0 0 90 48" xmlns="http://www.w3.org/2000/svg">
-                            <rect x="0" y="4" width="80" height="34" rx="5" fill="#F7A600" />
-                            <text x="10" y="29" font-family="Arial,sans-serif" font-size="22" font-weight="900"
-                                fill="#002169">EDF</text>
+                    <div class="logo-item" title="EDF">
+                        <svg viewBox="0 0 96 36" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="0" y="0" width="96" height="36" rx="4" fill="#002169" />
+                            <text x="50%" y="25" text-anchor="middle" font-family="Arial,sans-serif" font-size="22"
+                                font-weight="900" fill="#F7A600" letter-spacing="2">EDF</text>
                         </svg>
                     </div>
 
                     <!-- ABB -->
-                    <div class="logo-item">
-                        <svg viewBox="0 0 95 48" xmlns="http://www.w3.org/2000/svg">
-                            <rect x="0" y="4" width="86" height="34" rx="5" fill="#FF000F" />
-                            <text x="11" y="29" font-family="Arial,sans-serif" font-size="21" font-weight="900"
-                                fill="white">ABB</text>
+                    <div class="logo-item" title="ABB">
+                        <svg viewBox="0 0 88 36" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="0" y="0" width="88" height="36" rx="4" fill="#FF000F" />
+                            <text x="50%" y="26" text-anchor="middle" font-family="Arial,sans-serif" font-size="26"
+                                font-weight="900" fill="#fff" letter-spacing="2">ABB</text>
                         </svg>
                     </div>
 
                     <!-- SNCF -->
-                    <div class="logo-item">
-                        <svg viewBox="0 0 110 48" xmlns="http://www.w3.org/2000/svg">
-                            <rect x="0" y="4" width="100" height="34" rx="5" fill="#E2001A" />
-                            <text x="10" y="29" font-family="Arial,sans-serif" font-size="20" font-weight="900"
-                                fill="white">SNCF</text>
+                    <div class="logo-item" title="SNCF">
+                        <svg viewBox="0 0 96 36" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="0" y="0" width="96" height="36" rx="4" fill="#CC0A2B" />
+                            <text x="50%" y="26" text-anchor="middle" font-family="Arial,sans-serif" font-size="22"
+                                font-weight="900" fill="#fff" letter-spacing="1.5">SNCF</text>
                         </svg>
                     </div>
 
-                    <!-- Naval Group -->
-                    <div class="logo-item">
-                        <svg viewBox="0 0 165 48" xmlns="http://www.w3.org/2000/svg">
-                            <text x="0" y="30" font-family="Arial,sans-serif" font-size="20" font-weight="800"
+                    <!-- NAVAL GROUP -->
+                    <div class="logo-item" title="Naval Group">
+                        <svg viewBox="0 0 160 36" xmlns="http://www.w3.org/2000/svg">
+                            <text x="0" y="26" font-family="Arial,sans-serif" font-size="22" font-weight="800"
                                 fill="#003F8A">Naval</text>
-                            <text x="78" y="30" font-family="Arial,sans-serif" font-size="20" font-weight="400"
+                            <text x="78" y="26" font-family="Arial,sans-serif" font-size="22" font-weight="300"
                                 fill="#003F8A">Group</text>
                         </svg>
                     </div>
 
-                    <!-- Faurecia -->
-                    <div class="logo-item">
-                        <svg viewBox="0 0 140 48" xmlns="http://www.w3.org/2000/svg">
-                            <text x="0" y="36" font-family="Arial,sans-serif" font-size="28" font-weight="700"
-                                fill="#8B0000">Faurecia</text>
+                    <!-- FAURECIA (now FORVIA) -->
+                    <div class="logo-item" title="Faurecia">
+                        <svg viewBox="0 0 140 36" xmlns="http://www.w3.org/2000/svg">
+                            <text x="0" y="28" font-family="Arial,sans-serif" font-size="27" font-weight="700"
+                                fill="#8B0000" letter-spacing="0.5">Faurecia</text>
                         </svg>
                     </div>
 
-                    <!-- === DUPLICATE for seamless loop === -->
-                    <div class="logo-item">
-                        <svg viewBox="0 0 130 48" xmlns="http://www.w3.org/2000/svg">
-                            <text x="0" y="36" font-family="Arial,sans-serif" font-size="30" font-weight="900"
-                                fill="#00205B">air</text>
-                            <text x="54" y="36" font-family="Arial,sans-serif" font-size="30" font-weight="900"
-                                fill="#00AEEF">bus</text>
-                        </svg>
+                    <!-- ── DUPLICATE SET for seamless loop ── -->
+                    <div class="logo-item" title="Airbus"><svg viewBox="0 0 130 36"
+                            xmlns="http://www.w3.org/2000/svg"><text x="0" y="28"
+                                font-family="'Arial Narrow',Arial,sans-serif" font-size="30" font-weight="700"
+                                fill="#00205B" letter-spacing="0.5">AIRBUS</text></svg></div>
+                    <div class="logo-item" title="Safran"><svg viewBox="0 0 132 36"
+                            xmlns="http://www.w3.org/2000/svg"><text x="0" y="29" font-family="Arial,sans-serif"
+                                font-size="29" font-weight="900" fill="#E8002D" letter-spacing="1">SAFRAN</text></svg>
                     </div>
-                    <div class="logo-item">
-                        <svg viewBox="0 0 140 48" xmlns="http://www.w3.org/2000/svg">
-                            <text x="0" y="36" font-family="Arial,sans-serif" font-size="30" font-weight="800"
-                                fill="#E8002D">safran</text>
-                        </svg>
+                    <div class="logo-item" title="Renault"><svg viewBox="0 0 148 36"
+                            xmlns="http://www.w3.org/2000/svg"><text x="0" y="28" font-family="Arial,sans-serif"
+                                font-size="26" font-weight="800" fill="#EFCD00" stroke="#222" stroke-width="0.5"
+                                letter-spacing="1.5">RENAULT</text></svg></div>
+                    <div class="logo-item" title="Siemens"><svg viewBox="0 0 152 36"
+                            xmlns="http://www.w3.org/2000/svg"><text x="0" y="28" font-family="Arial,sans-serif"
+                                font-size="27" font-weight="700" fill="#009999" letter-spacing="1">SIEMENS</text></svg>
                     </div>
-                    <div class="logo-item">
-                        <svg viewBox="0 0 155 48" xmlns="http://www.w3.org/2000/svg">
-                            <text x="0" y="36" font-family="Arial,sans-serif" font-size="28" font-weight="900"
-                                fill="#EFCA00" stroke="#555" stroke-width="0.6">RENAULT</text>
-                        </svg>
+                    <div class="logo-item" title="Michelin"><svg viewBox="0 0 150 36"
+                            xmlns="http://www.w3.org/2000/svg"><text x="0" y="28" font-family="Arial,sans-serif"
+                                font-size="27" font-weight="800" fill="#003189" letter-spacing="1">MICHELIN</text></svg>
                     </div>
-                    <div class="logo-item">
-                        <svg viewBox="0 0 150 48" xmlns="http://www.w3.org/2000/svg">
-                            <text x="0" y="36" font-family="Arial,sans-serif" font-size="29" font-weight="700"
-                                fill="#009999">Siemens</text>
-                        </svg>
+                    <div class="logo-item" title="Schneider Electric"><svg viewBox="0 0 200 36"
+                            xmlns="http://www.w3.org/2000/svg"><text x="0" y="22" font-family="Arial,sans-serif"
+                                font-size="18" font-weight="800" fill="#3DCD58"
+                                letter-spacing="0.5">SCHNEIDER</text><text x="0" y="36" font-family="Arial,sans-serif"
+                                font-size="12" font-weight="400" fill="#555" letter-spacing="2">ELECTRIC</text></svg>
                     </div>
-                    <div class="logo-item">
-                        <svg viewBox="0 0 148 48" xmlns="http://www.w3.org/2000/svg">
-                            <text x="0" y="36" font-family="Arial,sans-serif" font-size="28" font-weight="800"
-                                fill="#003189">Michelin</text>
-                        </svg>
+                    <div class="logo-item" title="Valeo"><svg viewBox="0 0 100 36"
+                            xmlns="http://www.w3.org/2000/svg"><text x="0" y="29" font-family="Arial,sans-serif"
+                                font-size="30" font-weight="800" fill="#005BAC">Valeo</text></svg></div>
+                    <div class="logo-item" title="TotalEnergies"><svg viewBox="0 0 180 36"
+                            xmlns="http://www.w3.org/2000/svg"><text x="0" y="28" font-family="Arial,sans-serif"
+                                font-size="24" font-weight="900" fill="#CC0001">Total</text><text x="72" y="28"
+                                font-family="Arial,sans-serif" font-size="24" font-weight="900"
+                                fill="#F7941D">Energies</text></svg></div>
+                    <div class="logo-item" title="Thales"><svg viewBox="0 0 120 36"
+                            xmlns="http://www.w3.org/2000/svg"><text x="0" y="29" font-family="Arial,sans-serif"
+                                font-size="29" font-weight="800" fill="#004C97" letter-spacing="1.5">THALES</text></svg>
                     </div>
-                    <div class="logo-item">
-                        <svg viewBox="0 0 160 48" xmlns="http://www.w3.org/2000/svg">
-                            <text x="0" y="26" font-family="Arial,sans-serif" font-size="22" font-weight="700"
-                                fill="#3DCD58">Schneider</text>
-                            <text x="1" y="43" font-family="Arial,sans-serif" font-size="13" font-weight="600"
-                                fill="#3DCD58" letter-spacing="0.1em">ELECTRIC</text>
-                        </svg>
+                    <div class="logo-item" title="Alstom"><svg viewBox="0 0 124 36"
+                            xmlns="http://www.w3.org/2000/svg"><text x="0" y="29" font-family="Arial,sans-serif"
+                                font-size="29" font-weight="800" fill="#0033A0" letter-spacing="1">ALSTOM</text></svg>
                     </div>
-                    <div class="logo-item">
-                        <svg viewBox="0 0 110 48" xmlns="http://www.w3.org/2000/svg">
-                            <text x="0" y="36" font-family="Arial,sans-serif" font-size="30" font-weight="800"
-                                fill="#005BAC">Valeo</text>
-                        </svg>
-                    </div>
-                    <div class="logo-item">
-                        <svg viewBox="0 0 175 48" xmlns="http://www.w3.org/2000/svg">
-                            <text x="0" y="26" font-family="Arial,sans-serif" font-size="20" font-weight="900"
-                                fill="#CC0001">Total</text>
-                            <text x="68" y="26" font-family="Arial,sans-serif" font-size="20" font-weight="900"
-                                fill="#F7941D">Energies</text>
-                        </svg>
-                    </div>
-                    <div class="logo-item">
-                        <svg viewBox="0 0 130 48" xmlns="http://www.w3.org/2000/svg">
-                            <text x="0" y="36" font-family="Arial,sans-serif" font-size="30" font-weight="800"
-                                fill="#004C97">thales</text>
-                        </svg>
-                    </div>
-                    <div class="logo-item">
-                        <svg viewBox="0 0 130 48" xmlns="http://www.w3.org/2000/svg">
-                            <text x="0" y="36" font-family="Arial,sans-serif" font-size="29" font-weight="800"
-                                fill="#0033A0">Alstom</text>
-                        </svg>
-                    </div>
-                    <div class="logo-item">
-                        <svg viewBox="0 0 120 48" xmlns="http://www.w3.org/2000/svg">
-                            <rect x="0" y="4" width="112" height="34" rx="17" fill="#EA0016" />
-                            <text x="16" y="29" font-family="Arial,sans-serif" font-size="20" font-weight="700"
-                                fill="white">BOSCH</text>
-                        </svg>
-                    </div>
-                    <div class="logo-item">
-                        <svg viewBox="0 0 90 48" xmlns="http://www.w3.org/2000/svg">
-                            <rect x="0" y="4" width="80" height="34" rx="5" fill="#F7A600" />
-                            <text x="10" y="29" font-family="Arial,sans-serif" font-size="22" font-weight="900"
-                                fill="#002169">EDF</text>
-                        </svg>
-                    </div>
-                    <div class="logo-item">
-                        <svg viewBox="0 0 95 48" xmlns="http://www.w3.org/2000/svg">
-                            <rect x="0" y="4" width="86" height="34" rx="5" fill="#FF000F" />
-                            <text x="11" y="29" font-family="Arial,sans-serif" font-size="21" font-weight="900"
-                                fill="white">ABB</text>
-                        </svg>
-                    </div>
-                    <div class="logo-item">
-                        <svg viewBox="0 0 110 48" xmlns="http://www.w3.org/2000/svg">
-                            <rect x="0" y="4" width="100" height="34" rx="5" fill="#E2001A" />
-                            <text x="10" y="29" font-family="Arial,sans-serif" font-size="20" font-weight="900"
-                                fill="white">SNCF</text>
-                        </svg>
-                    </div>
-                    <div class="logo-item">
-                        <svg viewBox="0 0 165 48" xmlns="http://www.w3.org/2000/svg">
-                            <text x="0" y="30" font-family="Arial,sans-serif" font-size="20" font-weight="800"
-                                fill="#003F8A">Naval</text>
-                            <text x="78" y="30" font-family="Arial,sans-serif" font-size="20" font-weight="400"
-                                fill="#003F8A">Group</text>
-                        </svg>
-                    </div>
-                    <div class="logo-item">
-                        <svg viewBox="0 0 140 48" xmlns="http://www.w3.org/2000/svg">
-                            <text x="0" y="36" font-family="Arial,sans-serif" font-size="28" font-weight="700"
-                                fill="#8B0000">Faurecia</text>
-                        </svg>
-                    </div>
-
+                    <div class="logo-item" title="Bosch"><svg viewBox="0 0 108 36" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="0" y="2" width="104" height="32" rx="16" fill="#EA0016" /><text x="13" y="24"
+                                font-family="Arial,sans-serif" font-size="19" font-weight="700" fill="#fff"
+                                letter-spacing="0.5">BOSCH</text>
+                        </svg></div>
+                    <div class="logo-item" title="EDF"><svg viewBox="0 0 96 36" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="0" y="0" width="96" height="36" rx="4" fill="#002169" /><text x="50%" y="25"
+                                text-anchor="middle" font-family="Arial,sans-serif" font-size="22" font-weight="900"
+                                fill="#F7A600" letter-spacing="2">EDF</text>
+                        </svg></div>
+                    <div class="logo-item" title="ABB"><svg viewBox="0 0 88 36" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="0" y="0" width="88" height="36" rx="4" fill="#FF000F" /><text x="50%" y="26"
+                                text-anchor="middle" font-family="Arial,sans-serif" font-size="26" font-weight="900"
+                                fill="#fff" letter-spacing="2">ABB</text>
+                        </svg></div>
+                    <div class="logo-item" title="SNCF"><svg viewBox="0 0 96 36" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="0" y="0" width="96" height="36" rx="4" fill="#CC0A2B" /><text x="50%" y="26"
+                                text-anchor="middle" font-family="Arial,sans-serif" font-size="22" font-weight="900"
+                                fill="#fff" letter-spacing="1.5">SNCF</text>
+                        </svg></div>
+                    <div class="logo-item" title="Naval Group"><svg viewBox="0 0 160 36"
+                            xmlns="http://www.w3.org/2000/svg"><text x="0" y="26" font-family="Arial,sans-serif"
+                                font-size="22" font-weight="800" fill="#003F8A">Naval</text><text x="78" y="26"
+                                font-family="Arial,sans-serif" font-size="22" font-weight="300"
+                                fill="#003F8A">Group</text></svg></div>
+                    <div class="logo-item" title="Faurecia"><svg viewBox="0 0 140 36"
+                            xmlns="http://www.w3.org/2000/svg"><text x="0" y="28" font-family="Arial,sans-serif"
+                                font-size="27" font-weight="700" fill="#8B0000"
+                                letter-spacing="0.5">Faurecia</text></svg></div>
                 </div>
             </div>
+
+            <!-- ── ROW 2: reverse ── -->
+            <div class="logo-slider-track-wrap">
+                <div class="logo-slider-track reverse">
+                    <div class="logo-item" title="Bosch"><svg viewBox="0 0 108 36" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="0" y="2" width="104" height="32" rx="16" fill="#EA0016" /><text x="13" y="24"
+                                font-family="Arial,sans-serif" font-size="19" font-weight="700" fill="#fff"
+                                letter-spacing="0.5">BOSCH</text>
+                        </svg></div>
+                    <div class="logo-item" title="Thales"><svg viewBox="0 0 120 36"
+                            xmlns="http://www.w3.org/2000/svg"><text x="0" y="29" font-family="Arial,sans-serif"
+                                font-size="29" font-weight="800" fill="#004C97" letter-spacing="1.5">THALES</text></svg>
+                    </div>
+                    <div class="logo-item" title="EDF"><svg viewBox="0 0 96 36" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="0" y="0" width="96" height="36" rx="4" fill="#002169" /><text x="50%" y="25"
+                                text-anchor="middle" font-family="Arial,sans-serif" font-size="22" font-weight="900"
+                                fill="#F7A600" letter-spacing="2">EDF</text>
+                        </svg></div>
+                    <div class="logo-item" title="TotalEnergies"><svg viewBox="0 0 180 36"
+                            xmlns="http://www.w3.org/2000/svg"><text x="0" y="28" font-family="Arial,sans-serif"
+                                font-size="24" font-weight="900" fill="#CC0001">Total</text><text x="72" y="28"
+                                font-family="Arial,sans-serif" font-size="24" font-weight="900"
+                                fill="#F7941D">Energies</text></svg></div>
+                    <div class="logo-item" title="Michelin"><svg viewBox="0 0 150 36"
+                            xmlns="http://www.w3.org/2000/svg"><text x="0" y="28" font-family="Arial,sans-serif"
+                                font-size="27" font-weight="800" fill="#003189" letter-spacing="1">MICHELIN</text></svg>
+                    </div>
+                    <div class="logo-item" title="Valeo"><svg viewBox="0 0 100 36"
+                            xmlns="http://www.w3.org/2000/svg"><text x="0" y="29" font-family="Arial,sans-serif"
+                                font-size="30" font-weight="800" fill="#005BAC">Valeo</text></svg></div>
+                    <div class="logo-item" title="Alstom"><svg viewBox="0 0 124 36"
+                            xmlns="http://www.w3.org/2000/svg"><text x="0" y="29" font-family="Arial,sans-serif"
+                                font-size="29" font-weight="800" fill="#0033A0" letter-spacing="1">ALSTOM</text></svg>
+                    </div>
+                    <div class="logo-item" title="Schneider Electric"><svg viewBox="0 0 200 36"
+                            xmlns="http://www.w3.org/2000/svg"><text x="0" y="22" font-family="Arial,sans-serif"
+                                font-size="18" font-weight="800" fill="#3DCD58"
+                                letter-spacing="0.5">SCHNEIDER</text><text x="0" y="36" font-family="Arial,sans-serif"
+                                font-size="12" font-weight="400" fill="#555" letter-spacing="2">ELECTRIC</text></svg>
+                    </div>
+                    <div class="logo-item" title="Faurecia"><svg viewBox="0 0 140 36"
+                            xmlns="http://www.w3.org/2000/svg"><text x="0" y="28" font-family="Arial,sans-serif"
+                                font-size="27" font-weight="700" fill="#8B0000"
+                                letter-spacing="0.5">Faurecia</text></svg></div>
+                    <div class="logo-item" title="Airbus"><svg viewBox="0 0 130 36"
+                            xmlns="http://www.w3.org/2000/svg"><text x="0" y="28"
+                                font-family="'Arial Narrow',Arial,sans-serif" font-size="30" font-weight="700"
+                                fill="#00205B" letter-spacing="0.5">AIRBUS</text></svg></div>
+                    <div class="logo-item" title="Naval Group"><svg viewBox="0 0 160 36"
+                            xmlns="http://www.w3.org/2000/svg"><text x="0" y="26" font-family="Arial,sans-serif"
+                                font-size="22" font-weight="800" fill="#003F8A">Naval</text><text x="78" y="26"
+                                font-family="Arial,sans-serif" font-size="22" font-weight="300"
+                                fill="#003F8A">Group</text></svg></div>
+                    <div class="logo-item" title="ABB"><svg viewBox="0 0 88 36" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="0" y="0" width="88" height="36" rx="4" fill="#FF000F" /><text x="50%" y="26"
+                                text-anchor="middle" font-family="Arial,sans-serif" font-size="26" font-weight="900"
+                                fill="#fff" letter-spacing="2">ABB</text>
+                        </svg></div>
+                    <div class="logo-item" title="SNCF"><svg viewBox="0 0 96 36" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="0" y="0" width="96" height="36" rx="4" fill="#CC0A2B" /><text x="50%" y="26"
+                                text-anchor="middle" font-family="Arial,sans-serif" font-size="22" font-weight="900"
+                                fill="#fff" letter-spacing="1.5">SNCF</text>
+                        </svg></div>
+                    <div class="logo-item" title="Safran"><svg viewBox="0 0 132 36"
+                            xmlns="http://www.w3.org/2000/svg"><text x="0" y="29" font-family="Arial,sans-serif"
+                                font-size="29" font-weight="900" fill="#E8002D" letter-spacing="1">SAFRAN</text></svg>
+                    </div>
+                    <div class="logo-item" title="Renault"><svg viewBox="0 0 148 36"
+                            xmlns="http://www.w3.org/2000/svg"><text x="0" y="28" font-family="Arial,sans-serif"
+                                font-size="26" font-weight="800" fill="#EFCD00" stroke="#222" stroke-width="0.5"
+                                letter-spacing="1.5">RENAULT</text></svg></div>
+                    <div class="logo-item" title="Siemens"><svg viewBox="0 0 152 36"
+                            xmlns="http://www.w3.org/2000/svg"><text x="0" y="28" font-family="Arial,sans-serif"
+                                font-size="27" font-weight="700" fill="#009999" letter-spacing="1">SIEMENS</text></svg>
+                    </div>
+                    <!-- Duplicate -->
+                    <div class="logo-item" title="Bosch"><svg viewBox="0 0 108 36" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="0" y="2" width="104" height="32" rx="16" fill="#EA0016" /><text x="13" y="24"
+                                font-family="Arial,sans-serif" font-size="19" font-weight="700" fill="#fff"
+                                letter-spacing="0.5">BOSCH</text>
+                        </svg></div>
+                    <div class="logo-item" title="Thales"><svg viewBox="0 0 120 36"
+                            xmlns="http://www.w3.org/2000/svg"><text x="0" y="29" font-family="Arial,sans-serif"
+                                font-size="29" font-weight="800" fill="#004C97" letter-spacing="1.5">THALES</text></svg>
+                    </div>
+                    <div class="logo-item" title="EDF"><svg viewBox="0 0 96 36" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="0" y="0" width="96" height="36" rx="4" fill="#002169" /><text x="50%" y="25"
+                                text-anchor="middle" font-family="Arial,sans-serif" font-size="22" font-weight="900"
+                                fill="#F7A600" letter-spacing="2">EDF</text>
+                        </svg></div>
+                    <div class="logo-item" title="TotalEnergies"><svg viewBox="0 0 180 36"
+                            xmlns="http://www.w3.org/2000/svg"><text x="0" y="28" font-family="Arial,sans-serif"
+                                font-size="24" font-weight="900" fill="#CC0001">Total</text><text x="72" y="28"
+                                font-family="Arial,sans-serif" font-size="24" font-weight="900"
+                                fill="#F7941D">Energies</text></svg></div>
+                    <div class="logo-item" title="Michelin"><svg viewBox="0 0 150 36"
+                            xmlns="http://www.w3.org/2000/svg"><text x="0" y="28" font-family="Arial,sans-serif"
+                                font-size="27" font-weight="800" fill="#003189" letter-spacing="1">MICHELIN</text></svg>
+                    </div>
+                    <div class="logo-item" title="Valeo"><svg viewBox="0 0 100 36"
+                            xmlns="http://www.w3.org/2000/svg"><text x="0" y="29" font-family="Arial,sans-serif"
+                                font-size="30" font-weight="800" fill="#005BAC">Valeo</text></svg></div>
+                    <div class="logo-item" title="Alstom"><svg viewBox="0 0 124 36"
+                            xmlns="http://www.w3.org/2000/svg"><text x="0" y="29" font-family="Arial,sans-serif"
+                                font-size="29" font-weight="800" fill="#0033A0" letter-spacing="1">ALSTOM</text></svg>
+                    </div>
+                    <div class="logo-item" title="Schneider Electric"><svg viewBox="0 0 200 36"
+                            xmlns="http://www.w3.org/2000/svg"><text x="0" y="22" font-family="Arial,sans-serif"
+                                font-size="18" font-weight="800" fill="#3DCD58"
+                                letter-spacing="0.5">SCHNEIDER</text><text x="0" y="36" font-family="Arial,sans-serif"
+                                font-size="12" font-weight="400" fill="#555" letter-spacing="2">ELECTRIC</text></svg>
+                    </div>
+                    <div class="logo-item" title="Faurecia"><svg viewBox="0 0 140 36"
+                            xmlns="http://www.w3.org/2000/svg"><text x="0" y="28" font-family="Arial,sans-serif"
+                                font-size="27" font-weight="700" fill="#8B0000"
+                                letter-spacing="0.5">Faurecia</text></svg></div>
+                    <div class="logo-item" title="Airbus"><svg viewBox="0 0 130 36"
+                            xmlns="http://www.w3.org/2000/svg"><text x="0" y="28"
+                                font-family="'Arial Narrow',Arial,sans-serif" font-size="30" font-weight="700"
+                                fill="#00205B" letter-spacing="0.5">AIRBUS</text></svg></div>
+                    <div class="logo-item" title="Naval Group"><svg viewBox="0 0 160 36"
+                            xmlns="http://www.w3.org/2000/svg"><text x="0" y="26" font-family="Arial,sans-serif"
+                                font-size="22" font-weight="800" fill="#003F8A">Naval</text><text x="78" y="26"
+                                font-family="Arial,sans-serif" font-size="22" font-weight="300"
+                                fill="#003F8A">Group</text></svg></div>
+                    <div class="logo-item" title="ABB"><svg viewBox="0 0 88 36" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="0" y="0" width="88" height="36" rx="4" fill="#FF000F" /><text x="50%" y="26"
+                                text-anchor="middle" font-family="Arial,sans-serif" font-size="26" font-weight="900"
+                                fill="#fff" letter-spacing="2">ABB</text>
+                        </svg></div>
+                    <div class="logo-item" title="SNCF"><svg viewBox="0 0 96 36" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="0" y="0" width="96" height="36" rx="4" fill="#CC0A2B" /><text x="50%" y="26"
+                                text-anchor="middle" font-family="Arial,sans-serif" font-size="22" font-weight="900"
+                                fill="#fff" letter-spacing="1.5">SNCF</text>
+                        </svg></div>
+                    <div class="logo-item" title="Safran"><svg viewBox="0 0 132 36"
+                            xmlns="http://www.w3.org/2000/svg"><text x="0" y="29" font-family="Arial,sans-serif"
+                                font-size="29" font-weight="900" fill="#E8002D" letter-spacing="1">SAFRAN</text></svg>
+                    </div>
+                    <div class="logo-item" title="Renault"><svg viewBox="0 0 148 36"
+                            xmlns="http://www.w3.org/2000/svg"><text x="0" y="28" font-family="Arial,sans-serif"
+                                font-size="26" font-weight="800" fill="#EFCD00" stroke="#222" stroke-width="0.5"
+                                letter-spacing="1.5">RENAULT</text></svg></div>
+                    <div class="logo-item" title="Siemens"><svg viewBox="0 0 152 36"
+                            xmlns="http://www.w3.org/2000/svg"><text x="0" y="28" font-family="Arial,sans-serif"
+                                font-size="27" font-weight="700" fill="#009999" letter-spacing="1">SIEMENS</text></svg>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 
+
     <!-- BOOKING CTA SECTION -->
+
     <section class="section-booking-cta" id="booking-cta">
         <h2 data-fr="Prenez rendez-vous avec <em>notre équipe</em>" data-en="Schedule a call with <em>our team</em>">
             Prenez rendez-vous avec <em>notre équipe</em></h2>
@@ -2123,6 +2272,54 @@
 
             setTimeout(() => goStep('success'), 500);
         }
+
+        /* ── MOBILE VIDEO FALLBACK ── */
+        (function () {
+            const video = document.querySelector('.hero-video');
+            if (!video) return;
+
+            // Force play on first user interaction (iOS requirement)
+            function tryPlay() {
+                const playPromise = video.play();
+                if (playPromise !== undefined) {
+                    playPromise.catch(function () {
+                        // Autoplay blocked, will retry on next interaction
+                    });
+                }
+            }
+
+            // Play when video is ready
+            video.addEventListener('canplay', tryPlay);
+
+            // iOS needs user gesture to start video
+            document.addEventListener('touchstart', function onTouch() {
+                tryPlay();
+                document.removeEventListener('touchstart', onTouch);
+            }, { once: true, passive: true });
+
+            // Also try on click for desktop browsers that block autoplay
+            document.addEventListener('click', function onClick() {
+                tryPlay();
+                document.removeEventListener('click', onClick);
+            }, { once: true });
+
+            // Pause when not visible to save battery
+            if ('IntersectionObserver' in window) {
+                const observer = new IntersectionObserver(function (entries) {
+                    entries.forEach(function (entry) {
+                        if (entry.isIntersecting) {
+                            tryPlay();
+                        } else {
+                            video.pause();
+                        }
+                    });
+                }, { threshold: 0.1 });
+                observer.observe(video.closest('.hero') || video);
+            }
+
+            // Fallback: try playing immediately
+            tryPlay();
+        })();
     </script>
 </body>
 
