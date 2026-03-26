@@ -1247,6 +1247,54 @@
             }
         }
 
+        /* ── NAV SCROLL BEHAVIOR ────────────────────────── */
+        @media (min-width: 769px) {
+            nav {
+                transition: background .5s ease, backdrop-filter .5s ease, box-shadow .5s ease;
+            }
+
+            nav.nav-scrolled {
+                background: rgba(255, 255, 255, .96) !important;
+                backdrop-filter: blur(18px) !important;
+                -webkit-backdrop-filter: blur(18px) !important;
+                box-shadow: 0 1px 0 rgba(0, 0, 0, .07);
+            }
+        }
+
+        /* ── SCROLL ASSEMBLY — état initial caché ────────── */
+        body.sa-ready #solution .section-eyebrow,
+        body.sa-ready #solution .section-heading,
+        body.sa-ready #solution .feature-card,
+        body.sa-ready #how-it-works .section-eyebrow,
+        body.sa-ready #how-it-works .section-heading,
+        body.sa-ready #how-it-works .step-number,
+        body.sa-ready #how-it-works .step-item h3,
+        body.sa-ready #how-it-works .step-item p,
+        body.sa-ready .logo-slider-section,
+        body.sa-ready #booking-cta h2,
+        body.sa-ready #booking-cta p,
+        body.sa-ready #booking-cta .btn-book-large,
+        body.sa-ready footer {
+            opacity: 0;
+        }
+
+        /* Désactive les CSS transitions pendant que Anime.js anime ces éléments */
+        body.sa-ready:not(.sa-sol-done) #solution .feature-card,
+        body.sa-ready:not(.sa-cta-done) #booking-cta .btn-book-large {
+            transition: none !important;
+        }
+
+        /* Ligne de connexion des étapes : se trace de gauche à droite */
+        body.sa-ready .steps-grid::before {
+            transform-origin: left center;
+            transform: scaleX(0);
+            transition: transform 1.6s cubic-bezier(.22, 1, .36, 1) .55s;
+        }
+
+        body.sa-ready .steps-grid.sa-line::before {
+            transform: scaleX(1);
+        }
+
         /* ═══════ EXTRA SMALL ─ 430px ══════════════════ */
         @media (max-width: 430px) {
             .hero-text {
@@ -1985,6 +2033,203 @@
 
             setTimeout(() => goStep('success'), 500);
         }
+
+        /* ══════════════════════════════════════════════════
+           SCROLL ASSEMBLY SYSTEM — Anime.js scroll-driven
+           Chaque section se construit comme une machine
+           au fur et à mesure que l'utilisateur défile.
+        ══════════════════════════════════════════════════ */
+        (function () {
+            /* Chargement asynchrone d'Anime.js */
+            var s = document.createElement('script');
+            s.src = 'https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.2/anime.min.js';
+            s.onload = function () {
+                document.body.classList.add('sa-ready');
+                initNavScroll();
+                initScrollAssembly();
+            };
+            document.head.appendChild(s);
+
+            /* ── NAV : fond apparaît après le hero ─────── */
+            function initNavScroll() {
+                var nav = document.querySelector('nav');
+                var threshold = window.innerHeight * 0.72;
+                window.addEventListener('scroll', function () {
+                    nav.classList.toggle('nav-scrolled', window.scrollY > threshold);
+                }, { passive: true });
+            }
+
+            /* ── ANIMATIONS SECTION PAR SECTION ────────── */
+            function initScrollAssembly() {
+                var fired = {};
+
+                /* Observer générique — fire once */
+                function onEnter(selector, key, fn) {
+                    var el = document.querySelector(selector);
+                    if (!el) return;
+                    new IntersectionObserver(function (entries) {
+                        if (entries[0].isIntersecting && !fired[key]) {
+                            fired[key] = true;
+                            fn();
+                        }
+                    }, { threshold: 0.06, rootMargin: '0px 0px -28px 0px' }).observe(el);
+                }
+
+                /* ════ SECTION SOLUTION ════════════════════
+                   Chaque carte arrive d'un coin différent,
+                   légèrement inclinée, et clique en place. */
+                onEnter('#solution', 'sol', function () {
+                    anime.timeline({
+                        easing: 'easeOutExpo',
+                        complete: function () {
+                            /* Restaure les transitions hover CSS après assemblage */
+                            document.body.classList.add('sa-sol-done');
+                            document.querySelectorAll('#solution .feature-card')
+                                .forEach(function (el) { el.style.transform = ''; });
+                        }
+                    })
+                        /* Eyebrow tombe du haut */
+                        .add({
+                            targets: '#solution .section-eyebrow',
+                            opacity: [0, 1], translateY: [-26, 0],
+                            duration: 580
+                        })
+                        /* Heading monte du bas */
+                        .add({
+                            targets: '#solution .section-heading',
+                            opacity: [0, 1], translateY: [50, 0],
+                            duration: 700
+                        }, '-=360')
+                        /* Carte 1 — coin haut-gauche, inclinée -7° */
+                        .add({
+                            targets: '#solution .feature-card:nth-child(1)',
+                            opacity: [0, 1], translateX: [-72, 0], translateY: [-38, 0], rotate: [-7, 0],
+                            duration: 780
+                        }, '-=360')
+                        /* Carte 2 — tombe du haut, +4° */
+                        .add({
+                            targets: '#solution .feature-card:nth-child(2)',
+                            opacity: [0, 1], translateY: [-72, 0], rotate: [4, 0],
+                            duration: 780
+                        }, '-=640')
+                        /* Carte 3 — coin haut-droit, +7° */
+                        .add({
+                            targets: '#solution .feature-card:nth-child(3)',
+                            opacity: [0, 1], translateX: [72, 0], translateY: [-38, 0], rotate: [7, 0],
+                            duration: 780
+                        }, '-=640')
+                        /* Carte 4 — coin bas-gauche, +5° */
+                        .add({
+                            targets: '#solution .feature-card:nth-child(4)',
+                            opacity: [0, 1], translateX: [-72, 0], translateY: [38, 0], rotate: [5, 0],
+                            duration: 780
+                        }, '-=420')
+                        /* Carte 5 — remonte du bas, -4° */
+                        .add({
+                            targets: '#solution .feature-card:nth-child(5)',
+                            opacity: [0, 1], translateY: [72, 0], rotate: [-4, 0],
+                            duration: 780
+                        }, '-=640')
+                        /* Carte 6 — coin bas-droit, -7° */
+                        .add({
+                            targets: '#solution .feature-card:nth-child(6)',
+                            opacity: [0, 1], translateX: [72, 0], translateY: [38, 0], rotate: [-7, 0],
+                            duration: 780
+                        }, '-=640');
+                });
+
+                /* ════ SECTION HOW IT WORKS ═════════════════
+                   Les numéros pivotent comme des engrenages
+                   qui s'enclenchent, un par un. */
+                onEnter('#how-it-works', 'how', function () {
+                    /* Ligne de connexion se trace */
+                    var grid = document.querySelector('.steps-grid');
+                    if (grid) grid.classList.add('sa-line');
+
+                    anime.timeline({ easing: 'easeOutExpo' })
+                        .add({
+                            targets: '#how-it-works .section-eyebrow',
+                            opacity: [0, 1], translateY: [-26, 0],
+                            duration: 580
+                        })
+                        .add({
+                            targets: '#how-it-works .section-heading',
+                            opacity: [0, 1], translateY: [50, 0],
+                            duration: 700
+                        }, '-=360')
+                        /* Numéros pivotent 160°→0° et émergent (spring) */
+                        .add({
+                            targets: '#how-it-works .step-number',
+                            opacity: [0, 1],
+                            rotate: ['160deg', '0deg'],
+                            scale: [0.1, 1],
+                            duration: 720,
+                            delay: anime.stagger(130),
+                            easing: 'easeOutBack'
+                        }, '-=220')
+                        /* Titres glissent vers le haut, en séquence */
+                        .add({
+                            targets: '#how-it-works .step-item h3',
+                            opacity: [0, 1], translateY: [22, 0],
+                            duration: 520, delay: anime.stagger(130)
+                        }, '-=480')
+                        /* Paragraphes suivent avec micro-décalage */
+                        .add({
+                            targets: '#how-it-works .step-item p',
+                            opacity: [0, 1], translateY: [14, 0],
+                            duration: 520, delay: anime.stagger(130)
+                        }, '-=440');
+                });
+
+                /* ════ LOGO SLIDER ══════════════════════════
+                   La bande de logos monte doucement */
+                onEnter('.logo-slider-section', 'logos', function () {
+                    anime({
+                        targets: '.logo-slider-section',
+                        opacity: [0, 1], translateY: [32, 0],
+                        easing: 'easeOutExpo', duration: 820
+                    });
+                });
+
+                /* ════ BOOKING CTA ══════════════════════════
+                   Le titre descend, le texte suit,
+                   le bouton jaillit avec un ressort. */
+                onEnter('#booking-cta', 'cta', function () {
+                    anime.timeline({
+                        easing: 'easeOutExpo',
+                        complete: function () {
+                            document.body.classList.add('sa-cta-done');
+                            var btn = document.querySelector('#booking-cta .btn-book-large');
+                            if (btn) btn.style.transform = '';
+                        }
+                    })
+                        .add({
+                            targets: '#booking-cta h2',
+                            opacity: [0, 1], translateY: [58, 0],
+                            duration: 740
+                        })
+                        .add({
+                            targets: '#booking-cta p',
+                            opacity: [0, 1], translateY: [36, 0],
+                            duration: 640
+                        }, '-=460')
+                        .add({
+                            targets: '#booking-cta .btn-book-large',
+                            opacity: [0, 1], scale: [0.48, 1],
+                            duration: 620, easing: 'easeOutBack'
+                        }, '-=420');
+                });
+
+                /* ════ FOOTER ═══════════════════════════════ */
+                onEnter('footer', 'footer', function () {
+                    anime({
+                        targets: 'footer',
+                        opacity: [0, 1], translateY: [18, 0],
+                        easing: 'easeOutExpo', duration: 620
+                    });
+                });
+            }
+        })();
 
         /* ── MOBILE VIDEO FALLBACK ── */
         (function () {
