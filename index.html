@@ -1067,6 +1067,89 @@
             }
         }
 
+        /* ── HAMBURGER & MOBILE MENU ─────────────────── */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 5px;
+            width: 36px;
+            height: 36px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 4px;
+            z-index: 201;
+        }
+
+        .hamburger span {
+            display: block;
+            width: 22px;
+            height: 2px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 2px;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: translateY(7px) rotate(45deg);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: translateY(-7px) rotate(-45deg);
+        }
+
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            z-index: 150;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 28px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.35s ease;
+        }
+
+        .mobile-menu.open {
+            display: flex;
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .mobile-menu a {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 22px;
+            font-weight: 400;
+            color: rgba(255, 255, 255, 0.9);
+            text-decoration: none;
+            letter-spacing: 0.02em;
+            transition: color 0.2s ease;
+        }
+
+        .mobile-menu a:hover {
+            color: #6c5ce7;
+        }
+
+        .mobile-menu .mobile-cta {
+            margin-top: 12px;
+            font-size: 16px;
+            padding: 14px 36px;
+        }
+
         /* ── RESPONSIVE ──────────────────────────────── */
         /* ═══════ RESPONSIVE ─ 768px ═══════════════════ */
         @media (max-width: 768px) {
@@ -1074,14 +1157,27 @@
             /* NAV */
             nav {
                 padding: 14px 18px;
-                background: rgba(255, 255, 255, 0.96);
+                background: rgba(0, 0, 0, 0.85);
                 backdrop-filter: blur(16px);
                 -webkit-backdrop-filter: blur(16px);
-                border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+                border-bottom: 1px solid rgba(255, 255, 255, 0.08);
             }
 
             .nav-links {
+                display: none !important;
+            }
+
+            .nav-right {
                 display: none;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            /* Spline: keep animation alive but allow page scroll */
+            .hero-spline spline-viewer {
+                touch-action: pan-y;
             }
 
             /* HERO */
@@ -1094,21 +1190,23 @@
                 background: #000;
             }
 
-            .hero-video {
+            .hero-spline {
                 position: absolute;
                 top: 0;
                 left: 0;
                 width: 100%;
                 height: 100%;
-                transform: translateZ(0);
-                object-fit: cover;
-                object-position: center center;
+            }
+
+            .hero-spline spline-viewer {
+                width: 100%;
+                height: 100%;
             }
 
             .hero-overlay {
-                background: rgba(255, 255, 255, 0.38);
-                backdrop-filter: saturate(1.6) blur(1.5px);
-                -webkit-backdrop-filter: saturate(1.6) blur(1.5px);
+                background: rgba(0, 0, 0, 0.25);
+                backdrop-filter: none;
+                -webkit-backdrop-filter: none;
             }
 
             .hero-text {
@@ -1255,10 +1353,10 @@
             }
 
             nav.nav-scrolled {
-                background: rgba(255, 255, 255, .96) !important;
+                background: rgba(0, 0, 0, .85) !important;
                 backdrop-filter: blur(18px) !important;
                 -webkit-backdrop-filter: blur(18px) !important;
-                box-shadow: 0 1px 0 rgba(0, 0, 0, .07);
+                box-shadow: 0 1px 0 rgba(255, 255, 255, .07);
             }
         }
 
@@ -1363,7 +1461,21 @@
             <button class="btn-cta" id="btn-nav-rdv" onclick="openBooking()" data-fr="Prendre RDV"
                 data-en="Book a Call">Prendre RDV</button>
         </div>
+        <!-- Mobile hamburger -->
+        <button class="hamburger" id="hamburger-btn" aria-label="Menu" onclick="toggleMobileMenu()">
+            <span></span><span></span><span></span>
+        </button>
     </nav>
+
+    <!-- Mobile menu overlay -->
+    <div class="mobile-menu" id="mobile-menu">
+        <a href="#solution" onclick="closeMobileMenu()" data-fr="Solution" data-en="Solution">Solution</a>
+        <a href="#how-it-works" onclick="closeMobileMenu()" data-fr="Comment ça marche" data-en="How it works">Comment
+            ça marche</a>
+        <a href="#booking-cta" onclick="closeMobileMenu()" data-fr="Contact" data-en="Contact">Contact</a>
+        <button class="btn-cta mobile-cta" onclick="closeMobileMenu(); openBooking()" data-fr="Prendre RDV"
+            data-en="Book a Call">Prendre RDV</button>
+    </div>
 
     <!-- HERO -->
     <section class="hero">
@@ -1796,6 +1908,23 @@
                 }
             }, 500);
         })();
+
+        /* ── MOBILE MENU ── */
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            const btn = document.getElementById('hamburger-btn');
+            menu.classList.toggle('open');
+            btn.classList.toggle('active');
+            document.body.style.overflow = menu.classList.contains('open') ? 'hidden' : '';
+        }
+
+        function closeMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            const btn = document.getElementById('hamburger-btn');
+            menu.classList.remove('open');
+            btn.classList.remove('active');
+            document.body.style.overflow = '';
+        }
 
         /* ── LANGUAGE ── */
         let currentLang = 'fr';
