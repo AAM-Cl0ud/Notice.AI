@@ -12,7 +12,6 @@
     <link
         href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,400;1,500;1,600&display=swap"
         rel="stylesheet" />
-    <script type="module" src="https://unpkg.com/@splinetool/viewer@1.12.73/build/spline-viewer.js"></script>
     <style>
         *,
         *::before,
@@ -1360,6 +1359,66 @@
             }
         }
 
+        /* ── DRONE CANVAS ────────────────────────────────── */
+        #drone-canvas-wrap {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease;
+        }
+        #drone-canvas {
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+        .hero-scroll {
+            position: relative;
+            height: 280vh;
+        }
+        .hero-sticky {
+            position: sticky !important;
+            top: 0;
+            background: transparent !important;
+        }
+        /* Drone loader */
+        #drone-loader {
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            background: #000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 18px;
+            transition: opacity 0.6s ease, visibility 0.6s ease;
+        }
+        #drone-loader.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+        .drone-loader-logo {
+            font-family: 'DM Sans', sans-serif;
+            font-weight: 300;
+            font-size: 1.3rem;
+            letter-spacing: 0.1em;
+            color: rgba(255,255,255,0.85);
+        }
+        .drone-loader-bar {
+            width: 160px;
+            height: 1px;
+            background: rgba(255,255,255,0.15);
+        }
+        .drone-loader-bar-fill {
+            height: 100%;
+            width: 0%;
+            background: rgba(255,255,255,0.75);
+            transition: width 0.08s linear;
+        }
+
         /* ── SCROLL ASSEMBLY — état initial caché ────────── */
         body.sa-ready #solution .section-eyebrow,
         body.sa-ready #solution .section-heading,
@@ -1477,18 +1536,28 @@
             data-en="Book a Call">Prendre RDV</button>
     </div>
 
-    <!-- HERO -->
-    <section class="hero">
-        <div class="hero-spline">
-            <spline-viewer url="https://prod.spline.design/bVCqzzbEWHC008sy/scene.splinecode"></spline-viewer>
-        </div>
-        <div class="hero-overlay"></div>
-        <div class="hero-text">
-            <span class="line line-1" data-fr="Ne déchiffrez" data-en="Stop decoding">Ne déchiffrez</span>
-            <span class="line line-2" data-fr="plus." data-en="manuals.">plus.</span>
-            <span class="line line-3" data-fr="Visualisez." data-en="Visualize.">Visualisez.</span>
-        </div>
-    </section>
+    <!-- DRONE LOADER -->
+    <div id="drone-loader">
+        <div class="drone-loader-logo">Notice<span style="color:#4F46E5;">.AI</span></div>
+        <div class="drone-loader-bar"><div class="drone-loader-bar-fill" id="drone-loader-fill"></div></div>
+    </div>
+
+    <!-- DRONE CANVAS (fixed, full viewport) -->
+    <div id="drone-canvas-wrap">
+        <canvas id="drone-canvas"></canvas>
+    </div>
+
+    <!-- HERO (scroll-driven, 280vh) -->
+    <div class="hero-scroll" id="hero-scroll">
+        <section class="hero hero-sticky">
+            <div class="hero-overlay"></div>
+            <div class="hero-text">
+                <span class="line line-1" data-fr="Ne déchiffrez" data-en="Stop decoding">Ne déchiffrez</span>
+                <span class="line line-2" data-fr="plus." data-en="manuals.">plus.</span>
+                <span class="line line-3" data-fr="Visualisez." data-en="Visualize.">Visualisez.</span>
+            </div>
+        </section>
+    </div>
 
     <!-- SOLUTION SECTION -->
     <section class="section-solution" id="solution">
@@ -2431,6 +2500,112 @@
 
             // Fallback: try playing immediately
             tryPlay();
+        })();
+    </script>
+
+    <!-- DRONE VIDEO SCROLL ANIMATION -->
+    <script>
+        (function () {
+            var FRAME_COUNT = 145;
+            var IMAGE_SCALE = 0.85;
+            var droneFrames = new Array(FRAME_COUNT).fill(null);
+            var droneCurrentFrame = 0;
+            var droneBgColor = '#050508';
+
+            var canvasWrap = document.getElementById('drone-canvas-wrap');
+            var canvas = document.getElementById('drone-canvas');
+            var ctx = canvas.getContext('2d');
+            var heroScroll = document.getElementById('hero-scroll');
+            var loaderEl = document.getElementById('drone-loader');
+            var loaderFill = document.getElementById('drone-loader-fill');
+
+            function setupCanvas() {
+                var dpr = window.devicePixelRatio || 1;
+                var w = window.innerWidth, h = window.innerHeight;
+                canvas.width = w * dpr;
+                canvas.height = h * dpr;
+                canvas.style.width = w + 'px';
+                canvas.style.height = h + 'px';
+                ctx.scale(dpr, dpr);
+            }
+
+            function drawFrame(index) {
+                var img = droneFrames[index];
+                if (!img) return;
+                var cw = window.innerWidth, ch = window.innerHeight;
+                var iw = img.naturalWidth, ih = img.naturalHeight;
+                var scale = Math.max(cw / iw, ch / ih) * IMAGE_SCALE;
+                var dw = iw * scale, dh = ih * scale;
+                var dx = (cw - dw) / 2, dy = (ch - dh) / 2;
+                ctx.fillStyle = droneBgColor;
+                ctx.fillRect(0, 0, cw, ch);
+                ctx.drawImage(img, dx, dy, dw, dh);
+            }
+
+            function loadFrame(i) {
+                return new Promise(function (resolve) {
+                    var img = new Image();
+                    img.onload = function () { droneFrames[i] = img; resolve(); };
+                    img.onerror = resolve;
+                    img.src = 'frames/frame_' + String(i + 1).padStart(4, '0') + '.jpg';
+                });
+            }
+
+            function updateFrame() {
+                var scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                var heroH = heroScroll.offsetHeight;
+                var viewH = window.innerHeight;
+                var scrollable = heroH - viewH;
+                var progress = Math.max(0, Math.min(1, scrollTop / scrollable));
+
+                // Fade canvas out at the end of the hero zone
+                var opacity = 1;
+                var fadeStart = heroH - viewH * 0.6;
+                if (scrollTop > fadeStart) {
+                    opacity = Math.max(0, 1 - (scrollTop - fadeStart) / (viewH * 0.6));
+                }
+                if (scrollTop > heroH) opacity = 0;
+                canvasWrap.style.opacity = opacity.toString();
+
+                var idx = Math.min(Math.floor(progress * FRAME_COUNT), FRAME_COUNT - 1);
+                if (idx !== droneCurrentFrame) {
+                    droneCurrentFrame = idx;
+                    requestAnimationFrame(function () { drawFrame(droneCurrentFrame); });
+                }
+            }
+
+            async function init() {
+                setupCanvas();
+                window.addEventListener('resize', function () {
+                    setupCanvas();
+                    drawFrame(droneCurrentFrame);
+                });
+
+                // Phase 1 — first 10 frames fast
+                var first = [];
+                for (var i = 0; i < 10; i++) first.push(loadFrame(i));
+                await Promise.all(first);
+                drawFrame(0);
+                loaderEl.classList.add('hidden');
+                canvasWrap.style.opacity = '1';
+
+                // Phase 2 — rest in background
+                var loaded = 10;
+                var rest = [];
+                for (var j = 10; j < FRAME_COUNT; j++) {
+                    rest.push(loadFrame(j).then(function () {
+                        loaded++;
+                        var pct = Math.round((loaded / FRAME_COUNT) * 100);
+                        loaderFill.style.width = pct + '%';
+                    }));
+                }
+                await Promise.all(rest);
+
+                window.addEventListener('scroll', updateFrame, { passive: true });
+                updateFrame();
+            }
+
+            init();
         })();
     </script>
 </body>
