@@ -165,19 +165,6 @@
       background: #04040c; opacity: 0; pointer-events: none;
     }
 
-    /* ─── MARQUEE ─────────────────────────────────────────── */
-    #marquee {
-      position: fixed; bottom: 5vh; left: 0; right: 0;
-      z-index: 30; overflow: hidden; opacity: 0;
-      pointer-events: none; white-space: nowrap;
-    }
-    .marquee-text {
-      display: inline-block;
-      font-size: 12vw; font-weight: 700;
-      letter-spacing: -0.02em; text-transform: uppercase;
-      color: rgba(240,240,245,0.045);
-      white-space: nowrap; will-change: transform;
-    }
 
     /* ─── SCROLL CONTAINER ────────────────────────────────── */
     #scroll-container {
@@ -376,19 +363,43 @@
 
     /* ─── MOBILE ──────────────────────────────────────────── */
     @media (max-width: 768px) {
-      #site-header { padding: 18px 22px; }
+
+      /* Header */
+      #site-header { padding: 16px 20px; }
+      #site-header nav { grid-template-columns: 1fr auto; gap: 0; }
       .nav-links { display: none; }
-      #hero { padding: 0 22px 56px; }
-      #hero-heading { font-size: clamp(3rem,13vw,5.5rem); }
+      #site-header nav > .btn-rdv { font-size: 0.58rem; padding: 9px 18px; }
+
+      /* Hero */
+      #hero { padding: 0 20px 80px; }
+      #hero-heading { font-size: clamp(2.6rem, 11vw, 4.5rem); }
+      #hero-tagline { font-size: 0.65rem; }
       #scroll-hint { display: none; }
-      .al,.ar { padding: 0 5vw; align-items: flex-end; padding-bottom: 12vh; }
-      .al .si,.ar .si { max-width: 100%; }
-      .stats-grid { gap: 10px; }
-      .stat { padding: 26px 26px; }
-      #scroll-container { height: 700vh; }
+
+      /* Scroll sections — centrées, pleine largeur */
+      .al, .ar {
+        padding: 0 5vw;
+        justify-content: center;
+        align-items: center;
+      }
+      .al .si, .ar .si { max-width: 90vw; width: 90vw; }
+      .ac .si { max-width: 90vw; width: 90vw; }
+      .si { padding: 28px 24px; }
+      .sh { font-size: clamp(1.6rem, 6vw, 2.6rem); }
+      .sb { font-size: 0.8rem; max-width: 100%; }
+
+      /* Stats */
+      .stats-grid { flex-direction: column; gap: 12px; align-items: center; }
+      .stat { padding: 24px 32px; width: 100%; max-width: 280px; }
+
+      /* Scroll container */
+      #scroll-container { height: 750vh; }
       .marquee-text { font-size: 18vw; }
-      .modal-box { padding: 36px 22px 30px; }
+
+      /* Modal */
+      .modal-box { padding: 36px 20px 28px; }
       .fg-row { grid-template-columns: 1fr; }
+      .m-title { font-size: 1.5rem; }
     }
   </style>
 </head>
@@ -445,10 +456,6 @@
   <div class="arrow-line"></div>
 </div>
 
-<!-- ── MARQUEE ─────────────────────────────────────────────── -->
-<div id="marquee">
-  <span class="marquee-text">Notice.AI — Intelligence Artificielle — Vos manuels prennent vie — Notice.AI — Intelligence Artificielle — Vos manuels prennent vie —&nbsp;</span>
-</div>
 
 <!-- ── SCROLL CONTAINER ────────────────────────────────────── -->
 <div id="scroll-container">
@@ -938,19 +945,55 @@
 
 /* ── MOBILE ── */
 @media (max-width: 768px) {
-  .w-container { padding: 0 22px; }
-  .w-section { padding: 72px 0; }
-  .w-intro { padding: 88px 0 72px; }
-  .w-steps { grid-template-columns: 1fr; }
+  /* Container */
+  .w-container { padding: 0 20px; }
+  .w-section { padding: 60px 0; }
+
+  /* Intro */
+  .w-intro { padding: 72px 0 60px; }
+  .w-intro-h { font-size: clamp(2rem, 8vw, 3.2rem); }
+  .w-intro-lead { font-size: 0.95rem; }
+
+  /* Section header */
+  .w-section-title { font-size: clamp(1.6rem, 6vw, 2.4rem); }
+  .w-section-hdr { margin-bottom: 36px; }
+
+  /* Steps */
+  .w-steps { grid-template-columns: 1fr; gap: 0; }
+  .w-step { padding: 0 0 36px; border-bottom: 1px solid var(--w-border); margin-bottom: 36px; }
+  .w-step:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
   .w-step-line { display: none; }
-  .w-metrics-grid { flex-direction: column; gap: 40px; align-items: flex-start; }
+
+  /* Metrics */
+  .w-metrics { padding: 60px 0; }
+  .w-metrics-grid { flex-direction: column; gap: 36px; align-items: flex-start; }
   .w-metric-sep { display: none; }
-  .w-ind-grid { grid-template-columns: 1fr 1fr; }
-  .w-ind-card { border-bottom: 1px solid var(--w-border); }
-  .w-trust-inner { flex-direction: column; gap: 40px; }
-  .w-trust-badges { grid-template-columns: 1fr 1fr; }
-  .w-cta-final { padding: 88px 0; }
-  .w-footer-inner { flex-direction: column; gap: 14px; text-align: center; }
+  .w-metric-num { font-size: clamp(2.8rem, 12vw, 4.5rem); }
+
+  /* Industries */
+  .w-ind-grid { grid-template-columns: 1fr; }
+  .w-ind-card { border-right: none; border-bottom: 1px solid var(--w-border); padding: 36px 24px; }
+  .w-ind-card:last-child { border-bottom: none; }
+
+  /* Trust */
+  .w-trust-inner { flex-direction: column; gap: 36px; }
+  .w-trust-badges { grid-template-columns: 1fr 1fr; width: 100%; }
+  .w-trust-badge { min-width: unset; }
+
+  /* CTA */
+  .w-cta-final { padding: 72px 0; }
+  .w-cta-h { font-size: clamp(2rem, 7vw, 3.2rem); }
+  .w-cta-btn { width: 100%; text-align: center; padding: 16px 24px; }
+
+  /* Footer */
+  .w-footer-inner { flex-direction: column; gap: 16px; text-align: center; }
+  .w-footer-links { justify-content: center; }
+}
+
+/* Extra small */
+@media (max-width: 380px) {
+  .w-trust-badges { grid-template-columns: 1fr; }
+  .w-ind-grid { grid-template-columns: 1fr; }
 }
 </style>
 
@@ -1054,7 +1097,6 @@ const scrollCont = document.getElementById('scroll-container');
 const heroEl     = document.getElementById('hero');
 const scrollHint = document.getElementById('scroll-hint');
 const darkOv     = document.getElementById('dark-overlay');
-const marqueeEl  = document.getElementById('marquee');
 
 // ── canvas size ──────────────────────────────────────────────
 function resizeCanvas() {
@@ -1183,21 +1225,6 @@ function boot() {
     }
   });
 
-  // ── Marquee
-  const mText = marqueeEl.querySelector('.marquee-text');
-  gsap.to(mText, { xPercent:-22, ease:'none',
-    scrollTrigger:{ trigger:scrollCont, start:'top top', end:'bottom bottom', scrub:true } });
-  ScrollTrigger.create({
-    trigger:scrollCont, start:'top top', end:'bottom bottom', scrub:true,
-    onUpdate(self) {
-      const p = self.progress;
-      let o = 0;
-      if      (p > 0.18 && p < 0.22)  o = (p-0.18)/0.04;
-      else if (p >= 0.22 && p <= 0.50) o = 1;
-      else if (p > 0.50 && p < 0.54)  o = 1-(p-0.50)/0.04;
-      marqueeEl.style.opacity = o.toString();
-    }
-  });
 
   // ── Scroll sections
   document.querySelectorAll('.scroll-section').forEach(sec => {
