@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html><body>
+<div id="r" style="font-size:24px;padding:40px;font-family:sans-serif;"></div>
+<script>
+const r = document.getElementById('r');
+if (navigator.gpu) {
+  r.style.color = 'green';
+  r.textContent = '✓ WebGPU DISPONIBLE — l\'animation devrait fonctionner';
+  navigator.gpu.requestAdapter().then(a => {
+    if (a) r.textContent += ' (adaptateur GPU trouvé)';
+    else r.textContent += ' (pas d\'adaptateur GPU)';
+  });
+} else {
+  r.style.color = 'red';
+  r.textContent = '✗ WebGPU NON DISPONIBLE — le navigateur ne supporte pas WebGPU';
+}
+</script>
+</body></html>
