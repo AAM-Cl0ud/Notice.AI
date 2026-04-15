@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Notice.AI — Vos notices prennent vie</title>
+  <title>NoticeIA — Vos notices prennent vie</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
@@ -1378,7 +1378,7 @@
 
   <!-- ── LOADER ──────────────────────────────────────────────── -->
   <div id="loader">
-    <div id="loader-brand">Notice.AI</div>
+    <div id="loader-brand">NoticeIA</div>
     <div id="loader-bar">
       <div id="loader-fill"></div>
     </div>
@@ -1388,7 +1388,7 @@
   <!-- ── HEADER ──────────────────────────────────────────────── -->
   <header id="site-header">
     <nav>
-      <a href="#" class="nav-logo">Notice.AI</a>
+      <a href="#" class="nav-logo">NoticeIA</a>
       <ul class="nav-links">
         <li><a href="#" data-fr="Produit" data-en="Product">Produit</a></li>
         <li><a href="#" data-fr="Tarifs" data-en="Pricing">Tarifs</a></li>
@@ -1427,7 +1427,7 @@
 
                 <!-- Barre d'app (sticky) -->
                 <div class="cs-ui-bar">
-                  <span class="cs-ui-brand">Notice.AI</span>
+                  <span class="cs-ui-brand">NoticeIA</span>
                   <div class="cs-ui-tabs">
                     <span class="cs-ui-tab active">Projets</span>
                     <span class="cs-ui-tab">Analytique</span>
@@ -2117,9 +2117,10 @@
     <!-- ── FOOTER ──────────────────────────────────────────── -->
     <footer class="w-footer">
       <div class="w-container w-footer-inner">
-        <span class="w-footer-logo">Notice.AI</span>
-        <span class="w-footer-copy" data-fr="© 2026 Notice.AI — Tous droits réservés"
-          data-en="© 2026 Notice.AI — All rights reserved">© 2026 Notice.AI — Tous droits réservés</span>
+        <span class="w-footer-logo">NoticeIA</span>
+        <a href="https://noticeai.com" class="w-footer-domain">noticeai.com</a>
+        <span class="w-footer-copy" data-fr="© 2026 NoticeIA — Tous droits réservés"
+          data-en="© 2026 NoticeIA — All rights reserved">© 2026 NoticeIA — Tous droits réservés</span>
         <div class="w-footer-links">
           <a href="#" data-fr="Mentions légales" data-en="Legal">Mentions légales</a>
           <a href="#" data-fr="Confidentialité" data-en="Privacy">Confidentialité</a>
@@ -2771,6 +2772,19 @@
       color: #fff;
     }
 
+    .w-footer-domain {
+      font-size: 0.72rem;
+      font-weight: 400;
+      letter-spacing: 0.04em;
+      color: rgba(255, 255, 255, 0.35);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .w-footer-domain:hover {
+      color: rgba(255, 255, 255, 0.7);
+    }
+
     .w-footer-copy {
       font-size: 0.62rem;
       font-weight: 300;
@@ -3309,9 +3323,9 @@
       if (!email) { alert(lang === 'fr' ? 'Veuillez entrer votre email.' : 'Please enter your email.'); return; }
       if (!selDay || !selTime) { alert(lang === 'fr' ? 'Veuillez sélectionner une date et un créneau.' : 'Please select a date and time.'); return; }
       const ds = selDay.toLocaleDateString(lang === 'fr' ? 'fr-FR' : 'en-GB', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
-      const sub = encodeURIComponent(`[Notice.AI] Démo — ${first} ${last} — ${co}`);
+      const sub = encodeURIComponent(`[NoticeIA] Démo — ${first} ${last} — ${co}`);
       const bod = encodeURIComponent(`Nom : ${first} ${last}\nEmail : ${email}\nEntreprise : ${co}\n\nBesoin :\n${desc}\n\nCréneau : ${ds} à ${selTime}`);
-      window.location.href = `mailto:contact@notice.ai?subject=${sub}&body=${bod}`;
+      window.location.href = `mailto:contact@noticeai.com?subject=${sub}&body=${bod}`;
       closeModal();
     }
   </script>
