@@ -3,20 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Notice.AI — Vos manuels prennent vie</title>
+  <title>Notice.AI — Vos notices prennent vie</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
-  <script type="importmap">
-  {
-    "imports": {
-      "three": "https://unpkg.com/three@0.183.0/build/three.webgpu.js",
-      "three/webgpu": "https://unpkg.com/three@0.183.0/build/three.webgpu.js",
-      "three/tsl": "https://unpkg.com/three@0.183.0/build/three.tsl.js",
-      "three/addons/": "https://unpkg.com/three@0.183.0/examples/jsm/"
-    }
-  }
-  </script>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet" />
 
 
@@ -68,59 +58,224 @@
       letter-spacing: 0.16em; color: var(--muted);
     }
 
-    /* ─── THREE.JS CANVAS — fixed full screen background ───── */
-    canvas {
-      position: fixed !important;
-      top: 0 !important; left: 0 !important;
-      width: 100vw !important; height: 100vh !important;
-      z-index: 1 !important;
-      pointer-events: auto;
+    /* ─── BACKGROUND ─────────────────────────────────────── */
+    body { background: #fff; color: #0a0a0a; }
+
+    /* ─── CONTAINER SCROLL SECTION ───────────────────────── */
+    #cs-section {
+      position: relative;
+      z-index: 60;
+      height: 150vh;
+      /* fond blanc + motif de petits points */
+      background-color: #ffffff;
+      background-image: radial-gradient(circle, rgba(0,0,0,0.13) 1px, transparent 1px);
+      background-size: 22px 22px;
+    }
+    #cs-sticky {
+      position: sticky; top: 0;
+      height: 100vh;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      padding-top: 0;
+      overflow: visible;
+      gap: 32px;
+      /* perspective sur le parent direct — requis pour rotateX */
+      perspective: 1000px;
     }
 
-    /* ─── HERO — overlays canvas ──────────────────────────── */
-    #hero {
-      position: fixed; inset: 0; z-index: 5;
-      display: flex; flex-direction: column;
-      justify-content: center; align-items: center;
-      text-align: center;
-      background: transparent;
-      pointer-events: none;
+    /* Header adapts on light section */
+    body.cs-visible #site-header .nav-logo { color: #0a0a0a; }
+    body.cs-visible #site-header .nav-links a { color: rgba(10,10,10,0.50); }
+    body.cs-visible #site-header .nav-links a:hover { color: #0a0a0a; }
+    body.cs-visible .btn-rdv {
+      background: rgba(10,10,10,0.07);
+      border-color: rgba(10,10,10,0.2);
+      color: #0a0a0a;
     }
-    #hero-inner { pointer-events: auto; }
+
+    /* ── Titre : petite ligne + grande ligne ─────────────── */
+    #cs-title {
+      text-align: center;
+      position: relative; z-index: 2;
+      margin-bottom: 0;
+      padding: 0 20px;
+      width: 100%; max-width: 900px;
+      will-change: transform;
+    }
+    #cs-label {
+      display: block;
+      font-size: 0.62rem; font-weight: 500;
+      letter-spacing: 0.22em; text-transform: uppercase;
+      color: rgba(10,10,10,0.35); margin-bottom: 16px;
+    }
+    #cs-heading { line-height: 1; }
+    #cs-heading .cs-line-sm {
+      display: block;
+      font-size: clamp(1.3rem, 2.6vw, 2rem);
+      font-weight: 600; letter-spacing: -0.01em;
+      color: #0a0a0a; margin-bottom: 4px;
+    }
+    #cs-heading .cs-line-big {
+      display: block;
+      font-size: clamp(3.6rem, 9vw, 7.5rem);
+      font-weight: 700; letter-spacing: -0.04em;
+      color: #0a0a0a; line-height: 0.9;
+    }
+
+    /* ── Scroll hint ─────────────────────────────────────── */
+    #cs-scroll-hint {
+      position: absolute; bottom: 28px;
+      font-size: 0.52rem; letter-spacing: 0.2em;
+      text-transform: uppercase; color: rgba(10,10,10,0.28);
+      display: flex; flex-direction: column; align-items: center; gap: 8px;
+      z-index: 3;
+    }
+    #cs-scroll-hint .cs-arrow {
+      width: 1px; height: 36px;
+      background: linear-gradient(to bottom, rgba(10,10,10,0.28), transparent);
+      animation: ap 2s ease-in-out infinite;
+    }
+    @keyframes ap { 0%,100%{opacity:.3} 50%{opacity:.85} }
+
+    /* ── Device frame — exactement Aceternity ────────────── */
+    #cs-device {
+      width: min(82vw, 780px);
+      transform-origin: center top;
+      position: relative; z-index: 1;
+      flex-shrink: 0;
+      will-change: transform;
+    }
+    /* box-shadow exacte du composant Aceternity */
+    #cs-frame {
+      background: #222222;
+      border: 4px solid #6c6c6c;
+      border-radius: 30px;
+      padding: 8px;
+      box-shadow:
+        0 0 #0000004d,
+        0 9px 20px #0000004a,
+        0 37px 37px #00000042,
+        0 84px 50px #00000026,
+        0 149px 60px #0000000a,
+        0 233px 65px #00000003;
+    }
+    #cs-screen {
+      /* bg-zinc-900 — dark dashboard comme dans le ref Aceternity */
+      background: #09090b;
+      border-radius: 20px;
+      overflow: hidden;
+      height: clamp(220px, 32vh, 340px);
+    }
+
+    /* ── UI inside the device — dark theme (bg-zinc-900) ─── */
+    .cs-ui { display: flex; flex-direction: column; height: 100%; }
+    .cs-ui-bar {
+      display: flex; align-items: center;
+      padding: 14px 24px;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+      gap: 20px; flex-shrink: 0;
+      background: #18181b;
+    }
+    .cs-ui-brand {
+      font-size: 0.82rem; font-weight: 700;
+      letter-spacing: -0.01em; color: #fff;
+    }
+    .cs-ui-tabs {
+      display: flex;
+      background: rgba(255,255,255,0.07); border-radius: 8px; padding: 3px;
+    }
+    .cs-ui-tab {
+      font-size: 0.68rem; font-weight: 400;
+      color: rgba(255,255,255,0.4); padding: 5px 14px;
+      border-radius: 6px; cursor: default;
+    }
+    .cs-ui-tab.active {
+      background: rgba(255,255,255,0.1); color: #fff; font-weight: 500;
+    }
+    .cs-ui-action {
+      margin-left: auto;
+      font-size: 0.68rem; font-weight: 500;
+      background: #a78bfa; color: #fff;
+      border: none; border-radius: 8px;
+      padding: 7px 16px; cursor: default;
+    }
+    .cs-ui-body {
+      display: grid;
+      grid-template-columns: 1fr 240px;
+      flex: 1; overflow: hidden;
+    }
+    .cs-ui-main {
+      padding: 20px 24px;
+      border-right: 1px solid rgba(255,255,255,0.06);
+      background: #09090b;
+      overflow-y: auto;
+    }
+    .cs-ui-section-title {
+      font-size: 0.58rem; font-weight: 600;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: rgba(255,255,255,0.3); margin-bottom: 14px;
+    }
+    .cs-doc-row {
+      display: flex; align-items: center; gap: 12px;
+      padding: 11px 14px;
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 10px; margin-bottom: 8px;
+      background: rgba(255,255,255,0.03);
+    }
+    .cs-doc-icon { font-size: 1.1rem; flex-shrink: 0; }
+    .cs-doc-meta { flex: 1; min-width: 0; }
+    .cs-doc-name {
+      font-size: 0.76rem; font-weight: 500;
+      color: rgba(255,255,255,0.88); white-space: nowrap;
+      overflow: hidden; text-overflow: ellipsis;
+    }
+    .cs-doc-sub { font-size: 0.62rem; color: rgba(255,255,255,0.35); margin-top: 2px; }
+    .cs-doc-status {
+      font-size: 0.58rem; font-weight: 600;
+      padding: 4px 10px; border-radius: 100px; flex-shrink: 0;
+    }
+    .cs-doc-status.done  { background: rgba(34,197,94,0.15); color: #4ade80; }
+    .cs-doc-status.processing { background: rgba(167,139,250,0.15); color: #a78bfa; }
+    .cs-progress-wrap { margin-top: 12px; }
+    .cs-progress-bar {
+      height: 3px; background: rgba(255,255,255,0.08);
+      border-radius: 2px; overflow: hidden; margin-bottom: 6px;
+    }
+    .cs-progress-fill {
+      height: 100%; border-radius: 2px;
+      background: linear-gradient(90deg, #a78bfa, #7c3aed);
+    }
+    .cs-progress-lbl {
+      font-size: 0.58rem; color: rgba(255,255,255,0.3);
+      display: flex; justify-content: space-between;
+    }
+    .cs-badge-row { display: flex; gap: 5px; flex-wrap: wrap; margin-top: 14px; }
+    .cs-badge {
+      font-size: 0.55rem; font-weight: 500;
+      letter-spacing: 0.06em; text-transform: uppercase;
+      padding: 3px 9px; border-radius: 100px;
+      background: rgba(255,255,255,0.07); color: rgba(255,255,255,0.5);
+    }
+    .cs-badge.accent { background: rgba(167,139,250,0.18); color: #a78bfa; }
+    .cs-ui-sidebar { padding: 20px 16px; background: #18181b; }
+    .cs-stat-box {
+      border: 1px solid rgba(255,255,255,0.07); border-radius: 10px;
+      padding: 14px; margin-bottom: 8px; background: rgba(255,255,255,0.03);
+    }
+    .cs-stat-val {
+      font-size: 1.5rem; font-weight: 700;
+      letter-spacing: -0.03em; color: #fff; line-height: 1;
+    }
+    .cs-stat-sfx { font-size: 0.65em; color: #a78bfa; font-weight: 500; vertical-align: super; }
+    .cs-stat-lbl { font-size: 0.6rem; color: rgba(255,255,255,0.35); margin-top: 4px; }
+
+    /* .section-label for dark sections */
     .section-label {
       display: block;
       font-size: 0.58rem; font-weight: 400;
       letter-spacing: 0.22em; text-transform: uppercase;
       color: var(--muted); margin-bottom: 16px;
     }
-    #hero-heading {
-      font-family: 'DM Sans', sans-serif;
-      font-size: clamp(4rem, 11vw, 12rem);
-      font-weight: 700;
-      line-height: 0.9; letter-spacing: -0.03em;
-      color: var(--text);
-      overflow: hidden;
-    }
-    #hero-heading .word { display: block; }
-    #hero-tagline {
-      font-size: 0.78rem; font-weight: 300;
-      letter-spacing: 0.16em; text-transform: uppercase;
-      color: var(--muted); margin-top: 26px;
-    }
-    #scroll-hint {
-      position: fixed; bottom: 40px; right: 52px; z-index: 6;
-      display: flex; flex-direction: column; align-items: center; gap: 10px;
-    }
-    #scroll-hint span {
-      font-size: 0.5rem; letter-spacing: 0.2em;
-      color: var(--muted); writing-mode: vertical-rl;
-    }
-    .arrow-line {
-      width: 1px; height: 50px;
-      background: linear-gradient(to bottom, var(--muted), transparent);
-      animation: ap 2s ease-in-out infinite;
-    }
-    @keyframes ap { 0%,100%{opacity:.3} 50%{opacity:.85} }
 
     /* ─── HEADER ──────────────────────────────────────────── */
     #site-header {
@@ -174,17 +329,6 @@
       box-shadow: 0 4px 20px rgba(167,139,250,0.2), inset 0 1px 0 rgba(255,255,255,0.12);
     }
 
-    /* ─── DARK OVERLAY ────────────────────────────────────── */
-    #dark-overlay {
-      position: fixed; inset: 0; z-index: 3;
-      background: #04040c; opacity: 0; pointer-events: none;
-    }
-
-
-    /* ─── SCROLL CONTAINER ────────────────────────────────── */
-    #scroll-container {
-      position: relative; height: 900vh; z-index: 10;
-    }
 
     /* ─── GLASS CARD ──────────────────────────────────────── */
     .glass {
@@ -203,52 +347,94 @@
       pointer-events: none;
     }
 
-    /* ─── SCROLL SECTIONS ─────────────────────────────────── */
+    /* ─── SCROLL SECTIONS — Option C : overlay cinématographique ── */
     .scroll-section {
       position: fixed; inset: 0;
       display: flex; align-items: center;
       pointer-events: none; opacity: 0;
       z-index: 10;
-      transition: opacity 0.5s ease;
+      transition: opacity 0.8s ease;
     }
     .sc { pointer-events: auto; }
-    .al { padding-left: 5vw;  padding-right: 55vw; }
-    .ar { padding-left: 55vw; padding-right: 5vw; }
-    .al .si, .ar .si { max-width: 44vw; }
-    .ac { justify-content: center; text-align: center; }
-    .si { padding: 38px 42px; }
+
+    /* Gradient local derrière le texte — côté gauche */
+    .al {
+      padding-left: 7vw; padding-right: 52vw;
+      background: linear-gradient(to right, rgba(4,4,14,0.72) 0%, rgba(4,4,14,0.38) 46%, transparent 68%);
+    }
+    /* Gradient local côté droit */
+    .ar {
+      padding-left: 52vw; padding-right: 7vw;
+      background: linear-gradient(to left, rgba(4,4,14,0.72) 0%, rgba(4,4,14,0.38) 46%, transparent 68%);
+      justify-content: flex-end;
+    }
+    .al .si, .ar .si { max-width: 46vw; }
+
+    /* Centre — gradient radial */
+    .ac {
+      justify-content: center; text-align: center;
+      background: radial-gradient(ellipse 60% 55% at 50% 50%, rgba(4,4,14,0.70) 0%, transparent 100%);
+    }
+
+    /* Contenu — plus de carte, texte pur */
+    .si { padding: 0; }
+
+    /* Ligne décorative au-dessus du label */
+    .si .section-label {
+      position: relative; padding-left: 28px;
+    }
+    .si .section-label::before {
+      content: '';
+      position: absolute; left: 0; top: 50%;
+      width: 18px; height: 1px;
+      background: var(--accent);
+      transform: translateY(-50%);
+    }
 
     .sh {
       font-family: 'DM Sans', sans-serif;
-      font-size: clamp(2rem, 4vw, 4.5rem);
-      font-weight: 600; line-height: 1.0;
-      letter-spacing: -0.02em;
-      color: var(--text); margin-bottom: 18px;
+      font-size: clamp(2.4rem, 4.5vw, 5.5rem);
+      font-weight: 700; line-height: 0.95;
+      letter-spacing: -0.03em;
+      color: var(--text); margin-bottom: 22px;
     }
     .sb {
-      font-size: 0.84rem; font-weight: 300;
-      line-height: 1.85; color: var(--muted);
-      letter-spacing: 0.02em; max-width: 340px;
+      font-size: 0.88rem; font-weight: 300;
+      line-height: 1.9; color: rgba(240,240,245,0.75);
+      letter-spacing: 0.02em; max-width: 360px;
     }
 
     /* ─── STATS ───────────────────────────────────────────── */
-    .stats-wrap { justify-content: center; pointer-events: auto; }
-    .stats-grid {
-      display: flex; gap: 20px; flex-wrap: wrap; justify-content: center;
+    .stats-wrap {
+      justify-content: center; pointer-events: auto;
+      background: radial-gradient(ellipse 70% 60% at 50% 50%, rgba(4,4,14,0.65) 0%, transparent 100%);
     }
-    .stat { display: flex; flex-direction: column; align-items: center; gap: 10px; padding: 36px 44px; }
+    .stats-grid {
+      display: flex; gap: 80px; flex-wrap: wrap; justify-content: center; align-items: flex-end;
+    }
+    .stat {
+      display: flex; flex-direction: column; align-items: center; gap: 12px;
+      padding: 0;
+      /* séparateur vertical entre les chiffres */
+      position: relative;
+    }
+    .stat + .stat::before {
+      content: '';
+      position: absolute; left: -40px; top: 20%; bottom: 20%;
+      width: 1px; background: rgba(255,255,255,0.12);
+    }
     .stat-top { display: flex; align-items: flex-end; gap: 4px; line-height: 1; }
     .stat-num {
-      font-size: clamp(2.8rem,5vw,6rem); font-weight: 700;
+      font-size: clamp(4rem, 7vw, 9rem); font-weight: 700;
       line-height: 1; color: var(--text);
     }
     .stat-sfx {
-      font-size: clamp(1rem,1.4vw,1.5rem); font-weight: 400;
-      color: var(--accent); letter-spacing: 0.06em; padding-bottom: 0.4em;
+      font-size: clamp(1.4rem, 2vw, 2.4rem); font-weight: 300;
+      color: var(--accent); letter-spacing: 0.06em; padding-bottom: 0.5em;
     }
     .stat-lbl {
       font-size: 0.58rem; font-weight: 400;
-      letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted);
+      letter-spacing: 0.24em; text-transform: uppercase; color: var(--muted);
     }
 
     /* ─── CTA ─────────────────────────────────────────────── */
@@ -376,6 +562,74 @@
     .ts:hover { background:rgba(255,255,255,0.07); color:var(--text); border-color:rgba(255,255,255,0.18); }
     .ts.sel { background:rgba(167,139,250,0.18); border-color:rgba(167,139,250,0.38); color:var(--text); }
 
+
+    /* ─── LINK PREVIEW SECTION ────────────────────────────── */
+    #lp-section {
+      position: relative; z-index: 50;
+      background-color: #ffffff;
+      background-image: radial-gradient(circle, rgba(0,0,0,0.13) 1px, transparent 1px);
+      background-size: 22px 22px;
+      padding: 110px 52px 140px;
+      /* pas de border-top — continuité visuelle avec #cs-section */
+    }
+    /* fondu bas : efface les points avant #site-content (blanc uni) */
+    #lp-section::after {
+      content: '';
+      position: absolute; bottom: 0; left: 0; right: 0;
+      height: 100px;
+      background: linear-gradient(to bottom, transparent, #ffffff);
+      pointer-events: none;
+    }
+    #lp-container { max-width: 960px; }
+    .lp-eyebrow {
+      font-size: 0.6rem; font-weight: 500;
+      letter-spacing: 0.22em; text-transform: uppercase;
+      color: #bbb; margin-bottom: 36px; display: block;
+    }
+    .lp-text {
+      font-size: clamp(1.7rem, 3.2vw, 3rem);
+      font-weight: 400; line-height: 1.45;
+      color: #aaa; letter-spacing: -0.015em;
+    }
+    .lp-trigger {
+      color: #0a0a0a; font-weight: 600;
+      cursor: default; position: relative;
+      display: inline-block;
+      border-bottom: 1.5px solid rgba(10,10,10,0.18);
+      transition: border-color 0.18s;
+    }
+    .lp-trigger:hover { border-color: #0a0a0a; }
+
+    /* Preview popup */
+    #lp-popup {
+      position: fixed; z-index: 9999;
+      width: 300px; height: 200px;
+      border-radius: 14px; overflow: hidden;
+      pointer-events: none;
+      opacity: 0;
+      transform: translateY(14px) scale(0.94);
+      transition: opacity 0.22s ease, transform 0.22s ease;
+      box-shadow: 0 24px 80px rgba(0,0,0,0.18),
+                  0 0 0 1px rgba(0,0,0,0.06);
+      background: #e8e8e8;
+    }
+    #lp-popup.show {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+    #lp-popup img {
+      width: 100%; height: 100%;
+      object-fit: cover; display: block;
+    }
+    #lp-popup-label {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      padding: 24px 14px 12px;
+      background: linear-gradient(to top, rgba(0,0,0,0.6), transparent);
+      font-size: 0.65rem; font-weight: 600;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: #fff;
+    }
+
     /* ─── MOBILE ──────────────────────────────────────────── */
     @media (max-width: 768px) {
 
@@ -385,11 +639,19 @@
       .nav-links { display: none; }
       #site-header nav > .btn-rdv { font-size: 0.58rem; padding: 9px 18px; }
 
-      /* Hero */
-      #hero { padding: 0 20px 80px; }
-      #hero-heading { font-size: clamp(2.6rem, 11vw, 4.5rem); }
-      #hero-tagline { font-size: 0.65rem; }
-      #scroll-hint { display: none; }
+      /* Link Preview mobile */
+      #lp-section { padding: 72px 20px 80px; }
+      .lp-text { font-size: clamp(1.4rem, 5.5vw, 2rem); }
+      #lp-popup { display: none; }
+
+      /* Container Scroll mobile */
+      #cs-sticky { padding-top: 0; gap: 20px; }
+      #cs-heading .cs-line-big { font-size: clamp(2.8rem, 10vw, 5rem); }
+      #cs-title { padding: 0 16px; }
+      #cs-device { width: 92vw; }
+      .cs-ui-body { grid-template-columns: 1fr; }
+      .cs-ui-sidebar { display: none; }
+      #cs-scroll-hint { display: none; }
 
       /* Scroll sections — centrées, pleine largeur */
       .al, .ar {
@@ -404,11 +666,23 @@
       .sb { font-size: 0.8rem; max-width: 100%; }
 
       /* Stats */
-      .stats-grid { flex-direction: column; gap: 12px; align-items: center; }
-      .stat { padding: 24px 32px; width: 100%; max-width: 280px; }
+      .stats-grid { flex-direction: column; gap: 40px; align-items: center; }
+      .stat { width: 100%; max-width: 280px; }
+      .stat + .stat::before { display: none; }
+      .stat-num { font-size: clamp(3.5rem, 14vw, 6rem); }
 
-      /* Scroll container */
-      #scroll-container { height: 750vh; }
+      /* Scroll sections mobile — gradient pleine largeur */
+      .al, .ar {
+        padding: 0 6vw;
+        justify-content: flex-start;
+        align-items: flex-end;
+        padding-bottom: 15vh;
+        background: linear-gradient(to top, rgba(4,4,14,0.80) 0%, rgba(4,4,14,0.35) 55%, transparent 100%);
+      }
+      .ar { justify-content: flex-start; }
+      .al .si, .ar .si { max-width: 90vw; width: 90vw; }
+      .ac .si { max-width: 90vw; width: 90vw; }
+
       .marquee-text { font-size: 18vw; }
 
       /* Modal */
@@ -427,27 +701,14 @@
   <div id="loader-pct">0%</div>
 </div>
 
-<!-- ── STUB ELEMENTS (required by Three.js script) ─────────── -->
-<div id="progressBar" style="display:none"></div>
-<div id="navFloat" style="display:none"></div>
-<button id="navHamburger" style="display:none"></button>
-<div id="navMobileOverlay" style="display:none"></div>
-<div class="settings-panel" id="settingsPanel" style="display:none"></div>
-<button class="settings-gear" id="settingsGear" style="display:none" aria-label="Settings">
-  <svg viewBox="0 0 24 24"><path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1Z"/></svg>
-</button>
-
-<!-- ── DARK OVERLAY ────────────────────────────────────────── -->
-<div id="dark-overlay"></div>
-
 <!-- ── HEADER ──────────────────────────────────────────────── -->
 <header id="site-header">
   <nav>
     <a href="#" class="nav-logo">Notice.AI</a>
     <ul class="nav-links">
-      <li><a href="#" onclick="navScroll(0.10);return false;" data-fr="Produit"  data-en="Product">Produit</a></li>
-      <li><a href="#" onclick="navScroll(0.39);return false;" data-fr="Tarifs"   data-en="Pricing">Tarifs</a></li>
-      <li><a href="#" onclick="navScroll(0.55);return false;" data-fr="À propos" data-en="About">À propos</a></li>
+      <li><a href="#" data-fr="Produit"  data-en="Product">Produit</a></li>
+      <li><a href="#" data-fr="Tarifs"   data-en="Pricing">Tarifs</a></li>
+      <li><a href="#" data-fr="À propos" data-en="About">À propos</a></li>
       <li>
         <div class="lang-toggle">
           <button class="lang-btn active" onclick="setLang('fr')">FR</button>
@@ -459,90 +720,161 @@
   </nav>
 </header>
 
-<!-- ── HERO (fixed, overlays canvas) ──────────────────────── -->
-<div id="hero">
-  <div id="hero-inner">
-    <span class="section-label" data-fr="001 / Intelligence Artificielle" data-en="001 / Artificial Intelligence">001 / Intelligence Artificielle</span>
-    <h1 id="hero-heading">
-      <span class="word" data-fr="Vos manuels"   data-en="Your manuals">Vos manuels</span>
-      <span class="word" data-fr="prennent vie." data-en="come alive.">prennent vie.</span>
-    </h1>
+<!-- ══════════════════════════════════════════════════════════
+     CONTAINER SCROLL — hero animé
+══════════════════════════════════════════════════════════ -->
+<div id="cs-section">
+  <div id="cs-sticky">
+
+    <!-- Titre au-dessus du device -->
+    <div id="cs-title">
+      <span id="cs-label">001 / Notice.AI</span>
+      <h1 id="cs-heading">
+        <span class="cs-line-sm">Vos notices prennent</span>
+        <span class="cs-line-big">vie.</span>
+      </h1>
+    </div>
+
+    <!-- Device frame laptop -->
+    <div id="cs-device">
+      <div id="cs-frame">
+        <div id="cs-screen">
+          <div class="cs-ui">
+
+            <!-- Barre d'app -->
+            <div class="cs-ui-bar">
+              <span class="cs-ui-brand">Notice.AI</span>
+              <div class="cs-ui-tabs">
+                <span class="cs-ui-tab active">Projets</span>
+                <span class="cs-ui-tab">Analytique</span>
+                <span class="cs-ui-tab">Exports</span>
+              </div>
+              <button class="cs-ui-action">+ Nouveau projet</button>
+            </div>
+
+            <!-- Corps -->
+            <div class="cs-ui-body">
+
+              <!-- Liste documents -->
+              <div class="cs-ui-main">
+                <p class="cs-ui-section-title">Documents en cours</p>
+
+                <div class="cs-doc-row">
+                  <span class="cs-doc-icon">📄</span>
+                  <div class="cs-doc-meta">
+                    <div class="cs-doc-name">Manuel_maintenance_A380.pdf</div>
+                    <div class="cs-doc-sub">1 247 pages · Aéronautique · EASA Part-145</div>
+                  </div>
+                  <span class="cs-doc-status done">Terminé</span>
+                </div>
+
+                <div class="cs-doc-row">
+                  <span class="cs-doc-icon">📐</span>
+                  <div class="cs-doc-meta">
+                    <div class="cs-doc-name">Assemblage_moteur_CAO.step</div>
+                    <div class="cs-doc-sub">Fichier CAO · SolidWorks · Automobile</div>
+                  </div>
+                  <span class="cs-doc-status processing">En cours</span>
+                </div>
+
+                <div class="cs-doc-row">
+                  <span class="cs-doc-icon">🏥</span>
+                  <div class="cs-doc-meta">
+                    <div class="cs-doc-name">IFU_Dispositif_implantable_v3.pdf</div>
+                    <div class="cs-doc-sub">312 pages · Médical · MDR 2017/745</div>
+                  </div>
+                  <span class="cs-doc-status done">Terminé</span>
+                </div>
+
+                <div class="cs-progress-wrap">
+                  <div class="cs-progress-bar">
+                    <div class="cs-progress-fill" style="width:73%"></div>
+                  </div>
+                  <div class="cs-progress-lbl">
+                    <span>Génération vidéo 3D…</span>
+                    <span>73%</span>
+                  </div>
+                </div>
+
+                <div class="cs-badge-row">
+                  <span class="cs-badge accent">FR</span>
+                  <span class="cs-badge accent">EN</span>
+                  <span class="cs-badge accent">DE</span>
+                  <span class="cs-badge">SCORM</span>
+                  <span class="cs-badge">MP4</span>
+                  <span class="cs-badge">ISO 9001</span>
+                </div>
+              </div>
+
+              <!-- Métriques latérales -->
+              <div class="cs-ui-sidebar">
+                <p class="cs-ui-section-title">Ce projet</p>
+                <div class="cs-stat-box">
+                  <div class="cs-stat-val">12<span class="cs-stat-sfx">×</span></div>
+                  <div class="cs-stat-lbl">Plus rapide qu'une agence</div>
+                </div>
+                <div class="cs-stat-box">
+                  <div class="cs-stat-val">−80<span class="cs-stat-sfx">%</span></div>
+                  <div class="cs-stat-lbl">de coût vs production classique</div>
+                </div>
+                <div class="cs-stat-box">
+                  <div class="cs-stat-val">94<span class="cs-stat-sfx">%</span></div>
+                  <div class="cs-stat-lbl">taux de compréhension opérateur</div>
+                </div>
+                <div class="cs-stat-box">
+                  <div class="cs-stat-val">3<span class="cs-stat-sfx"></span></div>
+                  <div class="cs-stat-lbl">projets actifs · 1 560 pages</div>
+                </div>
+              </div>
+
+            </div><!-- /cs-ui-body -->
+          </div><!-- /cs-ui -->
+        </div><!-- /cs-screen -->
+      </div><!-- /cs-frame -->
+    </div><!-- /cs-device -->
+
+    <!-- Scroll hint -->
+    <div id="cs-scroll-hint">
+      <span>défiler</span>
+      <div class="cs-arrow"></div>
+    </div>
+
+  </div><!-- /cs-sticky -->
+</div><!-- /cs-section -->
+
+<!-- ══════════════════════════════════════════════════════════
+     LINK PREVIEW — secteurs avec aperçu image au survol
+══════════════════════════════════════════════════════════ -->
+<section id="lp-section">
+  <div id="lp-container">
+    <span class="lp-eyebrow">002 / Secteurs d'application</span>
+    <p class="lp-text">
+      Notre IA transforme vos documents techniques — manuels PDF, fichiers CAO, plans — en tutoriels vidéo 3D pour
+      <span class="lp-trigger"
+        data-image="https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=600&h=400&fit=crop&q=80"
+        data-label="Aéronautique & Défense">l'aéronautique</span>,
+      <span class="lp-trigger"
+        data-image="https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?w=600&h=400&fit=crop&q=80"
+        data-label="Automobile & Mobilité">l'automobile</span>,
+      le <span class="lp-trigger"
+        data-image="https://images.unsplash.com/photo-1559757175-0eb30cd8c063?w=600&h=400&fit=crop&q=80"
+        data-label="Médical & Pharma">médical</span>,
+      <span class="lp-trigger"
+        data-image="https://images.unsplash.com/photo-1565514020179-026b92b84bb6?w=600&h=400&fit=crop&q=80"
+        data-label="Industrie & Fabrication">l'industrie</span>
+      et <span class="lp-trigger"
+        data-image="https://images.unsplash.com/photo-1466611653911-95081537e5b7?w=600&h=400&fit=crop&q=80"
+        data-label="Énergie & Utilities">l'énergie</span>
+      — déployés en moins de 48h.
+    </p>
   </div>
+</section>
+
+<!-- popup preview -->
+<div id="lp-popup">
+  <img id="lp-popup-img" src="" alt="" />
+  <div id="lp-popup-label"></div>
 </div>
-
-<!-- scroll hint arrow -->
-<div id="scroll-hint">
-  <span data-fr="défiler" data-en="scroll">défiler</span>
-  <div class="arrow-line"></div>
-</div>
-
-
-<!-- ── SCROLL CONTAINER ────────────────────────────────────── -->
-<div id="scroll-container">
-
-  <!-- S1 -->
-  <div class="scroll-section al" data-enter="8" data-leave="20" data-anim="slide-left">
-    <div class="sc si glass">
-      <span class="section-label" data-fr="002 / Problème" data-en="002 / Problem">002 / Problème</span>
-      <h2 class="sh" data-fr="La documentation, réinventée." data-en="Documentation, reinvented.">La documentation, réinventée.</h2>
-      <p  class="sb" data-fr="Les manuels papier sont lents, chers et impossibles à maintenir. Notice.AI transforme votre contenu technique en expériences vidéo immersives, à la demande." data-en="Paper manuals are slow, costly and impossible to maintain. Notice.AI transforms your technical content into immersive video experiences, on demand.">Les manuels papier sont lents, chers et impossibles à maintenir. Notice.AI transforme votre contenu technique en expériences vidéo immersives, à la demande.</p>
-    </div>
-  </div>
-
-  <!-- S2 -->
-  <div class="scroll-section ar" data-enter="23" data-leave="36" data-anim="slide-right">
-    <div class="sc si glass">
-      <span class="section-label" data-fr="003 / Solution" data-en="003 / Solution">003 / Solution</span>
-      <h2 class="sh" data-fr="Uploadez. Générez. Déployez." data-en="Upload. Generate. Deploy.">Uploadez. Générez. Déployez.</h2>
-      <p  class="sb" data-fr="Notre IA analyse vos PDFs, fichiers CAO et images techniques pour produire des tutoriels vidéo 3D animés, clairs et engageants — sans équipe de production." data-en="Our AI analyzes your PDFs, CAD files and technical images to produce animated 3D video tutorials — with no production team.">Notre IA analyse vos PDFs, fichiers CAO et images techniques pour produire des tutoriels vidéo 3D animés, clairs et engageants — sans équipe de production.</p>
-    </div>
-  </div>
-
-  <!-- S3 : stats -->
-  <div class="scroll-section stats-wrap" data-enter="39" data-leave="52" data-anim="scale-up">
-    <div class="sc">
-      <div class="stats-grid">
-        <div class="stat glass">
-          <div class="stat-top"><span class="stat-num" data-value="12" data-dec="0">0</span><span class="stat-sfx">×</span></div>
-          <span class="stat-lbl" data-fr="Plus rapide" data-en="Faster">Plus rapide</span>
-        </div>
-        <div class="stat glass">
-          <div class="stat-top"><span class="stat-num" data-value="94" data-dec="0">0</span><span class="stat-sfx">%</span></div>
-          <span class="stat-lbl" data-fr="Taux de compréhension" data-en="Comprehension rate">Taux de compréhension</span>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- S4 -->
-  <div class="scroll-section al" data-enter="55" data-leave="68" data-anim="rotate-in">
-    <div class="sc si glass">
-      <span class="section-label" data-fr="004 / Industries" data-en="004 / Industries">004 / Industries</span>
-      <h2 class="sh" data-fr="Conçu pour l'industrie." data-en="Built for industry.">Conçu pour l'industrie.</h2>
-      <p  class="sb" data-fr="Aéronautique, automobile, médical, énergie — notre plateforme s'adapte à votre terminologie et vos standards métier." data-en="Aerospace, automotive, medical, energy — our platform adapts to your terminology and industry standards.">Aéronautique, automobile, médical, énergie — notre plateforme s'adapte à votre terminologie et vos standards métier.</p>
-    </div>
-  </div>
-
-  <!-- S5 -->
-  <div class="scroll-section ar" data-enter="71" data-leave="83" data-anim="stagger-up">
-    <div class="sc si glass">
-      <span class="section-label" data-fr="005 / Sécurité" data-en="005 / Security">005 / Sécurité</span>
-      <h2 class="sh" data-fr="Vos données restent vôtres." data-en="Your data stays yours.">Vos données restent vôtres.</h2>
-      <p  class="sb" data-fr="Infrastructure hébergée en Europe. Conformité RGPD native. Chiffrement end-to-end." data-en="Infrastructure hosted in Europe. Native GDPR compliance. End-to-end encryption.">Infrastructure hébergée en Europe. Conformité RGPD native. Chiffrement end-to-end.</p>
-    </div>
-  </div>
-
-  <!-- S6 : CTA -->
-  <div class="scroll-section cta-wrap ac" data-enter="86" data-leave="98" data-anim="scale-up">
-    <div class="sc si glass">
-      <span class="section-label" data-fr="006 / Contact" data-en="006 / Contact">006 / Contact</span>
-      <h2 class="sh cta-h" data-fr="Parlons de votre projet." data-en="Let's talk about your project.">Parlons de votre projet.</h2>
-      <p  class="sb" data-fr="Réservez une démo de 30 minutes. Nous analysons votre documentation et vous montrons ce que Notice.AI peut faire." data-en="Book a 30-minute demo. We analyze your documentation and show you what Notice.AI can do.">Réservez une démo de 30 minutes. Nous analysons votre documentation et vous montrons ce que Notice.AI peut faire.</p>
-      <button class="cta-btn" onclick="openModal()" data-fr="Réserver une démo" data-en="Book a demo">Réserver une démo</button>
-    </div>
-  </div>
-
-</div><!-- /scroll-container -->
 
 
 <!-- ══════════════════════════════════════════════════════════
@@ -553,64 +885,164 @@
 
 
 
-  <!-- ── INDUSTRIES ─────────────────────────────────────── -->
+  <!-- ── SECTEURS ──────────────────────────────────────── -->
   <section class="w-section w-ind-sec">
     <div class="w-container">
       <div class="w-section-hdr">
-        <span class="w-tag" data-fr="009 / Industries" data-en="009 / Industries">009 / Industries</span>
-        <h2 class="w-section-title" data-fr="Conçu pour les secteurs exigeants." data-en="Built for demanding sectors.">Conçu pour les secteurs exigeants.</h2>
+        <span class="w-tag">009 / Secteurs</span>
+        <h2 class="w-section-title">Conçu pour les secteurs à documentation critique.</h2>
       </div>
       <div class="w-ind-grid">
         <div class="w-ind-card">
           <span class="w-ind-num">01</span>
-          <h4 class="w-ind-name" data-fr="Aéronautique" data-en="Aerospace">Aéronautique</h4>
-          <p class="w-ind-desc" data-fr="Manuels de maintenance, procédures d'inspection, formation technicien." data-en="Maintenance manuals, inspection procedures, technician training.">Manuels de maintenance, procédures d'inspection, formation technicien.</p>
+          <h4 class="w-ind-name">Aéronautique &amp; Défense</h4>
+          <p class="w-ind-desc">Manuels de maintenance AMM, procédures d'inspection navigabilité, formation technicien certifié. Conformité EASA / FAA.</p>
+          <ul class="w-ind-tags"><li>AMM / CMM</li><li>EASA Part-145</li><li>Inspection</li></ul>
           <span class="w-ind-arrow">→</span>
         </div>
         <div class="w-ind-card">
           <span class="w-ind-num">02</span>
-          <h4 class="w-ind-name" data-fr="Industrie" data-en="Industry">Industrie</h4>
-          <p class="w-ind-desc" data-fr="Guides d'assemblage, procédures de sécurité, onboarding opérateurs." data-en="Assembly guides, safety procedures, operator onboarding.">Guides d'assemblage, procédures de sécurité, onboarding opérateurs.</p>
+          <h4 class="w-ind-name">Industrie &amp; Fabrication</h4>
+          <p class="w-ind-desc">Guides d'assemblage ligne de production, procédures sécurité machines, onboarding opérateurs. Compatible CAO SolidWorks, CATIA.</p>
+          <ul class="w-ind-tags"><li>ISO 9001</li><li>CAO / BOM</li><li>Lean / 5S</li></ul>
           <span class="w-ind-arrow">→</span>
         </div>
         <div class="w-ind-card">
           <span class="w-ind-num">03</span>
-          <h4 class="w-ind-name" data-fr="Médical" data-en="Medical">Médical</h4>
-          <p class="w-ind-desc" data-fr="Instructions d'utilisation dispositifs, formation personnel soignant." data-en="Device instructions, clinical staff training.">Instructions d'utilisation dispositifs, formation personnel soignant.</p>
+          <h4 class="w-ind-name">Médical &amp; Pharma</h4>
+          <p class="w-ind-desc">IFU dispositifs médicaux, SOPs laboratoire, formation personnel soignant. Conformité MDR 2017/745 et FDA 21 CFR Part 820.</p>
+          <ul class="w-ind-tags"><li>MDR / FDA</li><li>IFU / SOP</li><li>GMP</li></ul>
           <span class="w-ind-arrow">→</span>
         </div>
         <div class="w-ind-card">
           <span class="w-ind-num">04</span>
-          <h4 class="w-ind-name" data-fr="Énergie" data-en="Energy">Énergie</h4>
-          <p class="w-ind-desc" data-fr="Procédures maintenance équipements, formations sécurité site." data-en="Equipment maintenance procedures, site safety training.">Procédures maintenance équipements, formations sécurité site.</p>
+          <h4 class="w-ind-name">Énergie &amp; Utilities</h4>
+          <p class="w-ind-desc">Procédures O&amp;M équipements, plans de prévention risques, formation sécurité site (ATEX, consignation). Compatible P&amp;ID.</p>
+          <ul class="w-ind-tags"><li>ATEX</li><li>O&amp;M</li><li>HSE</li></ul>
+          <span class="w-ind-arrow">→</span>
+        </div>
+        <div class="w-ind-card">
+          <span class="w-ind-num">05</span>
+          <h4 class="w-ind-name">Automobile &amp; Mobilité</h4>
+          <p class="w-ind-desc">Manuels atelier, procédures de rappel, formation réseau concessionnaires. Compatible formats OEM (VDA, IATF 16949).</p>
+          <ul class="w-ind-tags"><li>IATF 16949</li><li>Atelier</li><li>Réseau VN/VO</li></ul>
+          <span class="w-ind-arrow">→</span>
+        </div>
+        <div class="w-ind-card">
+          <span class="w-ind-num">06</span>
+          <h4 class="w-ind-name">Infrastructure &amp; BTP</h4>
+          <p class="w-ind-desc">Dossiers d'exploitation maintenance, plans de prévention chantier, formation sous-traitants. Compatible BIM / IFC.</p>
+          <ul class="w-ind-tags"><li>BIM / IFC</li><li>Plan de prév.</li><li>DICT</li></ul>
           <span class="w-ind-arrow">→</span>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ── COÛT ──────────────────────────────────────────── -->
-  <section class="w-section w-cost">
-    <div class="w-container w-cost-inner">
-      <div class="w-cost-left">
-        <span class="w-tag" data-fr="010 / Coût" data-en="010 / Cost">010 / Coût</span>
-        <h2 class="w-section-title" data-fr="Jusqu'à 80% moins cher qu'une agence de production." data-en="Up to 80% cheaper than a production agency.">Jusqu'à 80% moins cher qu'une agence de production.</h2>
-        <p class="w-cost-body" data-fr="Pas d'équipe vidéo, pas de studio, pas de délai. Notre IA produit en quelques minutes ce qu'une agence met des semaines à livrer." data-en="No video team, no studio, no delays. Our AI produces in minutes what an agency takes weeks to deliver.">Pas d'équipe vidéo, pas de studio, pas de délai. Notre IA produit en quelques minutes ce qu'une agence met des semaines à livrer.</p>
+  <!-- ── TARIFS ─────────────────────────────────────────── -->
+  <section class="w-section w-pricing">
+    <div class="w-container">
+      <div class="w-section-hdr">
+        <span class="w-tag">010 / Tarifs</span>
+        <h2 class="w-section-title">Des offres adaptées à votre volume.</h2>
+        <p class="w-pricing-sub">Tarification à la page convertie. Pas de surprise — vous payez ce que vous produisez.</p>
       </div>
-      <div class="w-cost-right">
-        <div class="w-cost-stat">
-          <span class="w-cost-num">−80<span class="w-cost-sfx">%</span></span>
-          <span class="w-cost-lbl" data-fr="de coût vs agence" data-en="cost vs agency">de coût vs agence</span>
+
+      <div class="w-plans-grid">
+
+        <div class="w-plan">
+          <div class="w-plan-top">
+            <span class="w-plan-name">Scale</span>
+            <p class="w-plan-desc">PME et ETI industrielles. Jusqu'à 5 000 pages / mois.</p>
+          </div>
+          <div class="w-plan-price">
+            <span class="w-plan-num">0,90</span>
+            <span class="w-plan-unit">€ / page</span>
+          </div>
+          <ul class="w-plan-features">
+            <li>Jusqu'à 5 000 pages / mois</li>
+            <li>PDF, CAO, images techniques</li>
+            <li>Export vidéo MP4 + SCORM</li>
+            <li>Multilingue (FR / EN / DE / ES)</li>
+            <li>Support email 5j/7</li>
+            <li>Dashboard analytics</li>
+          </ul>
+          <button class="w-plan-btn" onclick="openModal()">Demander un devis</button>
         </div>
-        <div class="w-cost-stat">
-          <span class="w-cost-num">12<span class="w-cost-sfx">×</span></span>
-          <span class="w-cost-lbl" data-fr="plus rapide" data-en="faster">plus rapide</span>
+
+        <div class="w-plan w-plan--featured">
+          <div class="w-plan-badge">Le plus choisi</div>
+          <div class="w-plan-top">
+            <span class="w-plan-name">Pro</span>
+            <p class="w-plan-desc">Grands groupes industriels. Jusqu'à 25 000 pages / mois.</p>
+          </div>
+          <div class="w-plan-price">
+            <span class="w-plan-num">0,55</span>
+            <span class="w-plan-unit">€ / page</span>
+          </div>
+          <ul class="w-plan-features">
+            <li>Jusqu'à 25 000 pages / mois</li>
+            <li>Tout Scale, plus :</li>
+            <li>Intégration ERP / PLM / LMS</li>
+            <li>SSO (SAML 2.0, OIDC)</li>
+            <li>Audit logs &amp; gestion des droits</li>
+            <li>SLA 99,9 % — support dédié</li>
+          </ul>
+          <button class="w-plan-btn w-plan-btn--inv" onclick="openModal()">Demander un devis</button>
         </div>
-        <div class="w-cost-stat">
-          <span class="w-cost-num">94<span class="w-cost-sfx">%</span></span>
-          <span class="w-cost-lbl" data-fr="de compréhension" data-en="comprehension">de compréhension</span>
+
+        <div class="w-plan">
+          <div class="w-plan-top">
+            <span class="w-plan-name">Enterprise</span>
+            <p class="w-plan-desc">Volume illimité, déploiement on-premise ou VPC dédié.</p>
+          </div>
+          <div class="w-plan-price">
+            <span class="w-plan-num">Sur mesure</span>
+          </div>
+          <ul class="w-plan-features">
+            <li>Volume illimité</li>
+            <li>On-premise ou VPC dédié</li>
+            <li>Modèle IA fine-tuné sur votre jargon</li>
+            <li>Intégrations personnalisées</li>
+            <li>Account manager dédié</li>
+            <li>SLA contractuel 99,99 %</li>
+          </ul>
+          <button class="w-plan-btn" onclick="openModal()">Contacter l'équipe</button>
+        </div>
+
+      </div>
+
+      <!-- Comparatif ROI -->
+      <div class="w-roi">
+        <div class="w-roi-label">Comparatif vs agence de production traditionnelle</div>
+        <div class="w-roi-grid">
+          <div class="w-roi-item">
+            <span class="w-roi-num">0,55<span class="w-roi-sfx">€</span></span>
+            <span class="w-roi-lbl">par page — tarif Pro<br><span class="w-roi-sublbl">vs ~4–8 € chez une agence</span></span>
+          </div>
+          <div class="w-roi-sep"></div>
+          <div class="w-roi-item">
+            <span class="w-roi-num">−80<span class="w-roi-sfx">%</span></span>
+            <span class="w-roi-lbl">de coût de production</span>
+          </div>
+          <div class="w-roi-sep"></div>
+          <div class="w-roi-item">
+            <span class="w-roi-num">12<span class="w-roi-sfx">×</span></span>
+            <span class="w-roi-lbl">plus rapide qu'une agence</span>
+          </div>
+          <div class="w-roi-sep"></div>
+          <div class="w-roi-item">
+            <span class="w-roi-num">94<span class="w-roi-sfx">%</span></span>
+            <span class="w-roi-lbl">taux de compréhension opérateur</span>
+          </div>
+          <div class="w-roi-sep"></div>
+          <div class="w-roi-item">
+            <span class="w-roi-num">&lt;48<span class="w-roi-sfx">h</span></span>
+            <span class="w-roi-lbl">de mise en production</span>
+          </div>
         </div>
       </div>
+
     </div>
   </section>
 
@@ -618,18 +1050,18 @@
   <section class="w-section w-trust">
     <div class="w-container w-trust-inner">
       <div class="w-trust-text">
-        <span class="w-tag" data-fr="011 / Sécurité" data-en="011 / Security">011 / Sécurité</span>
-        <h2 class="w-section-title" data-fr="Vos données ne quittent jamais votre environnement." data-en="Your data never leaves your environment.">Vos données ne quittent jamais votre environnement.</h2>
-        <p class="w-trust-body" data-fr="Infrastructure hébergée en Europe. Conformité RGPD native. Chiffrement AES-256 au repos et en transit. Audit logs complets. SSO disponible." data-en="Infrastructure hosted in Europe. Native GDPR compliance. AES-256 encryption at rest and in transit. Full audit logs. SSO available.">Infrastructure hébergée en Europe. Conformité RGPD native. Chiffrement AES-256 au repos et en transit. Audit logs complets. SSO disponible.</p>
+        <span class="w-tag">011 / Sécurité &amp; Conformité</span>
+        <h2 class="w-section-title">Vos données industrielles restent sous votre contrôle.</h2>
+        <p class="w-trust-body">Infrastructure hébergée en Europe (Paris / Francfort). Conformité RGPD native. Chiffrement AES-256 au repos et en transit. Audit logs complets. SSO disponible. Contrats DPA sur demande.</p>
       </div>
       <div class="w-trust-badges">
         <div class="w-trust-badge">
           <span class="w-badge-title">RGPD</span>
-          <span class="w-badge-sub" data-fr="Conformité native" data-en="Native compliance">Conformité native</span>
+          <span class="w-badge-sub">Conformité native</span>
         </div>
         <div class="w-trust-badge">
           <span class="w-badge-title">ISO 27001</span>
-          <span class="w-badge-sub" data-fr="Certifié" data-en="Certified">Certifié</span>
+          <span class="w-badge-sub">En cours de certification</span>
         </div>
         <div class="w-trust-badge">
           <span class="w-badge-title">SOC 2</span>
@@ -637,7 +1069,7 @@
         </div>
         <div class="w-trust-badge">
           <span class="w-badge-title">EU</span>
-          <span class="w-badge-sub" data-fr="Hébergé en Europe" data-en="EU Hosted">Hébergé en Europe</span>
+          <span class="w-badge-sub">Hébergé en Europe</span>
         </div>
       </div>
     </div>
@@ -647,10 +1079,10 @@
   <section class="w-cta-final">
     <div class="w-container">
       <div class="w-cta-inner">
-        <span class="w-tag w-tag-inv" data-fr="011 / Contact" data-en="011 / Contact">011 / Contact</span>
-        <h2 class="w-cta-h" data-fr="Prêt à transformer votre documentation ?" data-en="Ready to transform your documentation?">Prêt à transformer votre documentation ?</h2>
-        <p class="w-cta-sub" data-fr="Réservez une démo de 30 minutes. Gratuit, sans engagement." data-en="Book a 30-minute demo. Free, no commitment.">Réservez une démo de 30 minutes. Gratuit, sans engagement.</p>
-        <button class="w-cta-btn" onclick="openModal()" data-fr="Réserver une démo" data-en="Book a demo">Réserver une démo</button>
+        <span class="w-tag w-tag-inv">012 / Contact</span>
+        <h2 class="w-cta-h">Parlons de votre projet.</h2>
+        <p class="w-cta-sub">Démo de 30 minutes. Nous analysons un extrait de votre documentation et vous montrons le résultat en direct. Gratuit, sans engagement.</p>
+        <button class="w-cta-btn" onclick="openModal()">Réserver une démo</button>
       </div>
     </div>
   </section>
@@ -797,74 +1229,188 @@
 /* ── INDUSTRIES ── */
 .w-ind-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   border: 1px solid var(--w-border);
 }
 .w-ind-card {
-  padding: 52px 36px;
+  padding: 48px 36px;
   border-right: 1px solid var(--w-border);
+  border-bottom: 1px solid var(--w-border);
   display: flex; flex-direction: column;
   transition: background 0.2s;
   cursor: default;
 }
-.w-ind-card:last-child { border-right: none; }
+.w-ind-card:nth-child(3n) { border-right: none; }
+.w-ind-card:nth-child(4),
+.w-ind-card:nth-child(5),
+.w-ind-card:nth-child(6) { border-bottom: none; }
 .w-ind-card:hover { background: var(--w-bg-alt); }
 .w-ind-card:hover .w-ind-arrow { color: var(--w-accent); transform: translateX(4px); }
 .w-ind-num {
   font-size: 0.58rem; font-weight: 600;
   letter-spacing: 0.2em; color: var(--w-accent);
-  margin-bottom: 20px;
+  margin-bottom: 18px;
 }
 .w-ind-name {
-  font-size: 1rem; font-weight: 600;
+  font-size: 1.05rem; font-weight: 600;
   letter-spacing: -0.01em; color: var(--w-text);
   margin-bottom: 12px;
 }
 .w-ind-desc {
-  font-size: 0.82rem; font-weight: 400;
-  line-height: 1.75; color: #0a0a0a;
-  flex: 1;
+  font-size: 0.83rem; font-weight: 400;
+  line-height: 1.75; color: var(--w-muted);
+  flex: 1; margin-bottom: 16px;
+}
+.w-ind-tags {
+  list-style: none; display: flex; flex-wrap: wrap; gap: 6px;
+  margin-bottom: 24px;
+}
+.w-ind-tags li {
+  font-size: 0.6rem; font-weight: 500;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--w-accent);
+  border: 1px solid rgba(167,139,250,0.3);
+  border-radius: 100px; padding: 3px 10px;
 }
 .w-ind-arrow {
-  margin-top: 28px; font-size: 1rem;
+  margin-top: auto; font-size: 1rem;
   color: var(--w-border);
   transition: color 0.2s, transform 0.2s;
 }
 
-/* ── COÛT ── */
-.w-cost-inner {
-  display: flex; align-items: center;
-  justify-content: space-between; gap: 80px;
-}
-.w-cost-left { flex: 1; }
-.w-cost-body {
+/* ── TARIFS ── */
+.w-pricing-sub {
   font-size: 0.9rem; font-weight: 400;
-  line-height: 1.9; color: #0a0a0a;
-  margin-top: 20px; max-width: 420px;
+  color: var(--w-muted); margin-top: 12px;
+  line-height: 1.7;
 }
-.w-cost-right {
+.w-plans-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+  border: 1px solid var(--w-border);
+  margin-bottom: 60px;
+}
+.w-plan {
+  padding: 48px 40px;
+  border-right: 1px solid var(--w-border);
   display: flex; flex-direction: column;
-  gap: 32px; flex-shrink: 0;
+  position: relative;
 }
-.w-cost-stat {
-  display: flex; flex-direction: column; gap: 6px;
-  border-left: 2px solid var(--w-accent);
-  padding-left: 20px;
+.w-plan:last-child { border-right: none; }
+.w-plan--featured {
+  background: var(--w-text);
 }
-.w-cost-num {
-  font-size: clamp(2.4rem, 4vw, 3.8rem);
-  font-weight: 700; line-height: 1;
-  letter-spacing: -0.04em; color: #0a0a0a;
+.w-plan-badge {
+  position: absolute; top: -1px; left: 40px;
+  font-size: 0.55rem; font-weight: 600;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  background: var(--w-accent); color: #fff;
+  padding: 5px 12px; border-radius: 0 0 8px 8px;
 }
-.w-cost-sfx {
-  font-size: 0.5em; color: var(--w-accent);
+.w-plan-top { margin-bottom: 28px; margin-top: 8px; }
+.w-plan-name {
+  display: block;
+  font-size: 1.1rem; font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--w-text); margin-bottom: 10px;
+}
+.w-plan--featured .w-plan-name { color: #fff; }
+.w-plan-desc {
+  font-size: 0.82rem; font-weight: 400;
+  line-height: 1.65; color: var(--w-muted);
+}
+.w-plan--featured .w-plan-desc { color: rgba(255,255,255,0.5); }
+.w-plan-price {
+  display: flex; align-items: baseline; gap: 6px;
+  margin-bottom: 32px;
+  padding-bottom: 28px;
+  border-bottom: 1px solid var(--w-border);
+}
+.w-plan--featured .w-plan-price { border-color: rgba(255,255,255,0.12); }
+.w-plan-num {
+  font-size: clamp(2rem, 3.5vw, 3rem);
+  font-weight: 700; letter-spacing: -0.04em;
+  color: var(--w-text); line-height: 1;
+}
+.w-plan--featured .w-plan-num { color: #fff; }
+.w-plan-unit {
+  font-size: 0.78rem; font-weight: 400;
+  color: var(--w-muted);
+}
+.w-plan--featured .w-plan-unit { color: rgba(255,255,255,0.45); }
+.w-plan-features {
+  list-style: none; display: flex; flex-direction: column;
+  gap: 12px; flex: 1; margin-bottom: 36px;
+}
+.w-plan-features li {
+  font-size: 0.83rem; font-weight: 400;
+  color: var(--w-muted); line-height: 1.5;
+  padding-left: 16px; position: relative;
+}
+.w-plan-features li::before {
+  content: '—';
+  position: absolute; left: 0;
+  color: var(--w-accent); font-size: 0.75rem;
+}
+.w-plan--featured .w-plan-features li { color: rgba(255,255,255,0.55); }
+.w-plan-btn {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.65rem; font-weight: 600;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--w-text); background: transparent;
+  padding: 14px 28px; border: 1px solid var(--w-border);
+  border-radius: 100px; cursor: pointer;
+  transition: background 0.2s, border-color 0.2s;
+  text-align: center;
+}
+.w-plan-btn:hover { background: var(--w-bg-alt); border-color: #ccc; }
+.w-plan-btn--inv {
+  background: #fff; color: #0a0a0a; border-color: #fff;
+}
+.w-plan-btn--inv:hover { background: #e0e0e0; border-color: #e0e0e0; }
+
+/* ROI Comparatif */
+.w-roi {
+  background: var(--w-bg-alt);
+  border: 1px solid var(--w-border);
+  padding: 44px 52px;
+}
+.w-roi-label {
+  font-size: 0.6rem; font-weight: 500;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--w-muted); margin-bottom: 32px;
+}
+.w-roi-grid {
+  display: flex; align-items: center;
+  justify-content: space-between; flex-wrap: wrap; gap: 24px;
+}
+.w-roi-item {
+  display: flex; flex-direction: column; gap: 8px;
+}
+.w-roi-num {
+  font-size: clamp(2rem, 3.5vw, 3.4rem);
+  font-weight: 700; letter-spacing: -0.04em;
+  color: var(--w-text); line-height: 1;
+}
+.w-roi-sfx {
+  font-size: 0.55em; color: var(--w-accent);
   font-weight: 500; vertical-align: super;
 }
-.w-cost-lbl {
-  font-size: 0.7rem; font-weight: 400;
-  letter-spacing: 0.06em; text-transform: uppercase;
-  color: #0a0a0a;
+.w-roi-lbl {
+  font-size: 0.72rem; font-weight: 400;
+  color: var(--w-muted); letter-spacing: 0.02em;
+  max-width: 180px; line-height: 1.5;
 }
+.w-roi-sublbl {
+  font-size: 0.64rem; font-weight: 400;
+  color: rgba(107,107,107,0.65); letter-spacing: 0.01em;
+}
+.w-roi-sep {
+  width: 1px; height: 56px;
+  background: var(--w-border); flex-shrink: 0;
+}
+
 
 /* ── TRUST / SÉCURITÉ ── */
 .w-trust { background: var(--w-bg-alt); }
@@ -987,12 +1533,19 @@
 
   /* Industries */
   .w-ind-grid { grid-template-columns: 1fr; }
-  .w-ind-card { border-right: none; border-bottom: 1px solid var(--w-border); padding: 36px 24px; }
-  .w-ind-card:last-child { border-bottom: none; }
+  .w-ind-card { border-right: none !important; border-bottom: 1px solid var(--w-border) !important; padding: 32px 24px; }
+  .w-ind-card:last-child { border-bottom: none !important; }
 
-  /* Coût */
-  .w-cost-inner { flex-direction: column; gap: 40px; }
-  .w-cost-right { flex-direction: row; flex-wrap: wrap; gap: 24px; }
+  /* Plans */
+  .w-plans-grid { grid-template-columns: 1fr; }
+  .w-plan { border-right: none; border-bottom: 1px solid var(--w-border); }
+  .w-plan:last-child { border-bottom: none; }
+  .w-plan--featured { border-color: transparent; }
+
+  /* ROI */
+  .w-roi { padding: 32px 24px; }
+  .w-roi-grid { flex-direction: column; gap: 28px; }
+  .w-roi-sep { display: none; }
 
   /* Trust */
   .w-trust-inner { flex-direction: column; gap: 36px; }
@@ -1100,39 +1653,22 @@
 const loaderEl   = document.getElementById('loader');
 const loaderFill = document.getElementById('loader-fill');
 const loaderPct  = document.getElementById('loader-pct');
-const scrollCont = document.getElementById('scroll-container');
-const heroEl     = document.getElementById('hero');
-const scrollHint = document.getElementById('scroll-hint');
-const darkOv     = document.getElementById('dark-overlay');
 
 function preload() {
-  // Animate loader bar while Three.js initializes
+  // Animate loader bar, then boot directly (no Three.js dependency)
   let p = 0;
   const ticker = setInterval(() => {
-    p = Math.min(p + Math.random() * 12, 88);
+    p = Math.min(p + Math.random() * 18, 100);
     loaderFill.style.width = p + '%';
     loaderPct.textContent  = Math.round(p) + '%';
-  }, 80);
-
-  // Three.js will call this when the first frame is rendered
-  window.threeJSReady = function() {
-    clearInterval(ticker);
-    loaderFill.style.width = '100%';
-    loaderPct.textContent  = '100%';
-    setTimeout(() => {
-      loaderEl.classList.add('hidden');
-      boot();
-    }, 300);
-  };
-
-  // Fallback: hide loader after 5s even if Three.js fails
-  setTimeout(() => {
-    if (loaderEl && !loaderEl.classList.contains('hidden')) {
+    if (p >= 100) {
       clearInterval(ticker);
-      loaderEl.classList.add('hidden');
-      boot();
+      setTimeout(() => {
+        loaderEl.classList.add('hidden');
+        boot();
+      }, 280);
     }
-  }, 5000);
+  }, 60);
 }
 
 // ════════════════════════════════════════════════════════════
@@ -1141,114 +1677,101 @@ function preload() {
 function boot() {
   gsap.registerPlugin(ScrollTrigger);
 
-  // native scroll — no Lenis dependency
+  // ── ContainerScroll animation
+  const csSection = document.getElementById('cs-section');
+  const csTitle   = document.getElementById('cs-title');
+  const csDevice  = document.getElementById('cs-device');
+  const csHint    = document.getElementById('cs-scroll-hint');
+  const csHeading = document.getElementById('cs-heading');
 
-  // ── Hero entrance
-  const words = document.querySelectorAll('#hero-heading .word');
-  gsap.set(words, { y:'110%', opacity:0 });
-  gsap.set(scrollHint, { opacity:0 });
+  // Entrance animation on load
+  gsap.set(csTitle,  { opacity: 0, y: 30 });
+  gsap.set(csDevice, { opacity: 0, y: 60, rotateX: 20 });
+  gsap.set(csHint,   { opacity: 0 });
 
-  gsap.timeline({ delay:0.1 })
-    .to(words,     { y:'0%', opacity:1, stagger:0.12, duration:1.1, ease:'power3.out' })
-    .to(scrollHint,{ opacity:1,                        duration:0.6                   }, '-=0.4');
+  gsap.timeline({ delay: 0.15 })
+    .to(csTitle,  { opacity: 1, y: 0, duration: 1.0, ease: 'power3.out' })
+    .to(csDevice, { opacity: 1, y: 0, duration: 1.1, ease: 'power3.out' }, '-=0.6')
+    .to(csHint,   { opacity: 1, duration: 0.6 }, '-=0.3');
 
-  // ── Hero fade on scroll
+  // Header adapts to light section
+  document.body.classList.add('cs-visible');
   ScrollTrigger.create({
-    trigger: scrollCont, start:'top top', end:'bottom bottom', scrub:true,
+    trigger: csSection,
+    start: 'bottom 80%',
+    onEnter: () => document.body.classList.remove('cs-visible'),
+    onLeaveBack: () => document.body.classList.add('cs-visible'),
+  });
+
+  // ── ContainerScroll — valeurs exactes du composant Aceternity
+  // rotate:    [0→1] = [20deg → 0deg]
+  // scale:     [0→1] = [1.05  → 1.0]
+  // translate: [0→1] = [0px   → -100px]  (sur le titre / header)
+  ScrollTrigger.create({
+    trigger: csSection,
+    start: 'top top',
+    end: 'bottom bottom',
+    scrub: 1,           // scrub:1 = 1s de lag fluide comme framer-motion
     onUpdate(self) {
       const p = self.progress;
-      // hero fades from 0→8% scroll
-      heroEl.style.opacity   = Math.max(0, 1 - p * 12).toString();
-      scrollHint.style.opacity = Math.max(0, 1 - p * 20).toString();
+
+      // Header translateY : 0 → -100
+      const ty = -100 * p;
+      csTitle.style.transform = `translateY(${ty.toFixed(1)}px)`;
+
+      // Scroll hint disparaît vite
+      csHint.style.opacity = Math.max(0, 1 - p * 6).toFixed(3);
+
+      // Card rotateX: 20 → 0  |  scale: 1.05 → 1.0
+      const rotX = 20 * (1 - p);
+      const scl  = 1.05 - 0.05 * p;
+      csDevice.style.transform =
+        `rotateX(${rotX.toFixed(3)}deg) scale(${scl.toFixed(4)})`;
     }
   });
 
-  // ── Dark overlay (shows between sections 52%–70%)
-  const eIn=0.52, eOut=0.70, fd=0.035;
-  ScrollTrigger.create({
-    trigger: scrollCont, start:'top top', end:'bottom bottom', scrub:true,
-    onUpdate(self) {
-      const p = self.progress;
-      let o = 0;
-      if      (p >= eIn-fd && p < eIn)  o = (p-(eIn-fd))/fd;
-      else if (p >= eIn && p <= eOut)    o = 0.88;
-      else if (p > eOut && p <= eOut+fd) o = 0.88*(1-(p-eOut)/fd);
-      darkOv.style.opacity = o.toString();
-    }
-  });
-
-
-  // ── Scroll sections
-  document.querySelectorAll('.scroll-section').forEach(sec => {
-    const enter = parseFloat(sec.dataset.enter) / 100;
-    const leave = parseFloat(sec.dataset.leave) / 100;
-
-    const anim = sec.dataset.anim;
-    const kids = sec.querySelectorAll('.section-label, .sh, .sb, .cta-btn, .stat');
-    const tl   = gsap.timeline({ paused:true });
-
-    switch(anim) {
-      case 'slide-left':  tl.from(kids,{x:-80,opacity:0,stagger:.13,duration:.9,ease:'power3.out'}); break;
-      case 'slide-right': tl.from(kids,{x:80, opacity:0,stagger:.13,duration:.9,ease:'power3.out'}); break;
-      case 'scale-up':    tl.from(kids,{scale:.88,opacity:0,stagger:.12,duration:1,ease:'power2.out'}); break;
-      case 'rotate-in':   tl.from(kids,{y:40,rotation:3,opacity:0,stagger:.10,duration:.9,ease:'power3.out'}); break;
-      case 'stagger-up':  tl.from(kids,{y:60,opacity:0,stagger:.14,duration:.8,ease:'power3.out'}); break;
-      default:            tl.from(kids,{y:40,opacity:0,stagger:.12,duration:.9,ease:'power3.out'});
-    }
-
-    let played = false;
-    const fade = 0.03; // zone de fondu : 3% du scroll
-    ScrollTrigger.create({
-      trigger:scrollCont, start:'top top', end:'bottom bottom',
-      scrub: false,
-      onUpdate(self) {
-        const p = self.progress;
-        let o = 0;
-        if (p >= enter && p <= leave) {
-          const fadeIn  = Math.min((p - enter) / fade, 1);
-          const fadeOut = Math.min((leave - p) / fade, 1);
-          o = Math.min(fadeIn, fadeOut);
-          // ease en puissance pour plus de fluidité
-          o = o < 0.5 ? 2*o*o : -1+(4-2*o)*o;
-        }
-        sec.style.opacity = o.toFixed(4);
-        if (o > 0.08 && !played) { tl.play(); played = true; }
-        if (o < 0.01) { tl.pause(0); played = false; }
-      }
-    });
-  });
-
-  // ── Counters
-  document.querySelectorAll('.stat-num').forEach(el => {
-    const target = parseFloat(el.dataset.value);
-    const dec    = parseInt(el.dataset.dec || '0');
-    const sec    = el.closest('.scroll-section');
-    const enter  = parseFloat(sec.dataset.enter) / 100;
-    let done     = false;
-    ScrollTrigger.create({
-      trigger:scrollCont, start:'top top', end:'bottom bottom',
-      onUpdate(self) {
-        if (self.progress >= enter && !done) {
-          done = true;
-          gsap.fromTo(el, {textContent:0}, {
-            textContent:target, duration:2, ease:'power1.out',
-            snap:{textContent: dec===0?1:0.01},
-            onUpdate() {
-              const v = parseFloat(el.textContent);
-              el.textContent = dec===0 ? Math.round(v).toString() : v.toFixed(dec);
-            }
-          });
-        }
-      }
-    });
-  });
 }
 
-// ── Nav scroll helper ────────────────────────────────────────
-function navScroll(progress) {
-  const target = progress * scrollCont.offsetHeight;
-  window.scrollTo({ top: target, behavior: 'smooth' });
-}
+// ════════════════════════════════════════════════════════════
+//  LINK PREVIEW
+// ════════════════════════════════════════════════════════════
+(function() {
+  const popup    = document.getElementById('lp-popup');
+  const popupImg = document.getElementById('lp-popup-img');
+  const popupLbl = document.getElementById('lp-popup-label');
+  let mx = 0, my = 0, active = false;
+
+  document.addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+    if (active) positionPopup();
+  });
+
+  function positionPopup() {
+    // Centre horizontalement sur le curseur, au-dessus
+    let x = mx - 150;
+    let y = my - 230;
+    // Ne pas sortir de l'écran
+    if (x < 8) x = 8;
+    if (x + 300 > window.innerWidth - 8) x = window.innerWidth - 308;
+    if (y < 8) y = my + 20; // si trop haut, passer en dessous
+    popup.style.left = x + 'px';
+    popup.style.top  = y + 'px';
+  }
+
+  document.querySelectorAll('.lp-trigger').forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      popupImg.src       = el.dataset.image;
+      popupLbl.textContent = el.dataset.label;
+      positionPopup();
+      popup.classList.add('show');
+      active = true;
+    });
+    el.addEventListener('mouseleave', () => {
+      popup.classList.remove('show');
+      active = false;
+    });
+  });
+})();
 
 // START
 preload();
@@ -1335,1516 +1858,5 @@ function submitForm(){
 }
 </script>
 
-<script type="module">
-// ── WebGPU availability check ─────────────────────────────
-if (!navigator.gpu) {
-  console.warn('WebGPU not supported — animation disabled');
-  document.getElementById('loader').classList.add('hidden');
-  document.body.style.background = 'linear-gradient(135deg, #0a0a1a 0%, #0e1e04 50%, #000 100%)';
-  if (window.threeJSReady) window.threeJSReady();
-  throw new Error('WebGPU not supported');
-}
-
-
-		import * as THREE from 'three/webgpu';
-		import {
-			Fn, uniform, float, vec3, instancedArray, instanceIndex, uv,
-			positionGeometry, positionWorld, sin, cos, pow, smoothstep, mix,
-			sqrt, select, hash, time, deltaTime, PI, mx_noise_float,
-			pass, mrt, output, transformedNormalView,
-		} from 'three/tsl';
-		import { dof } from 'three/addons/tsl/display/DepthOfFieldNode.js';
-
-		const BLADE_COUNT = 120000;
-		const FIELD_SIZE = 30;
-		const BACKGROUND_HEX = '#000000';
-		const GROUND_HEX = '#000000';
-		const BLADE_BASE_HEX = '#0e1e04';
-		const BLADE_TIP_HEX = '#c8b840';
-
-		// ─── Sky Gradient ──────────────────────────────────────────────────
-		const skyColors = {
-			top:     new THREE.Color('#000000'),
-			midHigh: new THREE.Color('#000000'),
-			midLow:  new THREE.Color('#000000'),
-			horizon: new THREE.Color('#000000'),
-		};
-
-		function buildSkyTexture() {
-			const w = 2, h = 512;
-			const canvas = document.createElement('canvas');
-			canvas.width = w;
-			canvas.height = h;
-			const ctx = canvas.getContext('2d');
-			const grad = ctx.createLinearGradient(0, 0, 0, h);
-			grad.addColorStop(0.0,  '#' + skyColors.top.getHexString());
-			grad.addColorStop(0.35, '#' + skyColors.midHigh.getHexString());
-			grad.addColorStop(0.65, '#' + skyColors.midLow.getHexString());
-			grad.addColorStop(1.0,  '#' + skyColors.horizon.getHexString());
-			ctx.fillStyle = grad;
-			ctx.fillRect(0, 0, w, h);
-			const tex = new THREE.CanvasTexture(canvas);
-			tex.mapping = THREE.EquirectangularReflectionMapping;
-			tex.colorSpace = THREE.SRGBColorSpace;
-			tex.needsUpdate = true;
-			return tex;
-		}
-
-		// ─── Scene ─────────────────────────────────────────────────────────
-		const scene = new THREE.Scene();
-		scene.background = buildSkyTexture();
-		scene.fog = new THREE.FogExp2('#000000', 0.035);
-
-		const camera = new THREE.PerspectiveCamera(38, innerWidth / innerHeight, 0.1, 100);
-		camera.position.set(0, 8, 18);
-		camera.lookAt(0, 0, 0);
-
-		const renderer = new THREE.WebGPURenderer({ antialias: true });
-		const isMobile = window.innerWidth < 768;
-		const maxDPR = window.innerWidth < 1200 ? 1.5 : Math.min(devicePixelRatio, 2);
-		renderer.setPixelRatio(maxDPR);
-		renderer.setSize(innerWidth, innerHeight);
-		renderer.toneMapping = THREE.ACESFilmicToneMapping;
-		renderer.toneMappingExposure = 1.0;
-		document.body.appendChild(renderer.domElement);
-		await renderer.init();
-
-		// ─── GPU Buffers ────────────────────────────────────────────────────
-		const bladeData = instancedArray(BLADE_COUNT, 'vec4');
-		const bendState = instancedArray(BLADE_COUNT, 'vec4');
-		const bladeBound = instancedArray(BLADE_COUNT, 'float');
-
-		// ─── Uniforms ───────────────────────────────────────────────────────
-		const mouseWorld = uniform(new THREE.Vector3(99999, 0, 99999));
-		const mouseRadius = uniform(6.1);
-		const mouseStrength = uniform(4.0);
-		const outerRadius = uniform(9.4);
-		const outerStrength = uniform(1.45);
-		const camSphereWorld = uniform(new THREE.Vector3(99999, 0, 99999));
-		const camSphereRadius = uniform(15.0);
-		const camSphereStrength = uniform(5.9);
-
-		const grassDensity = uniform(1.0);
-		const windSpeed = uniform(1.3);
-		const windAmplitude = uniform(0.21);
-		const bladeWidth = uniform(4.0);
-		const bladeTipWidth = uniform(0.19);
-		const bladeHeight = uniform(1.6);
-		const bladeHeightVariation = uniform(0.5);
-		const bladeLean = uniform(1.1);
-		const noiseAmplitude = uniform(1.85);
-		const noiseFrequency = uniform(0.3);
-		const noise2Amplitude = uniform(0.2);
-		const noise2Frequency = uniform(15);
-		const bladeColorVariation = uniform(0.93);
-		const groundRadius = uniform(13.8);
-		const groundFalloff = uniform(2.4);
-		const bladeBaseColor = uniform(new THREE.Color(BLADE_BASE_HEX));
-		const bladeTipColor = uniform(new THREE.Color(BLADE_TIP_HEX));
-		const backgroundColor = uniform(new THREE.Color(BACKGROUND_HEX));
-		const groundColor = uniform(new THREE.Color(GROUND_HEX));
-		const fogStart = uniform(6.5);
-		const fogEnd = uniform(12.0);
-		const fogIntensity = uniform(1.0);
-		const fogColor = uniform(new THREE.Color('#000000'));
-		let fogEnabled = true;
-		const goldenTipColor = uniform(new THREE.Color('#d4b838'));
-		const greenTipColor = uniform(new THREE.Color('#4a7a14'));
-		const midColor = uniform(new THREE.Color('#2d4e0e'));
-
-		// ─── DoF Uniforms ──────────────────────────────────────────────────
-		const focusDistanceU = uniform(31.83);
-		const focalLengthU = uniform(10.0);
-		const bokehScaleU = uniform(12.5);
-		let dofEnabled = true;
-
-		// Mouse-world distance for auto-focus
-		let mouseFocusDist = 10.0;
-		let autoFocusSmoothed = 10.0;
-
-		const noise2D = Fn(([x, z]) => mx_noise_float(vec3(x, float(0), z)).mul(0.5).add(0.5));
-
-		// ─── Compute Init ──────────────────────────────────────────────────
-		const computeInit = Fn(() => {
-			const blade = bladeData.element(instanceIndex);
-			const col = instanceIndex.mod(283);
-			const row = instanceIndex.div(283);
-			const jx = hash(instanceIndex).sub(0.5);
-			const jz = hash(instanceIndex.add(7919)).sub(0.5);
-			const wx = col.toFloat().add(jx).div(float(283)).sub(0.5).mul(FIELD_SIZE);
-			const wz = row.toFloat().add(jz).div(float(283)).sub(0.5).mul(FIELD_SIZE);
-			blade.x.assign(wx);
-			blade.y.assign(wz);
-			blade.z.assign(hash(instanceIndex.add(1337)).mul(PI.mul(2)));
-			const n1 = noise2D(wx.mul(noiseFrequency), wz.mul(noiseFrequency));
-			const n2 = noise2D(wx.mul(noiseFrequency.mul(noise2Frequency)).add(50), wz.mul(noiseFrequency.mul(noise2Frequency)).add(50));
-			const clump = n1.mul(noiseAmplitude).sub(noise2Amplitude).add(n2.mul(noise2Amplitude).mul(2)).max(0);
-			blade.w.assign(clump);
-			const dist = sqrt(wx.mul(wx).add(wz.mul(wz)));
-			const edgeNoise = noise2D(wx.mul(0.25).add(100), wz.mul(0.25).add(100));
-			const maxR = float(12.0).add(edgeNoise.sub(0.5).mul(6.0));
-			const boundary = float(1).sub(smoothstep(maxR.sub(1.5), maxR, dist));
-			bladeBound.element(instanceIndex).assign(select(boundary.lessThan(0.05), float(0), boundary));
-		})().compute(BLADE_COUNT);
-
-		// ─── Compute Update ────────────────────────────────────────────────
-		const computeUpdate = Fn(() => {
-			const blade = bladeData.element(instanceIndex);
-			const bend = bendState.element(instanceIndex);
-			const bx = blade.x;
-			const bz = blade.y;
-
-			const w1 = sin(bx.mul(0.35).add(bz.mul(0.12)).add(time.mul(windSpeed)));
-			const w2 = sin(bx.mul(0.18).add(bz.mul(0.28)).add(time.mul(windSpeed.mul(0.67))).add(1.7));
-			const windX = w1.add(w2).mul(windAmplitude);
-			const windZ = w1.sub(w2).mul(windAmplitude.mul(0.55));
-
-			const lw = deltaTime.mul(4.0).saturate();
-			bend.x.assign(mix(bend.x, windX, lw));
-			bend.y.assign(mix(bend.y, windZ, lw));
-
-			// Mouse push
-			const dx = bx.sub(mouseWorld.x);
-			const dz = bz.sub(mouseWorld.z);
-			const dist = sqrt(dx.mul(dx).add(dz.mul(dz))).add(0.0001);
-			const falloff = float(1).sub(dist.div(mouseRadius).saturate());
-			const influence = falloff.mul(falloff).mul(mouseStrength);
-			const pushX = dx.div(dist).mul(influence);
-			const pushZ = dz.div(dist).mul(influence);
-
-			// Outer mouse sphere
-			const odx = bx.sub(mouseWorld.x);
-			const odz = bz.sub(mouseWorld.z);
-			const odist = sqrt(odx.mul(odx).add(odz.mul(odz))).add(0.0001);
-			const ofalloff = float(1).sub(odist.div(outerRadius).saturate());
-			const oinfluence = ofalloff.mul(ofalloff).mul(outerStrength);
-			const opushX = odx.div(odist).mul(oinfluence);
-			const opushZ = odz.div(odist).mul(oinfluence);
-
-			// Camera sphere push
-			const cdx = bx.sub(camSphereWorld.x);
-			const cdz = bz.sub(camSphereWorld.z);
-			const cdist = sqrt(cdx.mul(cdx).add(cdz.mul(cdz))).add(0.0001);
-			const cfalloff = float(1).sub(cdist.div(camSphereRadius).saturate());
-			const cinfluence = cfalloff.mul(cfalloff).mul(camSphereStrength);
-			const cpushX = cdx.div(cdist).mul(cinfluence);
-			const cpushZ = cdz.div(cdist).mul(cinfluence);
-
-			const totalPushX = pushX.add(opushX).add(cpushX);
-			const totalPushZ = pushZ.add(opushZ).add(cpushZ);
-
-			const targetMag = sqrt(totalPushX.mul(totalPushX).add(totalPushZ.mul(totalPushZ)));
-			const currentMag = sqrt(bend.z.mul(bend.z).add(bend.w.mul(bend.w)));
-			const lm = select(targetMag.greaterThan(currentMag), deltaTime.mul(12.0), deltaTime.mul(1)).saturate();
-			bend.z.assign(mix(bend.z, totalPushX, lm));
-			bend.w.assign(mix(bend.w, totalPushZ, lm));
-		})().compute(BLADE_COUNT);
-
-		// ─── Blade Geometry ────────────────────────────────────────────────
-		function createBladeGeometry() {
-			const segs = 5, W = 0.055, H = 1.0;
-			const verts = [], norms = [], uvArr = [], idx = [];
-			for (let i = 0; i <= segs; i++) {
-				const t = i / segs, y = t * H, hw = W * 0.5 * (1.0 - t * 0.82);
-				verts.push(-hw, y, 0, hw, y, 0);
-				norms.push(0, 0, 1, 0, 0, 1);
-				uvArr.push(0, t, 1, t);
-			}
-			for (let i = 0; i < segs; i++) { const b = i * 2; idx.push(b, b + 1, b + 2, b + 1, b + 3, b + 2); }
-			const geo = new THREE.BufferGeometry();
-			geo.setAttribute('position', new THREE.Float32BufferAttribute(verts, 3));
-			geo.setAttribute('normal', new THREE.Float32BufferAttribute(norms, 3));
-			geo.setAttribute('uv', new THREE.Float32BufferAttribute(uvArr, 2));
-			geo.setIndex(idx);
-			return geo;
-		}
-
-		// ─── Grass Material ────────────────────────────────────────────────
-		const grassMat = new THREE.MeshBasicNodeMaterial({ side: THREE.DoubleSide, fog: true });
-
-		grassMat.positionNode = Fn(() => {
-			const blade = bladeData.element(instanceIndex);
-			const bend = bendState.element(instanceIndex);
-			const worldX = blade.x, worldZ = blade.y, rotY = blade.z;
-			const boundary = bladeBound.element(instanceIndex);
-			const visible = select(hash(instanceIndex.add(9999)).lessThan(grassDensity.mul(0.5)), float(1), float(0));
-			const hVar = hash(instanceIndex.add(5555)).mul(bladeHeightVariation);
-			const heightScale = float(0.35).add(blade.w).add(hVar).mul(boundary).mul(visible);
-			const taper = float(1).sub(uv().y.mul(float(1).sub(bladeTipWidth)));
-			const lx = positionGeometry.x.mul(bladeWidth).mul(taper).mul(heightScale.sign());
-			const ly = positionGeometry.y.mul(heightScale).mul(bladeHeight);
-			const cY = cos(rotY), sY = sin(rotY);
-			const rx = lx.mul(cY), rz = lx.mul(sY);
-			const t = uv().y;
-			const bendFactor = pow(t, 1.8);
-			const staticBendX = hash(instanceIndex.add(7777)).sub(0.5).mul(bladeLean);
-			const staticBendZ = hash(instanceIndex.add(8888)).sub(0.5).mul(bladeLean);
-			const bendX = staticBendX.add(bend.x).add(bend.z);
-			const bendZ = staticBendZ.add(bend.y).add(bend.w);
-			const relX = rx.add(bendX.mul(bendFactor).mul(bladeHeight));
-			const relY = ly;
-			const relZ = rz.add(bendZ.mul(bendFactor).mul(bladeHeight));
-			const origLen = sqrt(rx.mul(rx).add(ly.mul(ly)).add(rz.mul(rz)));
-			const newLen = sqrt(relX.mul(relX).add(relY.mul(relY)).add(relZ.mul(relZ)));
-			const scale = origLen.div(newLen.max(0.0001));
-			return vec3(worldX.add(relX.mul(scale)), relY.mul(scale), worldZ.add(relZ.mul(scale)));
-		})();
-
-		grassMat.colorNode = Fn(() => {
-			const t = uv().y;
-			const clump = bladeData.element(instanceIndex).w.saturate();
-			const bladeHash = hash(instanceIndex.add(4242));
-			const isGolden = bladeHash.lessThan(0.4);
-			const lowerGrad = smoothstep(float(0.0), float(0.45), t);
-			const upperGrad = smoothstep(float(0.4), float(0.85), t);
-			const tipMix = float(1).sub(bladeColorVariation).add(clump.mul(bladeColorVariation));
-			const greenTip = mix(greenTipColor, bladeTipColor, tipMix);
-			const warmTip = mix(greenTipColor, goldenTipColor, tipMix);
-			const tipFinal = mix(greenTip, warmTip, select(isGolden, float(1), float(0)));
-			const lowerColor = mix(bladeBaseColor, midColor, lowerGrad);
-			const grassColor = mix(lowerColor, tipFinal, upperGrad);
-			const blade = bladeData.element(instanceIndex);
-			const dist = sqrt(blade.x.mul(blade.x).add(blade.y.mul(blade.y)));
-			const fogFactor = smoothstep(fogStart, fogEnd, dist).mul(fogIntensity);
-			return mix(grassColor, fogColor, fogFactor);
-		})();
-
-		grassMat.opacityNode = Fn(() => {
-			const blade = bladeData.element(instanceIndex);
-			const dist = sqrt(blade.x.mul(blade.x).add(blade.y.mul(blade.y)));
-			const fadeEnd = select(fogIntensity.greaterThan(0.01), fogEnd.add(2.0), float(15.0));
-			const fadeFactor = float(1).sub(smoothstep(fadeEnd.sub(5.0), fadeEnd, dist));
-			return smoothstep(float(0.0), float(0.1), uv().y).mul(fadeFactor);
-		})();
-		grassMat.transparent = true;
-
-		// ─── Instances ─────────────────────────────────────────────────────
-		const bladeGeo = createBladeGeometry();
-		const grass = new THREE.InstancedMesh(bladeGeo, grassMat, BLADE_COUNT);
-		grass.frustumCulled = false;
-		scene.add(grass);
-		const dummy = new THREE.Object3D();
-		for (let i = 0; i < BLADE_COUNT; i++) grass.setMatrixAt(i, dummy.matrix);
-		grass.instanceMatrix.needsUpdate = true;
-
-		// ─── Ground ────────────────────────────────────────────────────────
-		const groundMat = new THREE.MeshBasicNodeMaterial();
-		groundMat.colorNode = Fn(() => {
-			const wx = positionWorld.x, wz = positionWorld.z;
-			const dist = sqrt(wx.mul(wx).add(wz.mul(wz)));
-			const edgeNoise = noise2D(wx.mul(0.25).add(100), wz.mul(0.25).add(100));
-			const maxR = groundRadius.add(edgeNoise.sub(0.5).mul(4.0));
-			const t = smoothstep(maxR.sub(groundFalloff), maxR, dist);
-			return mix(groundColor, backgroundColor, t);
-		})();
-		const ground = new THREE.Mesh(new THREE.PlaneGeometry(FIELD_SIZE * 5, FIELD_SIZE * 5), groundMat);
-		ground.rotation.x = -Math.PI / 2;
-		scene.add(ground);
-
-		// ─── Lighting ──────────────────────────────────────────────────────
-		scene.add(new THREE.AmbientLight(0xffffff, 0.6));
-		const dirLight = new THREE.DirectionalLight(0xfff4e0, 1.5);
-		dirLight.position.set(5, 10, 7);
-		scene.add(dirLight);
-
-		// ─── Post Processing (DoF) ─────────────────────────────────────────
-		const postProcessing = new THREE.PostProcessing(renderer);
-		const scenePass = pass(scene, camera);
-		scenePass.setMRT(mrt({
-			output: output,
-			normal: transformedNormalView,
-		}));
-		const sceneColor = scenePass.getTextureNode('output');
-		const sceneViewZ = scenePass.getViewZNode();
-		const dofOutput = dof(sceneColor, sceneViewZ, focusDistanceU, focalLengthU, bokehScaleU);
-
-		// Start with DoF ON (except mobile)
-		postProcessing.outputNode = isMobile ? sceneColor : dofOutput;
-		if (isMobile) dofEnabled = false;
-		postProcessing.needsUpdate = true;
-
-		function rebuildPipeline() {
-			if (dofEnabled) {
-				postProcessing.outputNode = dofOutput;
-			} else {
-				postProcessing.outputNode = sceneColor;
-			}
-			postProcessing.needsUpdate = true;
-		}
-
-		// ─── Mouse ─────────────────────────────────────────────────────────
-		const raycaster = new THREE.Raycaster();
-		const mouseNDC = new THREE.Vector2();
-		const grassPlane = new THREE.Plane(new THREE.Vector3(0, 1, 0), 0);
-		const hitPoint = new THREE.Vector3();
-
-		window.addEventListener('mousemove', (e) => {
-			mouseNDC.set((e.clientX / innerWidth) * 2 - 1, -(e.clientY / innerHeight) * 2 + 1);
-			raycaster.setFromCamera(mouseNDC, camera);
-			if (raycaster.ray.intersectPlane(grassPlane, hitPoint)) {
-				mouseWorld.value.copy(hitPoint);
-				// Compute distance from camera to mouse hit for auto-focus
-				mouseFocusDist = camera.position.distanceTo(hitPoint);
-			}
-		});
-		window.addEventListener('mouseleave', () => mouseWorld.value.set(99999, 0, 99999));
-
-		let resizeTimeout;
-		window.addEventListener('resize', () => {
-			clearTimeout(resizeTimeout);
-			resizeTimeout = setTimeout(() => {
-				camera.aspect = innerWidth / innerHeight;
-				camera.updateProjectionMatrix();
-				const dpr = window.innerWidth < 1200 ? 1.5 : Math.min(devicePixelRatio, 2);
-				renderer.setPixelRatio(dpr);
-				renderer.setSize(innerWidth, innerHeight);
-			}, 100);
-		});
-
-		// ─── Settings Panel (keyboard S) ───────────────────────────────────
-		const settingsPanel = document.getElementById('settingsPanel');
-		let settingsOpen = false;
-
-		const settingsGear = document.getElementById('settingsGear');
-
-		function toggleSettings() {
-			settingsOpen = !settingsOpen;
-			settingsPanel.classList.toggle('open', settingsOpen);
-			settingsGear.classList.toggle('active', settingsOpen);
-		}
-
-		settingsGear.addEventListener('click', toggleSettings);
-
-		window.addEventListener('keydown', (e) => {
-			if (e.key === 's' || e.key === 'S') {
-				// Don't toggle if user is typing in an input
-				if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
-				toggleSettings();
-			}
-		});
-
-		function buildSettings() {
-				// Color pickers (global scene colors not driven per-stage)
-			const colorControls = [
-				{ label: 'Background', u: backgroundColor, extra: (hex) => {
-					scene.background.set(hex);
-				}},
-				{ label: 'Ground', u: groundColor },
-			];
-
-			let html = '';
-
-			// Scene colors (global, not per-stage)
-			html += `<div class="sp-section"><div class="sp-section-title">Global Colors</div>`;
-			colorControls.forEach((c, idx) => {
-				const id = `sp_color_${idx}`;
-				const hex = '#' + c.u.value.getHexString();
-				html += `<div class="sp-color-row"><span class="sp-label">${c.label}</span><input type="color" class="sp-color-input" id="${id}" value="${hex}"></div>`;
-			});
-			html += `</div>`;
-
-			// Sky Gradient
-			html += `<div class="sp-section"><div class="sp-section-title">Sky Gradient</div>`;
-			const skyControls = [
-				{ label: 'Top (Zenith)', key: 'top' },
-				{ label: 'Mid High', key: 'midHigh' },
-				{ label: 'Mid Low', key: 'midLow' },
-				{ label: 'Horizon', key: 'horizon' },
-			];
-			skyControls.forEach((c, idx) => {
-				const id = `sp_sky_${idx}`;
-				const hex = '#' + skyColors[c.key].getHexString();
-				html += `<div class="sp-color-row"><span class="sp-label">${c.label}</span><input type="color" class="sp-color-input" id="${id}" value="${hex}"></div>`;
-			});
-			html += `</div>`;
-
-			// Camera Path Editor — one stage per section
-			html += `<div class="sp-section"><div class="sp-section-title">Camera Path</div>`;
-			// Mode toggle: Scroll / Edit
-			html += `<div style="display:flex;gap:6px;margin-bottom:12px;">`;
-			html += `<button id="modeScrollBtn" style="flex:1;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;padding:7px 0;border:1px solid rgba(140,180,120,0.3);border-radius:6px;background:rgba(120,180,80,0.25);color:rgba(200,220,140,0.9);cursor:pointer;transition:all 0.3s;font-weight:500;">⏵ Scroll</button>`;
-			html += `<button id="modeEditBtn" style="flex:1;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;padding:7px 0;border:1px solid rgba(140,180,120,0.12);border-radius:6px;background:rgba(140,180,120,0.06);color:rgba(180,210,140,0.4);cursor:pointer;transition:all 0.3s;font-weight:500;">✎ Edit</button>`;
-			html += `</div>`;
-			html += `<div id="modeHint" style="font-size:10px;color:rgba(180,210,140,0.3);margin-bottom:10px;line-height:1.5;">Scroll mode — camera follows scroll position naturally.</div>`;
-			html += `<div style="display:flex;justify-content:flex-end;margin-bottom:10px;"><button id="copyPathBtn" style="font-size:9px;letter-spacing:1px;text-transform:uppercase;padding:4px 10px;border:1px solid rgba(140,180,120,0.2);border-radius:4px;background:rgba(140,180,120,0.08);color:rgba(180,210,140,0.5);cursor:pointer;transition:all 0.3s;white-space:nowrap;">Copy JSON</button></div>`;
-			cameraPath.forEach((kf, i) => {
-				const name = stageNames[i] || `Stage ${i}`;
-				html += `<div class="cp-stage" id="cp_stage_${i}" data-stage="${i}" style="margin-bottom:8px;border:1px solid rgba(140,180,120,0.08);border-radius:8px;overflow:hidden;cursor:pointer;transition:opacity 0.3s;">`;
-				html += `<div class="cp-header" data-stage="${i}" style="display:flex;justify-content:space-between;align-items:center;padding:8px 10px;background:rgba(140,180,120,0.04);transition:background 0.2s;">`;
-				html += `<span class="sp-label" style="color:rgba(180,210,140,0.5);font-weight:500;pointer-events:none;">${name}</span>`;
-				html += `<span style="font-size:9px;color:rgba(180,210,140,0.25);pointer-events:none;" id="cp_${i}_arrow">▸</span>`;
-				html += `</div>`;
-				html += `<div class="cp-controls" id="cp_${i}_controls" style="display:none;padding:6px 10px 10px;">`;
-				// Camera position/look
-				html += `<div style="font-size:9px;letter-spacing:2px;text-transform:uppercase;color:rgba(180,210,140,0.3);margin-bottom:8px;">Camera</div>`;
-				html += `<div class="sp-row"><span class="sp-label">Pos X</span><span class="sp-val" id="cp_${i}_px_v">${kf[1].toFixed(1)}</span></div>`;
-				html += `<input type="range" class="sp-slider" id="cp_${i}_px" min="-10" max="10" step="0.1" value="${kf[1]}">`;
-				html += `<div class="sp-row"><span class="sp-label">Pos Y</span><span class="sp-val" id="cp_${i}_py_v">${kf[2].toFixed(1)}</span></div>`;
-				html += `<input type="range" class="sp-slider" id="cp_${i}_py" min="0.1" max="15" step="0.1" value="${kf[2]}">`;
-				html += `<div class="sp-row"><span class="sp-label">Pos Z</span><span class="sp-val" id="cp_${i}_pz_v">${kf[3].toFixed(1)}</span></div>`;
-				html += `<input type="range" class="sp-slider" id="cp_${i}_pz" min="0" max="25" step="0.1" value="${kf[3]}">`;
-				html += `<div class="sp-row"><span class="sp-label">Look X</span><span class="sp-val" id="cp_${i}_lx_v">${kf[4].toFixed(1)}</span></div>`;
-				html += `<input type="range" class="sp-slider" id="cp_${i}_lx" min="-5" max="5" step="0.1" value="${kf[4]}">`;
-				html += `<div class="sp-row"><span class="sp-label">Look Y</span><span class="sp-val" id="cp_${i}_ly_v">${kf[5].toFixed(1)}</span></div>`;
-				html += `<input type="range" class="sp-slider" id="cp_${i}_ly" min="-2" max="3" step="0.1" value="${kf[5]}">`;
-				html += `<div class="sp-row"><span class="sp-label">Look Z</span><span class="sp-val" id="cp_${i}_lz_v">${kf[6].toFixed(1)}</span></div>`;
-				html += `<input type="range" class="sp-slider" id="cp_${i}_lz" min="-10" max="10" step="0.1" value="${kf[6]}">`;
-				html += `<div style="height:1px;background:rgba(140,180,120,0.08);margin:8px 0;"></div>`;
-				// DoF
-				html += `<div style="font-size:9px;letter-spacing:2px;text-transform:uppercase;color:rgba(180,210,140,0.3);margin-bottom:8px;">Depth of Field</div>`;
-				html += `<div class="sp-toggle-row"><span class="sp-label">DoF Enabled</span><div class="sp-toggle ${kf[9] ? 'active' : ''}" id="cp_${i}_dof"></div></div>`;
-				html += `<div id="cp_${i}_dof_controls" style="${kf[9] ? '' : 'opacity:0.3;pointer-events:none;'}">`;
-				html += `<div class="sp-toggle-row"><span class="sp-label">Auto Focus</span><div class="sp-toggle ${kf[8] ? 'active' : ''}" id="cp_${i}_af"></div></div>`;
-				html += `<div id="cp_${i}_manual_focus" style="${kf[8] ? 'opacity:0.3;pointer-events:none;' : ''}">`;
-				html += `<div class="sp-row"><span class="sp-label">Focus Dist</span><span class="sp-val" id="cp_${i}_fd_v">${kf[7].toFixed(1)}</span></div>`;
-				html += `<input type="range" class="sp-slider" id="cp_${i}_fd" min="0.3" max="40" step="0.1" value="${kf[7]}">`;
-				html += `</div>`;
-				html += `<div id="cp_${i}_af_settings" style="${kf[8] ? '' : 'opacity:0.3;pointer-events:none;'}">`;
-				html += `<div class="sp-row"><span class="sp-label">AF Speed</span><span class="sp-val" id="cp_${i}_afspd_v">${kf[12].toFixed(1)}</span></div>`;
-				html += `<input type="range" class="sp-slider" id="cp_${i}_afspd" min="0.5" max="20" step="0.5" value="${kf[12]}">`;
-				html += `<div class="sp-row"><span class="sp-label">AF Min</span><span class="sp-val" id="cp_${i}_afmin_v">${kf[13].toFixed(1)}</span></div>`;
-				html += `<input type="range" class="sp-slider" id="cp_${i}_afmin" min="0.1" max="10" step="0.1" value="${kf[13]}">`;
-				html += `<div class="sp-row"><span class="sp-label">AF Max</span><span class="sp-val" id="cp_${i}_afmax_v">${kf[14].toFixed(1)}</span></div>`;
-				html += `<input type="range" class="sp-slider" id="cp_${i}_afmax" min="1" max="50" step="0.5" value="${kf[14]}">`;
-				html += `</div>`;
-				html += `<div class="sp-row"><span class="sp-label">Focal Length</span><span class="sp-val" id="cp_${i}_fl_v">${kf[10].toFixed(1)}</span></div>`;
-				html += `<input type="range" class="sp-slider" id="cp_${i}_fl" min="0.1" max="20" step="0.1" value="${kf[10]}">`;
-				html += `<div class="sp-row"><span class="sp-label">Bokeh Scale</span><span class="sp-val" id="cp_${i}_bk_v">${kf[11].toFixed(1)}</span></div>`;
-				html += `<input type="range" class="sp-slider" id="cp_${i}_bk" min="0" max="40" step="0.5" value="${kf[11]}">`;
-				html += `</div>`;
-				html += `<div style="height:1px;background:rgba(140,180,120,0.08);margin:8px 0;"></div>`;
-				// Per-stage params grouped
-				const sp = stageParams[i];
-				const groups = {};
-				stageParamKeys.forEach(k => {
-					const d = stageParamDefs[k];
-					if (!groups[d.group]) groups[d.group] = [];
-					groups[d.group].push({ key: k, ...d, val: sp[k] });
-				});
-				// Group color channels into combined color pickers + individual sliders
-				Object.keys(groups).forEach(grp => {
-					html += `<div style="font-size:9px;letter-spacing:2px;text-transform:uppercase;color:rgba(180,210,140,0.3);margin:8px 0 6px;">Stage ${grp}</div>`;
-					// Find color groups for combined pickers
-					const colorGroupsMap = {};
-					groups[grp].forEach(c => {
-						if (c.isColor) {
-							if (!colorGroupsMap[c.isColor]) colorGroupsMap[c.isColor] = [];
-							colorGroupsMap[c.isColor].push(c);
-						}
-					});
-					// Render combined color pickers first
-					const renderedColorKeys = new Set();
-					Object.keys(colorGroupsMap).forEach(colorName => {
-						const channels = colorGroupsMap[colorName];
-						const rCh = channels.find(c => c.ch === 'r');
-						const gCh = channels.find(c => c.ch === 'g');
-						const bCh = channels.find(c => c.ch === 'b');
-						if (rCh && gCh && bCh) {
-							const r = Math.round(rCh.val * 255), g = Math.round(gCh.val * 255), b = Math.round(bCh.val * 255);
-							const hex = '#' + [r,g,b].map(v => v.toString(16).padStart(2,'0')).join('');
-							const cpId = `sp_stage_${i}_cpick_${colorName}`;
-							const shortLabel = colorName.replace('Color','').replace(/([A-Z])/g,' $1').trim();
-							html += `<div class="sp-color-row"><span class="sp-label">${shortLabel}</span><input type="color" class="sp-color-input" id="${cpId}" value="${hex}"></div>`;
-							channels.forEach(c => renderedColorKeys.add(c.key));
-						}
-					});
-					// Now render all sliders (including color channel sliders for fine-tuning)
-					groups[grp].forEach(c => {
-						const sid = `sp_stage_${i}_${c.key}`;
-						html += `<div class="sp-row"><span class="sp-label">${c.label}</span><span class="sp-val" id="${sid}_v">${c.val.toFixed(2)}</span></div>`;
-						html += `<input type="range" class="sp-slider" id="${sid}" min="${c.min}" max="${c.max}" step="${c.step}" value="${c.val}">`;
-					});
-				});
-				html += `</div>`;
-				html += `</div>`;
-			});
-			html += `</div>`;
-
-			// Typography Colors
-			html += `<div class="sp-section"><div class="sp-section-title">Typography Colors</div>`;
-			const typoColors = [
-				{ label: 'Heading', cssVar: '--color-heading', defaultVal: '#f8fcf0' },
-				{ label: 'Accent / Emphasis', cssVar: '--color-accent', defaultVal: '#e6f578' },
-				{ label: 'Body Text', cssVar: '--color-body', defaultVal: '#d7e6be' },
-				{ label: 'Labels / Caps', cssVar: '--color-label', defaultVal: '#d2e6a0' },
-			];
-			typoColors.forEach((tc, idx) => {
-				const id = `sp_typo_${idx}`;
-				// Read current computed value or use default
-				const current = getComputedStyle(document.documentElement).getPropertyValue(tc.cssVar).trim() || tc.defaultVal;
-				html += `<div class="sp-color-row"><span class="sp-label">${tc.label}</span><input type="color" class="sp-color-input" id="${id}" value="${tc.defaultVal}"></div>`;
-			});
-			html += `</div>`;
-
-			// Global Rendering
-			html += `<div class="sp-section"><div class="sp-section-title">Rendering</div>`;
-			html += `<div class="sp-toggle-row"><span class="sp-label">Depth of Field</span><div class="sp-toggle ${globalDofEnabled ? 'active' : ''}" id="globalDofToggle"></div></div>`;
-			html += `</div>`;
-
-			// Debug
-			html += `<div class="sp-section"><div class="sp-section-title">Debug</div>`;
-			html += `<div class="sp-toggle-row"><span class="sp-label">FPS Counter</span><div class="sp-toggle" id="fpsToggle"></div></div>`;
-			html += `</div>`;
-
-			settingsPanel.innerHTML = html;
-
-			// Wire sky gradient pickers
-			skyControls.forEach((c, idx) => {
-				const id = `sp_sky_${idx}`;
-				const input = document.getElementById(id);
-				input.addEventListener('input', () => {
-					skyColors[c.key].set(input.value);
-					scene.background = buildSkyTexture();
-				});
-			});
-
-			// Wire color pickers
-			colorControls.forEach((c, idx) => {
-				const id = `sp_color_${idx}`;
-				const input = document.getElementById(id);
-				input.addEventListener('input', () => {
-					c.u.value.set(input.value);
-					if (c.extra) c.extra(input.value);
-				});
-			});
-
-			// Camera path editor wiring
-			let activeStage = -1;
-			let cameraOverride = -1;
-			let editorMode = 'scroll'; // 'scroll' or 'edit'
-
-			const modeScrollBtn = document.getElementById('modeScrollBtn');
-			const modeEditBtn = document.getElementById('modeEditBtn');
-			const modeHint = document.getElementById('modeHint');
-
-			function setMode(mode) {
-				editorMode = mode;
-				if (mode === 'scroll') {
-					modeScrollBtn.style.background = 'rgba(120,180,80,0.25)';
-					modeScrollBtn.style.borderColor = 'rgba(140,180,120,0.3)';
-					modeScrollBtn.style.color = 'rgba(200,220,140,0.9)';
-					modeEditBtn.style.background = 'rgba(140,180,120,0.06)';
-					modeEditBtn.style.borderColor = 'rgba(140,180,120,0.12)';
-					modeEditBtn.style.color = 'rgba(180,210,140,0.4)';
-					modeHint.textContent = 'Scroll mode — camera follows scroll position naturally.';
-					// Collapse any open stage and release override
-					if (activeStage >= 0) {
-						const prevControls = document.getElementById(`cp_${activeStage}_controls`);
-						const prevArrow = document.getElementById(`cp_${activeStage}_arrow`);
-						const prevStage = document.getElementById(`cp_stage_${activeStage}`);
-						if (prevControls) prevControls.style.display = 'none';
-						if (prevArrow) prevArrow.textContent = '▸';
-						if (prevStage) prevStage.style.borderColor = 'rgba(140,180,120,0.08)';
-					}
-					activeStage = -1;
-					cameraOverride = -1;
-					// Dim all stage headers
-					cameraPath.forEach((_, j) => {
-						const el = document.getElementById(`cp_stage_${j}`);
-						if (el) { el.style.opacity = '0.5'; el.style.pointerEvents = 'none'; }
-					});
-				} else {
-					modeEditBtn.style.background = 'rgba(120,180,80,0.25)';
-					modeEditBtn.style.borderColor = 'rgba(140,180,120,0.3)';
-					modeEditBtn.style.color = 'rgba(200,220,140,0.9)';
-					modeScrollBtn.style.background = 'rgba(140,180,120,0.06)';
-					modeScrollBtn.style.borderColor = 'rgba(140,180,120,0.12)';
-					modeScrollBtn.style.color = 'rgba(180,210,140,0.4)';
-					modeHint.textContent = 'Edit mode — click a stage to lock camera & tweak values. Switch to Scroll to preview transitions.';
-					// Enable all stage headers
-					cameraPath.forEach((_, j) => {
-						const el = document.getElementById(`cp_stage_${j}`);
-						if (el) { el.style.opacity = '1'; el.style.pointerEvents = 'auto'; }
-					});
-					// Auto-select first stage (or re-select previously active)
-					const startStage = activeStage >= 0 ? activeStage : 0;
-					selectStage(startStage);
-				}
-			}
-
-			modeScrollBtn.addEventListener('click', () => setMode('scroll'));
-			modeEditBtn.addEventListener('click', () => setMode('edit'));
-
-			let expandedStage = -1;
-
-			function selectStage(i) {
-				// Deselect previous highlight
-				if (activeStage >= 0 && activeStage !== i) {
-					const prevStage = document.getElementById(`cp_stage_${activeStage}`);
-					if (prevStage) prevStage.style.borderColor = 'rgba(140,180,120,0.08)';
-					// Collapse previous if it was expanded
-					if (expandedStage === activeStage) {
-						const prevControls = document.getElementById(`cp_${activeStage}_controls`);
-						const prevArrow = document.getElementById(`cp_${activeStage}_arrow`);
-						if (prevControls) prevControls.style.display = 'none';
-						if (prevArrow) prevArrow.textContent = '▸';
-						expandedStage = -1;
-					}
-				}
-				// Highlight selected (but don't expand)
-				const stageEl = document.getElementById(`cp_stage_${i}`);
-				if (stageEl) stageEl.style.borderColor = 'rgba(180,210,140,0.35)';
-				activeStage = i;
-				cameraOverride = i;
-				modeHint.textContent = `Editing: ${stageNames[i]} — click again to expand controls.`;
-				scrollToStage(i);
-				// Force scroll position to match keyframe so scroll and edit mode are consistent
-				currentScrollT = cameraPath[i][0];
-				targetScrollT = cameraPath[i][0];
-
-				// Force-apply this stage's params to uniforms immediately so preview is correct
-				const kf = cameraPath[i];
-				const sp = stageParams[i];
-				camera.position.set(kf[1], kf[2], kf[3]);
-				lookTarget.set(kf[4], kf[5], kf[6]);
-				camera.lookAt(lookTarget);
-				// Apply all per-stage params to uniforms right now
-				fogStart.value = sp.fogStart;
-				fogEnd.value = sp.fogEnd;
-				fogIntensity.value = sp.fogIntensity;
-				fogColor.value.setRGB(sp.fogR, sp.fogG, sp.fogB);
-				if (scene.fog) scene.fog.color.setRGB(sp.fogR, sp.fogG, sp.fogB);
-				grassDensity.value = sp.grassDensity;
-				bladeWidth.value = sp.bladeWidth;
-				bladeTipWidth.value = sp.bladeTipWidth;
-				bladeHeight.value = sp.bladeHeight;
-				bladeHeightVariation.value = sp.bladeHeightVar;
-				bladeLean.value = sp.bladeLean;
-				_baseWindSpeed = sp.windSpeed;
-				_baseWindAmp = sp.windAmplitude;
-				windSpeed.value = sp.windSpeed;
-				windAmplitude.value = sp.windAmplitude;
-				noiseAmplitude.value = sp.noiseAmp;
-				noiseFrequency.value = sp.noiseFreq;
-				noise2Amplitude.value = sp.noise2Amp;
-				noise2Frequency.value = sp.noise2Freq;
-				mouseRadius.value = sp.mouseRadius;
-				mouseStrength.value = sp.mouseStrength;
-				outerRadius.value = sp.outerRadius;
-				outerStrength.value = sp.outerStrength;
-				bladeBaseColor.value.setRGB(sp.bladeBaseR, sp.bladeBaseG, sp.bladeBaseB);
-				bladeTipColor.value.setRGB(sp.bladeTipR, sp.bladeTipG, sp.bladeTipB);
-				goldenTipColor.value.setRGB(sp.goldenTipR, sp.goldenTipG, sp.goldenTipB);
-				greenTipColor.value.setRGB(sp.greenTipR, sp.greenTipG, sp.greenTipB);
-				midColor.value.setRGB(sp.midR, sp.midG, sp.midB);
-				bladeColorVariation.value = sp.colorVar;
-				camSphereRadius.value = sp.camSphereRadius;
-				camSphereStrength.value = sp.camSphereStrength;
-				// DoF
-				const shouldDof = !!kf[9];
-				if (shouldDof !== dofEnabled) {
-					dofEnabled = shouldDof;
-					rebuildPipeline();
-				}
-				if (dofEnabled) {
-					focusDistanceU.value = kf[7];
-					focalLengthU.value = kf[10];
-					bokehScaleU.value = kf[11];
-				}
-			}
-
-			// Initialize — start in scroll mode, stages dimmed
-			setMode('scroll');
-
-			function scrollToStage(stageIndex) {
-				const section = document.querySelector(`.section[data-stage="${stageIndex}"]`);
-				if (section) {
-					section.scrollIntoView({ behavior: 'smooth', block: 'start' });
-				}
-			}
-
-			cameraPath.forEach((kf, i) => {
-				const header = document.querySelector(`#cp_stage_${i} .cp-header`);
-				const controls = document.getElementById(`cp_${i}_controls`);
-				const arrow = document.getElementById(`cp_${i}_arrow`);
-				const stageEl = document.getElementById(`cp_stage_${i}`);
-
-				header.addEventListener('click', () => {
-					// Only respond in edit mode
-					if (editorMode !== 'edit') return;
-
-					if (activeStage === i) {
-						// Already selected — toggle expand/collapse
-						const controls = document.getElementById(`cp_${i}_controls`);
-						const arrow = document.getElementById(`cp_${i}_arrow`);
-						if (expandedStage === i) {
-							// Collapse
-							if (controls) controls.style.display = 'none';
-							if (arrow) arrow.textContent = '▸';
-							expandedStage = -1;
-							modeHint.textContent = `Editing: ${stageNames[i]} — click again to expand controls.`;
-						} else {
-							// Expand
-							if (controls) controls.style.display = 'block';
-							if (arrow) arrow.textContent = '▾';
-							expandedStage = i;
-							modeHint.textContent = `Editing: ${stageNames[i]} — changes apply in real-time.`;
-						}
-						return;
-					}
-
-					selectStage(i);
-				});
-
-				// Wire all 6 sliders (posX, posY, posZ, lookX, lookY, lookZ)
-				const fields = [
-					{ key: 'px', idx: 1 },
-					{ key: 'py', idx: 2 },
-					{ key: 'pz', idx: 3 },
-					{ key: 'lx', idx: 4 },
-					{ key: 'ly', idx: 5 },
-					{ key: 'lz', idx: 6 },
-				];
-
-				fields.forEach(f => {
-					const slider = document.getElementById(`cp_${i}_${f.key}`);
-					const valEl = document.getElementById(`cp_${i}_${f.key}_v`);
-					slider.addEventListener('input', () => {
-						kf[f.idx] = parseFloat(slider.value);
-						valEl.textContent = kf[f.idx].toFixed(1);
-					});
-				});
-
-				// DoF enabled toggle per stage
-				const dofToggleEl = document.getElementById(`cp_${i}_dof`);
-				const dofControlsEl = document.getElementById(`cp_${i}_dof_controls`);
-				dofToggleEl.addEventListener('click', () => {
-					kf[9] = kf[9] ? 0 : 1;
-					dofToggleEl.classList.toggle('active', !!kf[9]);
-					dofControlsEl.style.opacity = kf[9] ? '1' : '0.3';
-					dofControlsEl.style.pointerEvents = kf[9] ? 'auto' : 'none';
-				});
-
-				// Focus distance slider
-				const fdSlider = document.getElementById(`cp_${i}_fd`);
-				const fdVal = document.getElementById(`cp_${i}_fd_v`);
-				fdSlider.addEventListener('input', () => {
-					kf[7] = parseFloat(fdSlider.value);
-					fdVal.textContent = kf[7].toFixed(1);
-				});
-
-				// Auto focus toggle per stage
-				const afToggle = document.getElementById(`cp_${i}_af`);
-				const manualFocusEl = document.getElementById(`cp_${i}_manual_focus`);
-				const afSettingsEl = document.getElementById(`cp_${i}_af_settings`);
-				afToggle.addEventListener('click', () => {
-					kf[8] = kf[8] ? 0 : 1;
-					afToggle.classList.toggle('active', !!kf[8]);
-					manualFocusEl.style.opacity = kf[8] ? '0.3' : '1';
-					manualFocusEl.style.pointerEvents = kf[8] ? 'none' : 'auto';
-					afSettingsEl.style.opacity = kf[8] ? '1' : '0.3';
-					afSettingsEl.style.pointerEvents = kf[8] ? 'auto' : 'none';
-				});
-
-				// AF Speed slider
-				const afspdSlider = document.getElementById(`cp_${i}_afspd`);
-				const afspdVal = document.getElementById(`cp_${i}_afspd_v`);
-				afspdSlider.addEventListener('input', () => {
-					kf[12] = parseFloat(afspdSlider.value);
-					afspdVal.textContent = kf[12].toFixed(1);
-				});
-
-				// AF Min slider
-				const afminSlider = document.getElementById(`cp_${i}_afmin`);
-				const afminVal = document.getElementById(`cp_${i}_afmin_v`);
-				afminSlider.addEventListener('input', () => {
-					kf[13] = parseFloat(afminSlider.value);
-					afminVal.textContent = kf[13].toFixed(1);
-				});
-
-				// AF Max slider
-				const afmaxSlider = document.getElementById(`cp_${i}_afmax`);
-				const afmaxVal = document.getElementById(`cp_${i}_afmax_v`);
-				afmaxSlider.addEventListener('input', () => {
-					kf[14] = parseFloat(afmaxSlider.value);
-					afmaxVal.textContent = kf[14].toFixed(1);
-				});
-
-				// Focal Length slider
-				const flSlider = document.getElementById(`cp_${i}_fl`);
-				const flVal = document.getElementById(`cp_${i}_fl_v`);
-				flSlider.addEventListener('input', () => {
-					kf[10] = parseFloat(flSlider.value);
-					flVal.textContent = kf[10].toFixed(1);
-				});
-
-				// Bokeh Scale slider
-				const bkSlider = document.getElementById(`cp_${i}_bk`);
-				const bkVal = document.getElementById(`cp_${i}_bk_v`);
-				bkSlider.addEventListener('input', () => {
-					kf[11] = parseFloat(bkSlider.value);
-					bkVal.textContent = kf[11].toFixed(1);
-				});
-
-				// Wire per-stage param sliders
-				stageParamKeys.forEach(k => {
-					const sid = `sp_stage_${i}_${k}`;
-					const slider = document.getElementById(sid);
-					const valEl = document.getElementById(`${sid}_v`);
-					if (slider && valEl) {
-						slider.addEventListener('input', () => {
-							const v = parseFloat(slider.value);
-							stageParams[i][k] = v;
-							valEl.textContent = v.toFixed(2);
-							// Update the combined color picker if this is a color channel
-							const d = stageParamDefs[k];
-							if (d.isColor && d.ch) {
-								updateStageColorPicker(i, d.isColor);
-							}
-						});
-					}
-				});
-
-				// Wire combined color pickers for this stage
-				const stageColorGroups = {};
-				stageParamKeys.forEach(k => {
-					const d = stageParamDefs[k];
-					if (d.isColor) {
-						if (!stageColorGroups[d.isColor]) stageColorGroups[d.isColor] = [];
-						stageColorGroups[d.isColor].push(k);
-					}
-				});
-				Object.keys(stageColorGroups).forEach(colorName => {
-					const cpId = `sp_stage_${i}_cpick_${colorName}`;
-					const cpEl = document.getElementById(cpId);
-					if (cpEl) {
-						cpEl.addEventListener('input', () => {
-							const hex = cpEl.value;
-							const r = parseInt(hex.substr(1,2),16)/255;
-							const g = parseInt(hex.substr(3,2),16)/255;
-							const b = parseInt(hex.substr(5,2),16)/255;
-							// Find the R/G/B keys for this color
-							stageColorGroups[colorName].forEach(k => {
-								const d = stageParamDefs[k];
-								if (d.ch === 'r') stageParams[i][k] = r;
-								if (d.ch === 'g') stageParams[i][k] = g;
-								if (d.ch === 'b') stageParams[i][k] = b;
-								// Update associated slider + value display
-								const sid = `sp_stage_${i}_${k}`;
-								const sl = document.getElementById(sid);
-								const vl = document.getElementById(`${sid}_v`);
-								if (sl) sl.value = stageParams[i][k];
-								if (vl) vl.textContent = stageParams[i][k].toFixed(2);
-							});
-						});
-					}
-				});
-			});
-
-			// Helper: update a combined color picker from individual channel sliders
-			function updateStageColorPicker(stageIdx, colorName) {
-				const cpId = `sp_stage_${stageIdx}_cpick_${colorName}`;
-				const cpEl = document.getElementById(cpId);
-				if (!cpEl) return;
-				// Find the R/G/B keys
-				let r = 0, g = 0, b = 0;
-				stageParamKeys.forEach(k => {
-					const d = stageParamDefs[k];
-					if (d.isColor === colorName) {
-						if (d.ch === 'r') r = stageParams[stageIdx][k];
-						if (d.ch === 'g') g = stageParams[stageIdx][k];
-						if (d.ch === 'b') b = stageParams[stageIdx][k];
-					}
-				});
-				const hex = '#' + [r,g,b].map(v => Math.round(Math.min(1,Math.max(0,v))*255).toString(16).padStart(2,'0')).join('');
-				cpEl.value = hex;
-			}
-
-			// Expose camera override for animate loop — only active in edit mode
-			window._getCameraOverride = () => (editorMode === 'edit' ? cameraOverride : -1);
-			window._getEditorMode = () => editorMode;
-
-			// Copy Path JSON button
-			const copyPathBtn = document.getElementById('copyPathBtn');
-			copyPathBtn.addEventListener('mouseenter', () => {
-				copyPathBtn.style.background = 'rgba(140,180,120,0.2)';
-				copyPathBtn.style.borderColor = 'rgba(180,210,140,0.4)';
-				copyPathBtn.style.color = 'rgba(200,220,140,0.8)';
-			});
-			copyPathBtn.addEventListener('mouseleave', () => {
-				copyPathBtn.style.background = 'rgba(140,180,120,0.08)';
-				copyPathBtn.style.borderColor = 'rgba(140,180,120,0.2)';
-				copyPathBtn.style.color = 'rgba(180,210,140,0.5)';
-			});
-			copyPathBtn.addEventListener('click', () => {
-				const json = JSON.stringify(cameraPath.map((kf, i) => ({
-					stage: stageNames[i],
-					scroll: kf[0],
-					pos: { x: kf[1], y: kf[2], z: kf[3] },
-					look: { x: kf[4], y: kf[5], z: kf[6] },
-					focusDist: kf[7],
-					autoFocus: !!kf[8],
-					dofEnabled: !!kf[9],
-					focalLength: kf[10],
-					bokehScale: kf[11],
-					afSpeed: kf[12],
-					afMin: kf[13],
-					afMax: kf[14],
-					params: stageParams[i],
-				})), null, 2);
-				navigator.clipboard.writeText(json).then(() => {
-					const orig = copyPathBtn.textContent;
-					copyPathBtn.textContent = 'Copied!';
-					copyPathBtn.style.color = 'rgba(180,220,100,0.9)';
-					setTimeout(() => {
-						copyPathBtn.textContent = orig;
-						copyPathBtn.style.color = 'rgba(180,210,140,0.5)';
-					}, 1500);
-				}).catch(() => {
-					// Fallback: select text in a textarea
-					const ta = document.createElement('textarea');
-					ta.value = json;
-					document.body.appendChild(ta);
-					ta.select();
-					document.execCommand('copy');
-					document.body.removeChild(ta);
-					const orig = copyPathBtn.textContent;
-					copyPathBtn.textContent = 'Copied!';
-					setTimeout(() => { copyPathBtn.textContent = orig; }, 1500);
-				});
-			});
-
-			// Wire typography color pickers
-			typoColors.forEach((tc, idx) => {
-				const id = `sp_typo_${idx}`;
-				const input = document.getElementById(id);
-				input.addEventListener('input', () => {
-					document.documentElement.style.setProperty(tc.cssVar, input.value);
-				});
-			});
-
-			// Global DoF toggle
-			const globalDofToggle = document.getElementById('globalDofToggle');
-			globalDofToggle.addEventListener('click', () => {
-				globalDofEnabled = !globalDofEnabled;
-				globalDofToggle.classList.toggle('active', globalDofEnabled);
-				if (!globalDofEnabled) {
-					dofEnabled = false;
-					rebuildPipeline();
-				}
-			});
-
-			// FPS toggle
-			const fpsToggle = document.getElementById('fpsToggle');
-			fpsToggle.addEventListener('click', () => {
-				fpsEnabled = !fpsEnabled;
-				fpsToggle.classList.toggle('active', fpsEnabled);
-				if (fpsOverlay) fpsOverlay.style.display = fpsEnabled ? 'block' : 'none';
-			});
-		}
-
-		// ─── FPS Overlay ───────────────────────────────────────────────────
-		let fpsEnabled = false;
-		let fpsOverlay = document.createElement('div');
-		fpsOverlay.style.cssText = 'position:fixed;top:10px;left:10px;z-index:400;font:12px/1 "Inter",monospace;color:rgba(180,210,140,0.6);background:rgba(0,0,0,0.4);padding:5px 10px;border-radius:6px;pointer-events:none;display:none;';
-		document.body.appendChild(fpsOverlay);
-		let fpsFrames = 0, fpsLast = performance.now();
-
-		// ─── Wind Button ───────────────────────────────────────────────────
-		let windBurst = 0;
-		let _baseWindSpeed = 1.3;
-		let _baseWindAmp = 0.21;
-		let globalDofEnabled = !isMobile;
-
-		// ─── Scroll-Driven Camera (one keyframe per section) ───────────────
-		// [scrollProgress, posX, posY, posZ, lookX, lookY, lookZ]
-		const stageNames = ['Hero', 'Manifesto', 'Pillars', 'Stats', 'Quote', 'CTA', 'Footer'];
-
-		// Per-stage parameter definitions with defaults
-		// Each key maps to: { uniform, default, min, max, step, label, group }
-		const stageParamDefs = {
-			// Fog
-			fogStart:    { u: fogStart,    def: 6.5,  min: 0,   max: 20, step: 0.5, label: 'Fog Start',     group: 'Fog' },
-			fogEnd:      { u: fogEnd,      def: 12.0, min: 1,   max: 30, step: 0.5, label: 'Fog End',       group: 'Fog' },
-			fogIntensity:{ u: fogIntensity, def: 1.0, min: 0,   max: 1,  step: 0.01, label: 'Fog Intensity', group: 'Fog' },
-			fogR:        { def: 0, min: 0, max: 1, step: 0.01, label: 'Fog Red',   group: 'Fog', isColor: 'fogColor', ch: 'r' },
-			fogG:        { def: 0, min: 0, max: 1, step: 0.01, label: 'Fog Green', group: 'Fog', isColor: 'fogColor', ch: 'g' },
-			fogB:        { def: 0, min: 0, max: 1, step: 0.01, label: 'Fog Blue',  group: 'Fog', isColor: 'fogColor', ch: 'b' },
-			// Grass
-			grassDensity:      { u: grassDensity,        def: 1.0,  min: 0,   max: 1,  step: 0.01, label: 'Density',        group: 'Grass' },
-			bladeWidth:        { u: bladeWidth,           def: 4.0,  min: 0.2, max: 4,  step: 0.05, label: 'Blade Width',    group: 'Grass' },
-			bladeTipWidth:     { u: bladeTipWidth,        def: 0.19, min: 0,   max: 1,  step: 0.01, label: 'Tip Width',      group: 'Grass' },
-			bladeHeight:       { u: bladeHeight,          def: 1.6,  min: 0.1, max: 2,  step: 0.05, label: 'Blade Height',   group: 'Grass' },
-			bladeHeightVar:    { u: bladeHeightVariation, def: 0.5,  min: 0,   max: 1,  step: 0.01, label: 'Height Var',     group: 'Grass' },
-			bladeLean:         { u: bladeLean,            def: 1.1,  min: 0,   max: 3,  step: 0.05, label: 'Lean',           group: 'Grass' },
-			// Wind
-			windSpeed:    { u: windSpeed,     def: 1.3,  min: 0, max: 5, step: 0.1,  label: 'Wind Speed',  group: 'Wind' },
-			windAmplitude:{ u: windAmplitude,  def: 0.21, min: 0, max: 1, step: 0.01, label: 'Wind Amp',    group: 'Wind' },
-			// Noise
-			noiseAmp:     { u: noiseAmplitude,  def: 1.85, min: 0,    max: 4,  step: 0.05, label: 'Noise Amp',    group: 'Noise' },
-			noiseFreq:    { u: noiseFrequency,  def: 0.3,  min: 0.01, max: 1,  step: 0.01, label: 'Noise Freq',   group: 'Noise' },
-			noise2Amp:    { u: noise2Amplitude, def: 0.2,  min: 0,    max: 1,  step: 0.01, label: 'Detail Amp',   group: 'Noise' },
-			noise2Freq:   { u: noise2Frequency, def: 15,   min: 1,    max: 30, step: 0.5,  label: 'Detail Freq',  group: 'Noise' },
-			// Mouse Sphere
-			mouseRadius:   { u: mouseRadius,   def: 6.1,  min: 0.5, max: 8,  step: 0.1,  label: 'Mouse Radius',   group: 'Mouse Sphere' },
-			mouseStrength: { u: mouseStrength,  def: 4.0,  min: 0,   max: 5,  step: 0.1,  label: 'Mouse Strength', group: 'Mouse Sphere' },
-			outerRadius:   { u: outerRadius,    def: 9.4,  min: 1,   max: 12, step: 0.1,  label: 'Outer Radius',   group: 'Mouse Sphere' },
-			outerStrength: { u: outerStrength,   def: 1.45, min: 0,   max: 3,  step: 0.05, label: 'Outer Strength', group: 'Mouse Sphere' },
-			// Camera Sphere
-			camSphereRadius:   { def: 15.0, min: 1,  max: 15, step: 0.1, label: 'Cam Radius',   group: 'Camera Sphere', noDirect: true },
-			camSphereStrength: { def: 5.9,  min: 0,  max: 6,  step: 0.1, label: 'Cam Strength',  group: 'Camera Sphere', noDirect: true },
-			// Scene Colors — blade base
-			bladeBaseR: { def: 0.055, min: 0, max: 1, step: 0.01, label: 'Base Red',     group: 'Scene Colors', isColor: 'bladeBaseColor', ch: 'r' },
-			bladeBaseG: { def: 0.118, min: 0, max: 1, step: 0.01, label: 'Base Green',   group: 'Scene Colors', isColor: 'bladeBaseColor', ch: 'g' },
-			bladeBaseB: { def: 0.016, min: 0, max: 1, step: 0.01, label: 'Base Blue',    group: 'Scene Colors', isColor: 'bladeBaseColor', ch: 'b' },
-			// Scene Colors — blade tip
-			bladeTipR:  { def: 0.784, min: 0, max: 1, step: 0.01, label: 'Tip Red',      group: 'Scene Colors', isColor: 'bladeTipColor', ch: 'r' },
-			bladeTipG:  { def: 0.722, min: 0, max: 1, step: 0.01, label: 'Tip Green',    group: 'Scene Colors', isColor: 'bladeTipColor', ch: 'g' },
-			bladeTipB:  { def: 0.251, min: 0, max: 1, step: 0.01, label: 'Tip Blue',     group: 'Scene Colors', isColor: 'bladeTipColor', ch: 'b' },
-			// Scene Colors — golden tip
-			goldenTipR: { def: 0.831, min: 0, max: 1, step: 0.01, label: 'Gold Tip R',   group: 'Scene Colors', isColor: 'goldenTipColor', ch: 'r' },
-			goldenTipG: { def: 0.722, min: 0, max: 1, step: 0.01, label: 'Gold Tip G',   group: 'Scene Colors', isColor: 'goldenTipColor', ch: 'g' },
-			goldenTipB: { def: 0.220, min: 0, max: 1, step: 0.01, label: 'Gold Tip B',   group: 'Scene Colors', isColor: 'goldenTipColor', ch: 'b' },
-			// Scene Colors — green tip
-			greenTipR:  { def: 0.290, min: 0, max: 1, step: 0.01, label: 'Green Tip R',  group: 'Scene Colors', isColor: 'greenTipColor', ch: 'r' },
-			greenTipG:  { def: 0.478, min: 0, max: 1, step: 0.01, label: 'Green Tip G',  group: 'Scene Colors', isColor: 'greenTipColor', ch: 'g' },
-			greenTipB:  { def: 0.078, min: 0, max: 1, step: 0.01, label: 'Green Tip B',  group: 'Scene Colors', isColor: 'greenTipColor', ch: 'b' },
-			// Scene Colors — mid tone
-			midR:       { def: 0.176, min: 0, max: 1, step: 0.01, label: 'Mid Tone R',   group: 'Scene Colors', isColor: 'midColor', ch: 'r' },
-			midG:       { def: 0.306, min: 0, max: 1, step: 0.01, label: 'Mid Tone G',   group: 'Scene Colors', isColor: 'midColor', ch: 'g' },
-			midB:       { def: 0.055, min: 0, max: 1, step: 0.01, label: 'Mid Tone B',   group: 'Scene Colors', isColor: 'midColor', ch: 'b' },
-			// Color variation
-			colorVar:   { u: bladeColorVariation, def: 0.93, min: 0, max: 1, step: 0.01, label: 'Color Var', group: 'Scene Colors' },
-		};
-
-		const stageParamKeys = Object.keys(stageParamDefs);
-
-		// Color uniform lookup for applying interpolated color channels
-		const colorUniformMap = {
-			fogColor: fogColor,
-			bladeBaseColor: bladeBaseColor,
-			bladeTipColor: bladeTipColor,
-			goldenTipColor: goldenTipColor,
-			greenTipColor: greenTipColor,
-			midColor: midColor,
-		};
-
-		// Build default params object — reads current uniform values for colors
-		function getDefaultParams() {
-			const p = {};
-			stageParamKeys.forEach(k => {
-				const d = stageParamDefs[k];
-				if (d.isColor && d.ch) {
-					// Pull actual current value from the uniform
-					const cu = colorUniformMap[d.isColor];
-					if (cu) {
-						p[k] = cu.value[d.ch];
-					} else {
-						p[k] = d.def;
-					}
-				} else {
-					p[k] = d.def;
-				}
-			});
-			return p;
-		}
-
-		// Per-stage camera path with full DoF settings
-		// [scroll, posX, posY, posZ, lookX, lookY, lookZ, focusDist, autoFocus, dofOn, focalLen, bokehScale, afSpeed, afMin, afMax]
-		//  0       1     2     3     4      5      6      7          8          9      10        11          12       13     14
-		const cameraPath = [
-			[0.00, -2.8,  7.2, 19.6,  0.5, 1.5,  0.4, 22.0, 1, 1, 10.0, 12.5, 5.0, 1.0, 40.0],  // Hero
-			[0.14,  0,    2.2, 14.0,  0,  -2.0,   0,   15.0, 1, 1,  8.0, 10.0, 5.0, 1.0, 30.0],  // Manifesto
-			[0.28,  7.5, 10.9, 15.8,  0,   0.0,   0.7, 10.0, 1, 1,  6.0,  8.0, 5.0, 0.5, 20.0],  // Pillars
-			[0.43, -8.0,  6.8, 21.6,  0,   0.2,   0,    7.0, 1, 1,  5.0, 10.0, 5.0, 0.5, 15.0],  // Stats
-			[0.57, -1.0,  5.3, 25.0, -1.2, 3.0,   0,    5.0, 1, 1,  4.0, 14.0, 6.0, 1.1, 21.5],  // Quote
-			[0.78, -1.6,  2.4,  0.0, -1.2, -2.0,   0.0, 16.4, 1, 0, 20.0, 18.0, 19.0, 2.8, 12.5],  // CTA
-			[1.00,  0,   15.0,  0.0, -5,   3.0,  -5,    9.8, 1, 1, 13.8,  0.0, 17.5, 1.2,  9.0],  // Footer
-		];
-
-		// Per-stage params (each stage gets its own copy, starts as defaults)
-		const stageParams = cameraPath.map(() => getDefaultParams());
-
-		// Apply exported per-stage overrides
-		(function applyExportedParams() {
-			const exported = [
-				// Hero (0) — colors only differ from defaults
-				{ bladeBaseR:0.004391442035325718, bladeBaseG:0.012983032338510335, bladeBaseB:0.001214107934117647, bladeTipR:0.5775804404214573, bladeTipG:0.4793201830913402, bladeTipB:0.05126945836711539, goldenTipR:0.6583748172725346, goldenTipG:0.4793201830913402, goldenTipB:0.03954623527052923, greenTipR:0.06847816983662762, greenTipG:0.19461783043107173, greenTipB:0.0069954101845983935, midR:0.026241221889696346, midG:0.07618538147321911, midB:0.004391442035325718 },
-				// Manifesto (1) — same colors
-				{ bladeBaseR:0.004391442035325718, bladeBaseG:0.012983032338510335, bladeBaseB:0.001214107934117647, bladeTipR:0.5775804404214573, bladeTipG:0.4793201830913402, bladeTipB:0.05126945836711539, goldenTipR:0.6583748172725346, goldenTipG:0.4793201830913402, goldenTipB:0.03954623527052923, greenTipR:0.06847816983662762, greenTipG:0.19461783043107173, greenTipB:0.0069954101845983935, midR:0.026241221889696346, midG:0.07618538147321911, midB:0.004391442035325718 },
-				// Pillars (2) — warm pinkish palette
-				{ bladeBaseR:0, bladeBaseG:0.012983032338510335, bladeBaseB:0.001214107934117647, bladeTipR:0.8980392156862745, bladeTipG:0.803921568627451, bladeTipB:0.803921568627451, goldenTipR:0.6627450980392157, goldenTipG:0.28627450980392155, goldenTipB:0.0392156862745098, greenTipR:0.19215686274509805, greenTipG:0.15294117647058825, greenTipB:0.00784313725490196, midR:0.07450980392156863, midG:0.00784313725490196, midB:0.00392156862745098, colorVar:1 },
-				// Stats (3) — different grass params + colors
-				{ fogStart:0, fogEnd:12.5, bladeHeight:2, bladeHeightVar:1, bladeLean:0, windSpeed:1.3, windAmplitude:0.21, bladeBaseR:0.004391442035325718, bladeBaseG:0.012983032338510335, bladeBaseB:0.001214107934117647, bladeTipR:0.5775804404214573, bladeTipG:0.4793201830913402, bladeTipB:0.05126945836711539, goldenTipR:0.6583748172725346, goldenTipG:0.4793201830913402, goldenTipB:0.03954623527052923, greenTipR:0.06847816983662762, greenTipG:0.19461783043107173, greenTipB:0.0069954101845983935, midR:0.026241221889696346, midG:0.07618538147321911, midB:0.004391442035325718 },
-				// Quote (4) — same colors
-				{ bladeBaseR:0.004391442035325718, bladeBaseG:0.012983032338510335, bladeBaseB:0.001214107934117647, bladeTipR:0.5775804404214573, bladeTipG:0.4793201830913402, bladeTipB:0.05126945836711539, goldenTipR:0.6583748172725346, goldenTipG:0.4793201830913402, goldenTipB:0.03954623527052923, greenTipR:0.06847816983662762, greenTipG:0.19461783043107173, greenTipB:0.0069954101845983935, midR:0.026241221889696346, midG:0.07618538147321911, midB:0.004391442035325718 },
-				// CTA (5) — fogStart 7, short grass, no lean
-				{ fogStart:7, bladeTipWidth:0.27, bladeHeight:0.9, bladeHeightVar:0, bladeLean:0, bladeBaseR:0.004391442035325718, bladeBaseG:0.012983032338510335, bladeBaseB:0.001214107934117647, bladeTipR:0.5775804404214573, bladeTipG:0.4793201830913402, bladeTipB:0.05126945836711539, goldenTipR:0.6583748172725346, goldenTipG:0.4793201830913402, goldenTipB:0.03954623527052923, greenTipR:0.06847816983662762, greenTipG:0.19461783043107173, greenTipB:0.0069954101845983935, midR:0.026241221889696346, midG:0.07618538147321911, midB:0.004391442035325718 },
-				// Footer (6) — different grass, fog, colors
-				{ fogStart:2, fogEnd:10, bladeHeight:2, bladeHeightVar:0, bladeLean:0, windSpeed:1.3, windAmplitude:0.21, bladeBaseR:0, bladeBaseG:0.012983032338510335, bladeBaseB:0.001214107934117647, bladeTipR:0.32941176470588235, bladeTipG:0.3058823529411765, bladeTipB:0.050980392156862744, goldenTipR:0.6588235294117647, goldenTipG:0.47843137254901963, goldenTipB:0.0392156862745098, greenTipR:0.06666666666666667, greenTipG:0.19607843137254902, greenTipB:0.00784313725490196, midR:0, midG:0, midB:0 },
-			];
-			exported.forEach((overrides, i) => {
-				Object.keys(overrides).forEach(k => {
-					if (k in stageParams[i]) stageParams[i][k] = overrides[k];
-				});
-			});
-		})();
-
-		function lerpCam(scrollT) {
-			// Snap to nearest keyframe if very close (within 0.5% of scroll range)
-			const snapThreshold = 0.005;
-			for (let j = 0; j < cameraPath.length; j++) {
-				if (Math.abs(cameraPath[j][0] - scrollT) < snapThreshold) {
-					const kf = cameraPath[j];
-					return {
-						px: kf[1], py: kf[2], pz: kf[3],
-						lx: kf[4], ly: kf[5], lz: kf[6],
-						fd: kf[7], af: kf[8], dofOn: kf[9],
-						fl: kf[10], bk: kf[11],
-						afSpd: kf[12], afMin: kf[13], afMax: kf[14],
-						params: { ...stageParams[j] },
-					};
-				}
-			}
-
-			let i = 0;
-			for (let j = 1; j < cameraPath.length; j++) {
-				if (cameraPath[j][0] >= scrollT) { i = j - 1; break; }
-				if (j === cameraPath.length - 1) i = j - 1;
-			}
-			const a = cameraPath[i], b = cameraPath[Math.min(i + 1, cameraPath.length - 1)];
-			const range = b[0] - a[0];
-			const t = range > 0 ? Math.max(0, Math.min(1, (scrollT - a[0]) / range)) : 0;
-			const ease = t * t * (3 - 2 * t);
-
-			// Interpolate per-stage params
-			const iB = Math.min(i + 1, cameraPath.length - 1);
-			const pA = stageParams[i], pB = stageParams[iB];
-			const lerpedParams = {};
-			stageParamKeys.forEach(k => {
-				lerpedParams[k] = pA[k] + (pB[k] - pA[k]) * ease;
-			});
-
-			return {
-				px: a[1] + (b[1] - a[1]) * ease,
-				py: a[2] + (b[2] - a[2]) * ease,
-				pz: a[3] + (b[3] - a[3]) * ease,
-				lx: a[4] + (b[4] - a[4]) * ease,
-				ly: a[5] + (b[5] - a[5]) * ease,
-				lz: a[6] + (b[6] - a[6]) * ease,
-				fd: a[7] + (b[7] - a[7]) * ease,
-				af: a[8] + (b[8] - a[8]) * ease,
-				dofOn: a[9] + (b[9] - a[9]) * ease,
-				fl: a[10] + (b[10] - a[10]) * ease,
-				bk: a[11] + (b[11] - a[11]) * ease,
-				afSpd: a[12] + (b[12] - a[12]) * ease,
-				afMin: a[13] + (b[13] - a[13]) * ease,
-				afMax: a[14] + (b[14] - a[14]) * ease,
-				params: lerpedParams,
-			};
-		}
-
-		let currentScrollT = 0;
-		let targetScrollT = 0;
-
-		function getScrollProgress() {
-			const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-			const docHeight = document.documentElement.scrollHeight;
-			const winHeight = window.innerHeight;
-			const scrollable = docHeight - winHeight;
-			return scrollable > 0 ? Math.min(1, Math.max(0, scrollTop / scrollable)) : 0;
-		}
-
-		// Sync cameraPath scroll values to actual DOM section positions
-		function syncCameraPathToDOM() {
-			const docHeight = document.documentElement.scrollHeight;
-			const winHeight = window.innerHeight;
-			const scrollable = docHeight - winHeight;
-			if (scrollable <= 0) return;
-			cameraPath.forEach((kf, i) => {
-				const section = document.querySelector(`.section[data-stage="${i}"]`);
-				if (section) {
-					const sectionTop = section.offsetTop;
-					kf[0] = Math.min(1, Math.max(0, sectionTop / scrollable));
-				}
-			});
-			// Ensure footer (last) is always 1.0
-			cameraPath[cameraPath.length - 1][0] = 1.0;
-		}
-
-		// Sync on load and on resize
-		syncCameraPathToDOM();
-		window.addEventListener('resize', () => {
-			setTimeout(syncCameraPathToDOM, 100);
-		});
-		// Re-sync after fonts/images load
-		window.addEventListener('load', () => {
-			setTimeout(syncCameraPathToDOM, 200);
-			setTimeout(syncCameraPathToDOM, 1000);
-		});
-
-		let _scrollDirty = false;
-		window.addEventListener('scroll', () => { _scrollDirty = true; }, { passive: true });
-		window.addEventListener('touchmove', () => { _scrollDirty = true; }, { passive: true });
-
-		// ─── Reveal on Scroll ──────────────────────────────────────────────
-		const progressBar = document.getElementById('progressBar');
-		const navFloat = document.getElementById('navFloat');
-
-		// Use IntersectionObserver for reveals — no per-scroll layout thrashing
-		const revealObserver = new IntersectionObserver((entries) => {
-			entries.forEach(entry => {
-				if (entry.isIntersecting) {
-					const el = entry.target;
-					const delay = el.dataset.delay || '0';
-					el.classList.add('revealed', `delay-${delay}`);
-					revealObserver.unobserve(el);
-				}
-			});
-		}, { threshold: 0.1, rootMargin: '0px 0px -18% 0px' });
-
-		document.querySelectorAll('[data-reveal]').forEach(el => revealObserver.observe(el));
-
-		// Force reveal the scroll hint after a brief delay
-		setTimeout(() => {
-			const hint = document.querySelector('.scroll-hint');
-			if (hint && !hint.classList.contains('revealed')) {
-				hint.classList.add('revealed', 'delay-4');
-			}
-		}, 800);
-
-		// ─── Nav Link Click → Scroll to Section ────────────────────────────
-		document.querySelectorAll('[data-nav]').forEach(link => {
-			link.addEventListener('click', (e) => {
-				e.preventDefault();
-				const stageIdx = parseInt(link.dataset.nav);
-				const section = document.querySelector(`.section[data-stage="${stageIdx}"]`);
-				if (section) {
-					section.scrollIntoView({ behavior: 'smooth', block: 'start' });
-				}
-			});
-		});
-
-		// ─── Mobile Hamburger Menu ─────────────────────────────────────────
-		const navHamburger = document.getElementById('navHamburger');
-		const navMobileOverlay = document.getElementById('navMobileOverlay');
-
-		navHamburger.addEventListener('click', () => {
-			navHamburger.classList.toggle('open');
-			navMobileOverlay.classList.toggle('open');
-		});
-
-		document.querySelectorAll('[data-nav-mobile]').forEach(link => {
-			link.addEventListener('click', (e) => {
-				e.preventDefault();
-				const stageIdx = parseInt(link.dataset.navMobile);
-				const section = document.querySelector(`.section[data-stage="${stageIdx}"]`);
-				navHamburger.classList.remove('open');
-				navMobileOverlay.classList.remove('open');
-				if (section) {
-					section.scrollIntoView({ behavior: 'smooth', block: 'start' });
-				}
-			});
-		});
-
-		// ─── Build settings now that cameraPath is defined ─────────────────
-		buildSettings();
-
-		// ─── Boot ──────────────────────────────────────────────────────────
-		await renderer.computeAsync(computeInit);
-
-		// Pre-warm the pipeline by rendering a couple of frames before showing
-		renderer.domElement.style.opacity = '0';
-		renderer.domElement.style.transition = 'opacity 0.4s ease';
-		for (let i = 0; i < 3; i++) {
-			renderer.compute(computeUpdate);
-			postProcessing.render();
-			await new Promise(r => requestAnimationFrame(r));
-		}
-		renderer.domElement.style.opacity = '1';
-  if (window.threeJSReady) window.threeJSReady();
-
-		const clock = new THREE.Clock();
-		const lookTarget = new THREE.Vector3();
-
-		// Cache DOM elements queried every frame
-		const _siteFooter = document.querySelector('.site-footer');
-		const _scrollHint = document.querySelector('.scroll-hint');
-
-		function animate() {
-			const dt = Math.min(clock.getDelta(), 0.05);
-
-			if (_scrollDirty) {
-				targetScrollT = getScrollProgress();
-				_scrollDirty = false;
-			}
-
-			// Smooth scroll interpolation
-			currentScrollT += (targetScrollT - currentScrollT) * Math.min(1, dt * 6);
-
-			// If a camera path stage is being edited, snap to that keyframe directly
-			const override = window._getCameraOverride ? window._getCameraOverride() : -1;
-			let cam;
-			if (override >= 0 && override < cameraPath.length) {
-				const kf = cameraPath[override];
-				cam = {
-					px: kf[1], py: kf[2], pz: kf[3],
-					lx: kf[4], ly: kf[5], lz: kf[6],
-					fd: kf[7], af: kf[8], dofOn: kf[9],
-					fl: kf[10], bk: kf[11],
-					afSpd: kf[12], afMin: kf[13], afMax: kf[14],
-					params: stageParams[override],
-				};
-			} else {
-				cam = lerpCam(currentScrollT);
-			}
-			camera.position.set(cam.px, cam.py, cam.pz);
-			lookTarget.set(cam.lx, cam.ly, cam.lz);
-			camera.lookAt(lookTarget);
-
-			// Push canvas up when footer is visible (cached element)
-			if (_siteFooter) {
-				const footerTop = _siteFooter.getBoundingClientRect().top;
-				if (footerTop < window.innerHeight) {
-					renderer.domElement.style.transform = `translateY(-${window.innerHeight - footerTop}px)`;
-				} else {
-					renderer.domElement.style.transform = '';
-				}
-			}
-
-			// Progress bar
-			progressBar.style.width = (currentScrollT * 100) + '%';
-
-		// Nav visibility
-		navFloat.classList.toggle('visible', currentScrollT > 0.08);
-
-		// Fade out scroll hint on scroll (cached element)
-		if (_scrollHint) {
-			_scrollHint.style.opacity = Math.max(0, 1 - currentScrollT * 15);
-		}
-
-			// Camera sphere — always push grass away from camera base
-			camSphereWorld.value.set(camera.position.x, 0, camera.position.z);
-
-			// Apply interpolated per-stage params to uniforms
-			if (cam.params) {
-				const p = cam.params;
-				// Fog
-				fogStart.value = p.fogStart;
-				fogEnd.value = p.fogEnd;
-				fogIntensity.value = p.fogIntensity;
-				fogColor.value.setRGB(p.fogR, p.fogG, p.fogB);
-				if (scene.fog) scene.fog.color.setRGB(p.fogR, p.fogG, p.fogB);
-				// Grass
-				grassDensity.value = p.grassDensity;
-				bladeWidth.value = p.bladeWidth;
-				bladeTipWidth.value = p.bladeTipWidth;
-				bladeHeight.value = p.bladeHeight;
-				bladeHeightVariation.value = p.bladeHeightVar;
-				bladeLean.value = p.bladeLean;
-				// Wind (base values before burst)
-				_baseWindSpeed = p.windSpeed;
-				_baseWindAmp = p.windAmplitude;
-				// Noise
-				noiseAmplitude.value = p.noiseAmp;
-				noiseFrequency.value = p.noiseFreq;
-				noise2Amplitude.value = p.noise2Amp;
-				noise2Frequency.value = p.noise2Freq;
-				// Mouse
-				mouseRadius.value = p.mouseRadius;
-				mouseStrength.value = p.mouseStrength;
-				outerRadius.value = p.outerRadius;
-				outerStrength.value = p.outerStrength;
-				// Scene Colors
-				bladeBaseColor.value.setRGB(p.bladeBaseR, p.bladeBaseG, p.bladeBaseB);
-				bladeTipColor.value.setRGB(p.bladeTipR, p.bladeTipG, p.bladeTipB);
-				goldenTipColor.value.setRGB(p.goldenTipR, p.goldenTipG, p.goldenTipB);
-				greenTipColor.value.setRGB(p.greenTipR, p.greenTipG, p.greenTipB);
-				midColor.value.setRGB(p.midR, p.midG, p.midB);
-				bladeColorVariation.value = p.colorVar;
-				// Camera Sphere — blend per-stage values with proximity scaling
-				const baseCamR = p.camSphereRadius;
-				const baseCamS = p.camSphereStrength;
-				camSphereRadius.value = baseCamR;
-				camSphereStrength.value = baseCamS;
-			}
-
-			// Scale camera sphere influence additionally based on proximity to grass
-			const camHeight = camera.position.y;
-			const proximityT = Math.max(0, 1 - camHeight / 10);
-			const proxCurve = proximityT * proximityT;
-			// Add proximity boost on top of per-stage base
-			camSphereRadius.value = Math.min(15, camSphereRadius.value * (0.3 + proxCurve * 0.7));
-			camSphereStrength.value = camSphereStrength.value * (0.1 + proxCurve * 0.9);
-
-			// Always apply base wind from per-stage params, then layer burst on top
-			windSpeed.value = _baseWindSpeed;
-			windAmplitude.value = _baseWindAmp;
-
-			// Wind burst — smoothly ramp up speed & amplitude, then ease back down
-			if (windBurst > 0) {
-				windBurst -= dt * 0.6;
-				const burstT = Math.max(0, windBurst / 4.0);
-				const eased = burstT * burstT * (3 - 2 * burstT);
-				windSpeed.value += eased * 4.5;
-				windAmplitude.value += eased * 0.45;
-			}
-
-			// Per-stage DoF
-			{
-				const dofWeight = typeof cam.dofOn === 'number' ? cam.dofOn : 1;
-				const shouldDof = globalDofEnabled && dofWeight > 0.5;
-
-				// Toggle DoF pipeline if state changed
-				if (shouldDof !== dofEnabled) {
-					dofEnabled = shouldDof;
-					rebuildPipeline();
-				}
-
-				if (dofEnabled) {
-					const autoWeight = typeof cam.af === 'number' ? Math.max(0, Math.min(1, cam.af)) : 0;
-					const mouseOnField = mouseWorld.value.x < 9000;
-					const afSpeed = cam.afSpd || 5.0;
-					const afMin = cam.afMin || 0.5;
-					const afMax = cam.afMax || 40.0;
-
-					// Compute raw auto-focus distance from mouse
-					let rawAutoFocus;
-					if (mouseOnField) {
-						rawAutoFocus = mouseFocusDist;
-					} else {
-						rawAutoFocus = Math.max(0.5, Math.sqrt(cam.py * cam.py + cam.pz * cam.pz) * 0.9);
-					}
-
-					// Clamp to per-stage AF range
-					rawAutoFocus = Math.max(afMin, Math.min(afMax, rawAutoFocus));
-
-					// Smooth auto-focus with per-stage speed
-					autoFocusSmoothed += (rawAutoFocus - autoFocusSmoothed) * Math.min(1, dt * afSpeed);
-
-					// Blend between manual focus and auto-focus
-					const targetFocus = cam.fd * (1 - autoWeight) + autoFocusSmoothed * autoWeight;
-
-					focusDistanceU.value += (targetFocus - focusDistanceU.value) * Math.min(1, dt * 8);
-					focalLengthU.value += (cam.fl - focalLengthU.value) * Math.min(1, dt * 6);
-					bokehScaleU.value += (cam.bk - bokehScaleU.value) * Math.min(1, dt * 6);
-				}
-
-				// Update the active stage's focus distance display if in auto mode
-				const ovr = window._getCameraOverride ? window._getCameraOverride() : -1;
-				if (ovr >= 0 && cameraPath[ovr][8] && dofEnabled) {
-					const fdEl = document.getElementById(`cp_${ovr}_fd_v`);
-					if (fdEl) fdEl.textContent = focusDistanceU.value.toFixed(1);
-				}
-			}
-
-			// FPS counter
-			fpsFrames++;
-			const fpsNow = performance.now();
-			if (fpsNow - fpsLast >= 500) {
-				if (fpsEnabled && fpsOverlay) {
-					fpsOverlay.textContent = (fpsFrames / ((fpsNow - fpsLast) / 1000)).toFixed(0) + ' FPS';
-				}
-				fpsFrames = 0;
-				fpsLast = fpsNow;
-			}
-
-			renderer.compute(computeUpdate);
-			postProcessing.render();
-		}
-
-		renderer.setAnimationLoop(animate);
-	
-</script>
 </body>
 </html>
