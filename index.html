@@ -158,19 +158,20 @@
 
     #cs-heading .cs-line-sm {
       display: block;
-      font-size: clamp(1rem, 1.8vw, 1.5rem);
-      font-weight: 500;
-      color: rgba(10, 10, 10, 0.55);
-      margin-bottom: 6px;
+      font-size: clamp(3rem, 7vw, 6.5rem);
+      font-weight: 700;
+      color: #0a0a0a;
+      letter-spacing: -0.04em;
+      line-height: 0.95;
     }
 
     #cs-heading .cs-line-big {
       display: block;
-      font-size: clamp(3rem, 7vw, 6rem);
+      font-size: clamp(3rem, 7vw, 6.5rem);
       font-weight: 700;
       letter-spacing: -0.04em;
       color: #0a0a0a;
-      line-height: 0.9;
+      line-height: 0.95;
     }
 
     #cs-scroll-hint {
@@ -1113,27 +1114,15 @@
     #lp-section {
       position: relative;
       z-index: 50;
-      background-color: #ffffff;
-      background-image: radial-gradient(circle, rgba(0, 0, 0, 0.13) 1px, transparent 1px);
-      background-size: 22px 22px;
-      padding: 110px 52px 140px;
-      /* pas de border-top — continuité visuelle avec #cs-section */
-    }
-
-    /* fondu bas : efface les points avant #site-content (blanc uni) */
-    #lp-section::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      height: 100px;
-      background: linear-gradient(to bottom, transparent, #ffffff);
-      pointer-events: none;
+      background: transparent;
+      padding: 55vh 52px 130px;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.07);
+      text-align: center;
     }
 
     #lp-container {
-      max-width: 960px;
+      max-width: 900px;
+      margin: 0 auto;
     }
 
     .lp-eyebrow {
@@ -1413,8 +1402,8 @@
       <!-- Titre au-dessus du device -->
       <div id="cs-title">
         <h1 id="cs-heading">
-          <span class="cs-line-sm">Vos notices prennent</span>
-          <span class="cs-line-big">vie.</span>
+          <span class="cs-line-sm">Vos notices</span>
+          <span class="cs-line-big">prennent vie.</span>
         </h1>
       </div>
 
@@ -1444,7 +1433,7 @@
                     <div class="cs-doc-row">
                       <span class="cs-doc-icon">📄</span>
                       <div class="cs-doc-meta">
-                        <div class="cs-doc-name">Manuel_maintenance_A380.pdf</div>
+                        <div class="cs-doc-name">Notice_maintenance_A380.pdf</div>
                         <div class="cs-doc-sub">1 247 pages · Aéronautique · EASA Part-145</div>
                       </div>
                       <span class="cs-doc-status done">Terminé</span>
@@ -1594,7 +1583,7 @@
                       <div class="cs-doc-row">
                         <span class="cs-doc-icon">🔄</span>
                         <div class="cs-doc-meta">
-                          <div class="cs-doc-name">Traduction DE → Manuel_A380</div>
+                          <div class="cs-doc-name">Traduction DE → Notice_A380</div>
                           <div class="cs-doc-sub">En cours · 847/1 247 pages traduites</div>
                         </div>
                         <span class="cs-doc-status processing">68%</span>
@@ -1663,7 +1652,7 @@
                 <!-- ═══ PAGE 3 : Éditeur 3D ═══ -->
                 <div class="cs-page" style="border-top: 1px solid rgba(255,255,255,0.06);">
                   <div style="padding:20px 24px;">
-                    <p class="cs-ui-section-title">Éditeur 3D · Manuel_maintenance_A380</p>
+                    <p class="cs-ui-section-title">Éditeur 3D · Notice_maintenance_A380</p>
 
                     <!-- Fake 3D viewport -->
                     <div
@@ -1834,130 +1823,41 @@
     </div><!-- /cs-sticky -->
   </div><!-- /cs-section -->
 
-  <!-- ══════════════════════════════════════════════════════════
-     LINK PREVIEW — secteurs avec aperçu image au survol
-══════════════════════════════════════════════════════════ -->
-  <section id="lp-section">
-    <div id="lp-container">
-
-      <p class="lp-text">
-        Notre IA transforme vos documents techniques — manuels PDF, fichiers CAO, plans — en tutoriels vidéo 3D pour
-        <span class="lp-trigger"
-          data-image="https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=600&h=400&fit=crop&q=80"
-          data-label="Aéronautique & Défense">l'aéronautique</span>,
-        <span class="lp-trigger"
-          data-image="https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?w=600&h=400&fit=crop&q=80"
-          data-label="Automobile & Mobilité">l'automobile</span>,
-        le <span class="lp-trigger"
-          data-image="https://images.unsplash.com/photo-1559757175-0eb30cd8c063?w=600&h=400&fit=crop&q=80"
-          data-label="Médical & Pharma">médical</span>,
-        <span class="lp-trigger"
-          data-image="https://images.unsplash.com/photo-1565514020179-026b92b84bb6?w=600&h=400&fit=crop&q=80"
-          data-label="Industrie & Fabrication">l'industrie</span>
-        et <span class="lp-trigger"
-          data-image="https://images.unsplash.com/photo-1466611653911-95081537e5b7?w=600&h=400&fit=crop&q=80"
-          data-label="Énergie & Utilities">l'énergie</span>
-        — déployés en moins de 48h.
-      </p>
-    </div>
-  </section>
-
   <!-- popup preview -->
   <div id="lp-popup">
     <img id="lp-popup-img" src="" alt="" />
     <div id="lp-popup-label"></div>
   </div>
 
-
   <!-- ══════════════════════════════════════════════════════════
      SECTION BLANCHE — après le scroll vidéo
 ══════════════════════════════════════════════════════════ -->
   <div id="site-content">
 
-
-
-
-    <!-- ── SECTEURS ──────────────────────────────────────── -->
-    <section class="w-section w-ind-sec">
-      <div class="w-container">
-        <div class="w-section-hdr">
-          <span class="w-tag">009 / Secteurs</span>
-          <h2 class="w-section-title">Conçu pour les secteurs à documentation critique.</h2>
-        </div>
-        <div class="w-ind-grid">
-          <div class="w-ind-card">
-            <span class="w-ind-num">01</span>
-            <h4 class="w-ind-name">Aéronautique &amp; Défense</h4>
-            <p class="w-ind-desc">Manuels de maintenance AMM, procédures d'inspection navigabilité, formation technicien
-              certifié. Conformité EASA / FAA.</p>
-            <ul class="w-ind-tags">
-              <li>AMM / CMM</li>
-              <li>EASA Part-145</li>
-              <li>Inspection</li>
-            </ul>
-            <span class="w-ind-arrow">→</span>
-          </div>
-          <div class="w-ind-card">
-            <span class="w-ind-num">02</span>
-            <h4 class="w-ind-name">Industrie &amp; Fabrication</h4>
-            <p class="w-ind-desc">Guides d'assemblage ligne de production, procédures sécurité machines, onboarding
-              opérateurs. Compatible CAO SolidWorks, CATIA.</p>
-            <ul class="w-ind-tags">
-              <li>ISO 9001</li>
-              <li>CAO / BOM</li>
-              <li>Lean / 5S</li>
-            </ul>
-            <span class="w-ind-arrow">→</span>
-          </div>
-          <div class="w-ind-card">
-            <span class="w-ind-num">03</span>
-            <h4 class="w-ind-name">Médical &amp; Pharma</h4>
-            <p class="w-ind-desc">IFU dispositifs médicaux, SOPs laboratoire, formation personnel soignant. Conformité
-              MDR 2017/745 et FDA 21 CFR Part 820.</p>
-            <ul class="w-ind-tags">
-              <li>MDR / FDA</li>
-              <li>IFU / SOP</li>
-              <li>GMP</li>
-            </ul>
-            <span class="w-ind-arrow">→</span>
-          </div>
-          <div class="w-ind-card">
-            <span class="w-ind-num">04</span>
-            <h4 class="w-ind-name">Énergie &amp; Utilities</h4>
-            <p class="w-ind-desc">Procédures O&amp;M équipements, plans de prévention risques, formation sécurité site
-              (ATEX, consignation). Compatible P&amp;ID.</p>
-            <ul class="w-ind-tags">
-              <li>ATEX</li>
-              <li>O&amp;M</li>
-              <li>HSE</li>
-            </ul>
-            <span class="w-ind-arrow">→</span>
-          </div>
-          <div class="w-ind-card">
-            <span class="w-ind-num">05</span>
-            <h4 class="w-ind-name">Automobile &amp; Mobilité</h4>
-            <p class="w-ind-desc">Manuels atelier, procédures de rappel, formation réseau concessionnaires. Compatible
-              formats OEM (VDA, IATF 16949).</p>
-            <ul class="w-ind-tags">
-              <li>IATF 16949</li>
-              <li>Atelier</li>
-              <li>Réseau VN/VO</li>
-            </ul>
-            <span class="w-ind-arrow">→</span>
-          </div>
-          <div class="w-ind-card">
-            <span class="w-ind-num">06</span>
-            <h4 class="w-ind-name">Infrastructure &amp; BTP</h4>
-            <p class="w-ind-desc">Dossiers d'exploitation maintenance, plans de prévention chantier, formation
-              sous-traitants. Compatible BIM / IFC.</p>
-            <ul class="w-ind-tags">
-              <li>BIM / IFC</li>
-              <li>Plan de prév.</li>
-              <li>DICT</li>
-            </ul>
-            <span class="w-ind-arrow">→</span>
-          </div>
-        </div>
+    <!-- ══════════════════════════════════════════════════════════
+       LINK PREVIEW — secteurs avec aperçu image au survol
+  ══════════════════════════════════════════════════════════ -->
+    <section id="lp-section">
+      <div id="lp-container">
+        <p class="lp-text">
+          NoticeIA donne vie à vos notices — en vidéos 3D interactives prêtes en 48h,
+          pour
+          <span class="lp-trigger"
+            data-image="https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=600&h=400&fit=crop&q=80"
+            data-label="Aéronautique & Défense">l'aéronautique</span>,
+          <span class="lp-trigger"
+            data-image="https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?w=600&h=400&fit=crop&q=80"
+            data-label="Automobile & Mobilité">l'automobile</span>,
+          le <span class="lp-trigger"
+            data-image="https://images.unsplash.com/photo-1559757175-0eb30cd8c063?w=600&h=400&fit=crop&q=80"
+            data-label="Médical & Pharma">médical</span>,
+          <span class="lp-trigger"
+            data-image="https://images.unsplash.com/photo-1565514020179-026b92b84bb6?w=600&h=400&fit=crop&q=80"
+            data-label="Industrie & Fabrication">l'industrie</span>
+          et <span class="lp-trigger"
+            data-image="https://images.unsplash.com/photo-1466611653911-95081537e5b7?w=600&h=400&fit=crop&q=80"
+            data-label="Énergie & Utilities">l'énergie</span>.
+        </p>
       </div>
     </section>
 
@@ -2146,7 +2046,9 @@
     #site-content {
       position: relative;
       z-index: 50;
-      background: var(--w-bg);
+      background: #ffffff;
+      background-image: radial-gradient(circle, rgba(0, 0, 0, 0.07) 1px, transparent 1px);
+      background-size: 24px 24px;
       font-family: 'DM Sans', sans-serif;
     }
 
