@@ -125,23 +125,6 @@
       margin: 0 auto;
     }
 
-    body.cs-visible #site-header .nav-logo {
-      color: #0a0a0a;
-    }
-
-    body.cs-visible #site-header .nav-links a {
-      color: rgba(10, 10, 10, 0.50);
-    }
-
-    body.cs-visible #site-header .nav-links a:hover {
-      color: #0a0a0a;
-    }
-
-    body.cs-visible .btn-rdv {
-      background: rgba(10, 10, 10, 0.07);
-      border-color: rgba(10, 10, 10, 0.2);
-      color: #0a0a0a;
-    }
 
     #cs-title {
       text-align: center;
@@ -495,91 +478,120 @@
       left: 0;
       right: 0;
       z-index: 100;
-      padding: 24px 52px;
+      padding: 0 52px;
+      height: 64px;
+      background: transparent;
+      transition: background 0.3s, border-color 0.3s;
+    }
+
+    #site-header.on-white {
+      background: transparent;
     }
 
     #site-header nav {
       display: grid;
       grid-template-columns: 1fr auto 1fr;
       align-items: center;
+      height: 100%;
     }
 
-    #site-header nav>.btn-rdv {
+    #site-header nav > .btn-rdv {
       justify-self: end;
     }
 
+    /* ══ Liquid Glass ══ */
+    .liquid-glass {
+      position: relative;
+      border-radius: 20px;
+      background: rgba(255,255,255,0.30);
+      backdrop-filter: blur(4px) saturate(160%);
+      -webkit-backdrop-filter: blur(4px) saturate(160%);
+      box-shadow:
+        0 4px 8px rgba(0,0,0,0.14),
+        0 0 18px rgba(0,0,0,0.07),
+        inset 2px 2px 1px rgba(255,255,255,0.65),
+        inset -1px -1px 1px rgba(255,255,255,0.40);
+      transition: all 0.7s cubic-bezier(0.175, 0.885, 0.32, 2.2);
+      cursor: pointer;
+    }
+    .liquid-glass:hover {
+      background: rgba(255,255,255,0.42);
+      box-shadow:
+        0 8px 16px rgba(0,0,0,0.18),
+        0 0 24px rgba(0,0,0,0.09),
+        inset 2px 2px 1px rgba(255,255,255,0.75),
+        inset -1px -1px 1px rgba(255,255,255,0.50);
+      transform: translateY(-2px) scale(1.04);
+    }
+
     .nav-logo {
-      font-size: 0.85rem;
-      font-weight: 500;
-      letter-spacing: 0.06em;
-      color: var(--text);
+      font-size: 0.9rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      color: #0a0a0a;
       text-decoration: none;
+      padding: 7px 18px;
+      display: inline-block;
     }
 
     .nav-links {
       display: flex;
-      gap: 40px;
+      gap: 6px;
       list-style: none;
       align-items: center;
     }
 
     .nav-links a {
-      font-size: 0.7rem;
-      font-weight: 400;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--muted);
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      color: #0a0a0a;
       text-decoration: none;
-      transition: color 0.2s;
+      padding: 7px 16px;
+      display: block;
     }
 
-    .nav-links a:hover {
-      color: var(--text);
-    }
-
+    /* ── Lang toggle pill ── */
     .lang-toggle {
       display: flex;
+      align-items: center;
+      padding: 3px;
       gap: 2px;
     }
 
-    .lang-btn {
+.lang-btn {
       font-size: 0.62rem;
-      font-weight: 400;
-      letter-spacing: 0.1em;
+      font-weight: 500;
+      letter-spacing: 0.08em;
       text-transform: uppercase;
       background: none;
       border: none;
-      color: var(--muted);
+      color: rgba(0, 0, 0, 0.45);
       cursor: pointer;
-      padding: 4px 8px;
-      transition: color 0.2s;
+      padding: 4px 10px;
+      border-radius: 100px;
+      transition: background 0.2s, color 0.2s;
     }
 
     .lang-btn.active {
-      color: var(--text);
+      background: #0a0a0a;
+      color: #fff;
       font-weight: 600;
     }
 
+    /* ── Bouton RDV — liquid glass ── */
     .btn-rdv {
       font-size: 0.65rem;
-      font-weight: 500;
-      letter-spacing: 0.12em;
+      font-weight: 600;
+      letter-spacing: 0.08em;
       text-transform: uppercase;
-      color: var(--text);
+      color: #0a0a0a;
       padding: 11px 26px;
-      cursor: pointer;
-      background: rgba(255, 255, 255, 0.09);
-      backdrop-filter: blur(16px) saturate(140%);
-      -webkit-backdrop-filter: blur(16px) saturate(140%);
-      border: 1px solid rgba(255, 255, 255, 0.18);
-      border-radius: 100px;
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
-      transition: background 0.2s, box-shadow 0.2s;
+      border: none;
+      white-space: nowrap;
     }
-
-    .btn-rdv:hover {
-      background: rgba(255, 255, 255, 0.15);
-      box-shadow: 0 4px 20px rgba(167, 139, 250, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+    .btn-rdv:active {
+      transform: translateY(1px) scale(0.97) !important;
     }
 
 
@@ -1205,12 +1217,13 @@
 
       /* Header */
       #site-header {
-        padding: 16px 20px;
+        padding: 0 20px;
+        height: 56px;
       }
 
       #site-header nav {
         grid-template-columns: 1fr auto;
-        gap: 0;
+        gap: 12px;
       }
 
       .nav-links {
@@ -1375,13 +1388,33 @@
   </div>
 
   <!-- ── HEADER ──────────────────────────────────────────────── -->
+  <!-- SVG liquid glass filter -->
+  <svg style="display:none;position:absolute;width:0;height:0">
+    <defs>
+      <filter id="glass-distortion" x="0%" y="0%" width="100%" height="100%" filterUnits="objectBoundingBox">
+        <feTurbulence type="fractalNoise" baseFrequency="0.001 0.005" numOctaves="1" seed="17" result="turbulence"/>
+        <feComponentTransfer in="turbulence" result="mapped">
+          <feFuncR type="gamma" amplitude="1" exponent="10" offset="0.5"/>
+          <feFuncG type="gamma" amplitude="0" exponent="1" offset="0"/>
+          <feFuncB type="gamma" amplitude="0" exponent="1" offset="0.5"/>
+        </feComponentTransfer>
+        <feGaussianBlur in="turbulence" stdDeviation="3" result="softMap"/>
+        <feSpecularLighting in="softMap" surfaceScale="5" specularConstant="1" specularExponent="100" lighting-color="white" result="specLight">
+          <fePointLight x="-200" y="-200" z="300"/>
+        </feSpecularLighting>
+        <feComposite in="specLight" operator="arithmetic" k1="0" k2="1" k3="1" k4="0" result="litImage"/>
+        <feDisplacementMap in="SourceGraphic" in2="softMap" scale="12" xChannelSelector="R" yChannelSelector="G"/>
+      </filter>
+    </defs>
+  </svg>
+
   <header id="site-header">
     <nav>
       <a href="#" class="nav-logo">NoticeIA</a>
       <ul class="nav-links">
-        <li><a href="#" data-fr="Produit" data-en="Product">Produit</a></li>
-        <li><a href="#" data-fr="Tarifs" data-en="Pricing">Tarifs</a></li>
-        <li><a href="#" data-fr="À propos" data-en="About">À propos</a></li>
+        <li><a href="#section-produit" data-fr="Produit" data-en="Product">Produit</a></li>
+        <li><a href="#section-tarifs" data-fr="Tarifs" data-en="Pricing">Tarifs</a></li>
+        <li><a href="#lp-section" data-fr="Secteurs" data-en="Industries">Secteurs</a></li>
         <li>
           <div class="lang-toggle">
             <button class="lang-btn active" onclick="setLang('fr')">FR</button>
@@ -1389,21 +1422,22 @@
           </div>
         </li>
       </ul>
-      <button class="btn-rdv" onclick="openModal()" data-fr="Prendre RDV" data-en="Book a call">Prendre RDV</button>
+      <button class="btn-rdv liquid-glass" onclick="openModal()" data-fr="Prendre RDV" data-en="Book a call">Prendre RDV</button>
     </nav>
   </header>
 
   <!-- ══════════════════════════════════════════════════════════
      CONTAINER SCROLL — hero animé
 ══════════════════════════════════════════════════════════ -->
+  <div id="section-produit"></div>
   <div id="cs-section">
     <div id="cs-sticky">
 
       <!-- Titre au-dessus du device -->
       <div id="cs-title">
         <h1 id="cs-heading">
-          <span class="cs-line-sm">Vos notices</span>
-          <span class="cs-line-big">prennent vie.</span>
+          <span class="cs-line-sm" data-fr="Vos notices" data-en="Your notices">Vos notices</span>
+          <span class="cs-line-big" data-fr="prennent vie." data-en="come to life.">prennent vie.</span>
         </h1>
       </div>
 
@@ -1816,7 +1850,7 @@
 
       <!-- Scroll hint -->
       <div id="cs-scroll-hint">
-        <span>défiler</span>
+        <span data-fr="défiler" data-en="scroll">défiler</span>
         <div class="cs-arrow"></div>
       </div>
 
@@ -1839,8 +1873,8 @@
   ══════════════════════════════════════════════════════════ -->
     <section id="lp-section">
       <div id="lp-container">
-        <p class="lp-text">
-          NoticeIA donne vie à vos notices — en vidéos 3D interactives prêtes en 48h,
+        <p class="lp-text" data-lang-show="fr">
+          NoticeIA donne vie à vos notices en vidéos 3D interactives prêtes en 48h,
           pour
           <span class="lp-trigger"
             data-image="https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=600&h=400&fit=crop&q=80"
@@ -1858,16 +1892,35 @@
             data-image="https://images.unsplash.com/photo-1466611653911-95081537e5b7?w=600&h=400&fit=crop&q=80"
             data-label="Énergie & Utilities">l'énergie</span>.
         </p>
+        <p class="lp-text" data-lang-show="en" style="display:none">
+          NoticeIA brings your technical notices to life as interactive 3D videos ready in 48h,
+          for
+          <span class="lp-trigger"
+            data-image="https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=600&h=400&fit=crop&q=80"
+            data-label="Aerospace & Defence">aerospace</span>,
+          <span class="lp-trigger"
+            data-image="https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?w=600&h=400&fit=crop&q=80"
+            data-label="Automotive & Mobility">automotive</span>,
+          <span class="lp-trigger"
+            data-image="https://images.unsplash.com/photo-1559757175-0eb30cd8c063?w=600&h=400&fit=crop&q=80"
+            data-label="Medical & Pharma">medical</span>,
+          <span class="lp-trigger"
+            data-image="https://images.unsplash.com/photo-1565514020179-026b92b84bb6?w=600&h=400&fit=crop&q=80"
+            data-label="Industry & Manufacturing">industrial</span>
+          and <span class="lp-trigger"
+            data-image="https://images.unsplash.com/photo-1466611653911-95081537e5b7?w=600&h=400&fit=crop&q=80"
+            data-label="Energy & Utilities">energy</span> sectors.
+        </p>
       </div>
     </section>
 
     <!-- ── TARIFS ─────────────────────────────────────────── -->
-    <section class="w-section w-pricing">
+    <section id="section-tarifs" class="w-section w-pricing">
       <div class="w-container">
         <div class="w-section-hdr">
-          <span class="w-tag">010 / Tarifs</span>
-          <h2 class="w-section-title">Des offres adaptées à votre volume.</h2>
-          <p class="w-pricing-sub">Tarification à la page convertie. Pas de surprise — vous payez ce que vous produisez.
+          <span class="w-tag" data-fr="010 / Tarifs" data-en="010 / Pricing">010 / Tarifs</span>
+          <h2 class="w-section-title" data-fr="Des offres adaptées à votre volume." data-en="Plans tailored to your volume.">Des offres adaptées à votre volume.</h2>
+          <p class="w-pricing-sub" data-fr="Tarification à la page convertie. Pas de surprise — vous payez ce que vous produisez." data-en="Per-page pricing. No surprises — you pay for what you produce.">Tarification à la page convertie. Pas de surprise — vous payez ce que vous produisez.
           </p>
         </div>
 
@@ -1876,93 +1929,92 @@
           <div class="w-plan">
             <div class="w-plan-top">
               <span class="w-plan-name">Scale</span>
-              <p class="w-plan-desc">PME et ETI industrielles. Jusqu'à 5 000 pages / mois.</p>
+              <p class="w-plan-desc" data-fr="PME et ETI industrielles. Jusqu'à 5 000 pages / mois." data-en="SMEs and mid-size industrial companies. Up to 5,000 pages / month.">PME et ETI industrielles. Jusqu'à 5 000 pages / mois.</p>
             </div>
             <div class="w-plan-price">
               <span class="w-plan-num">0,90</span>
               <span class="w-plan-unit">€ / page</span>
             </div>
             <ul class="w-plan-features">
-              <li>Jusqu'à 5 000 pages / mois</li>
-              <li>PDF, CAO, images techniques</li>
-              <li>Export vidéo MP4 + SCORM</li>
+              <li data-fr="Jusqu'à 5 000 pages / mois" data-en="Up to 5,000 pages / month">Jusqu'à 5 000 pages / mois</li>
+              <li data-fr="PDF, CAO, images techniques" data-en="PDF, CAD, technical images">PDF, CAO, images techniques</li>
+              <li data-fr="Export vidéo MP4 + SCORM" data-en="Video export MP4 + SCORM">Export vidéo MP4 + SCORM</li>
               <li>Multilingue (FR / EN / DE / ES)</li>
-              <li>Support email 5j/7</li>
-              <li>Dashboard analytics</li>
+              <li data-fr="Support email 5j/7" data-en="Email support 5d/7">Support email 5j/7</li>
+              <li data-fr="Dashboard analytics" data-en="Analytics dashboard">Dashboard analytics</li>
             </ul>
-            <button class="w-plan-btn" onclick="openModal()">Demander un devis</button>
+            <button class="w-plan-btn" onclick="openModal()" data-fr="Demander un devis" data-en="Request a quote">Demander un devis</button>
           </div>
 
           <div class="w-plan w-plan--featured">
-            <div class="w-plan-badge">Le plus choisi</div>
+            <div class="w-plan-badge" data-fr="Le plus choisi" data-en="Most popular">Le plus choisi</div>
             <div class="w-plan-top">
               <span class="w-plan-name">Pro</span>
-              <p class="w-plan-desc">Grands groupes industriels. Jusqu'à 25 000 pages / mois.</p>
+              <p class="w-plan-desc" data-fr="Grands groupes industriels. Jusqu'à 25 000 pages / mois." data-en="Large industrial groups. Up to 25,000 pages / month.">Grands groupes industriels. Jusqu'à 25 000 pages / mois.</p>
             </div>
             <div class="w-plan-price">
               <span class="w-plan-num">0,55</span>
               <span class="w-plan-unit">€ / page</span>
             </div>
             <ul class="w-plan-features">
-              <li>Jusqu'à 25 000 pages / mois</li>
-              <li>Tout Scale, plus :</li>
-              <li>Intégration ERP / PLM / LMS</li>
+              <li data-fr="Jusqu'à 25 000 pages / mois" data-en="Up to 25,000 pages / month">Jusqu'à 25 000 pages / mois</li>
+              <li data-fr="Tout Scale, plus :" data-en="Everything in Scale, plus:">Tout Scale, plus :</li>
+              <li data-fr="Intégration ERP / PLM / LMS" data-en="ERP / PLM / LMS integration">Intégration ERP / PLM / LMS</li>
               <li>SSO (SAML 2.0, OIDC)</li>
-              <li>Audit logs &amp; gestion des droits</li>
-              <li>SLA 99,9 % — support dédié</li>
+              <li data-fr="Audit logs &amp; gestion des droits" data-en="Audit logs &amp; access management">Audit logs &amp; gestion des droits</li>
+              <li data-fr="SLA 99,9 % — support dédié" data-en="SLA 99.9% — dedicated support">SLA 99,9 % — support dédié</li>
             </ul>
-            <button class="w-plan-btn w-plan-btn--inv" onclick="openModal()">Demander un devis</button>
+            <button class="w-plan-btn w-plan-btn--inv" onclick="openModal()" data-fr="Demander un devis" data-en="Request a quote">Demander un devis</button>
           </div>
 
           <div class="w-plan">
             <div class="w-plan-top">
               <span class="w-plan-name">Enterprise</span>
-              <p class="w-plan-desc">Volume illimité, déploiement on-premise ou VPC dédié.</p>
+              <p class="w-plan-desc" data-fr="Volume illimité, déploiement on-premise ou VPC dédié." data-en="Unlimited volume, on-premise or dedicated VPC deployment.">Volume illimité, déploiement on-premise ou VPC dédié.</p>
             </div>
             <div class="w-plan-price">
-              <span class="w-plan-num">Sur mesure</span>
+              <span class="w-plan-num" data-fr="Sur mesure" data-en="Custom">Sur mesure</span>
             </div>
             <ul class="w-plan-features">
-              <li>Volume illimité</li>
-              <li>On-premise ou VPC dédié</li>
-              <li>Modèle IA fine-tuné sur votre jargon</li>
-              <li>Intégrations personnalisées</li>
-              <li>Account manager dédié</li>
-              <li>SLA contractuel 99,99 %</li>
+              <li data-fr="Volume illimité" data-en="Unlimited volume">Volume illimité</li>
+              <li data-fr="On-premise ou VPC dédié" data-en="On-premise or dedicated VPC">On-premise ou VPC dédié</li>
+              <li data-fr="Modèle IA fine-tuné sur votre jargon" data-en="AI model fine-tuned on your terminology">Modèle IA fine-tuné sur votre jargon</li>
+              <li data-fr="Intégrations personnalisées" data-en="Custom integrations">Intégrations personnalisées</li>
+              <li data-fr="Account manager dédié" data-en="Dedicated account manager">Account manager dédié</li>
+              <li data-fr="SLA contractuel 99,99 %" data-en="Contractual SLA 99.99%">SLA contractuel 99,99 %</li>
             </ul>
-            <button class="w-plan-btn" onclick="openModal()">Contacter l'équipe</button>
+            <button class="w-plan-btn" onclick="openModal()" data-fr="Contacter l'équipe" data-en="Contact sales">Contacter l'équipe</button>
           </div>
 
         </div>
 
         <!-- Comparatif ROI -->
         <div class="w-roi">
-          <div class="w-roi-label">Comparatif vs agence de production traditionnelle</div>
+          <div class="w-roi-label" data-fr="Comparatif vs agence de production traditionnelle" data-en="Comparison vs traditional production agency">Comparatif vs agence de production traditionnelle</div>
           <div class="w-roi-grid">
             <div class="w-roi-item">
               <span class="w-roi-num">0,55<span class="w-roi-sfx">€</span></span>
-              <span class="w-roi-lbl">par page — tarif Pro<br><span class="w-roi-sublbl">vs ~4–8 € chez une
-                  agence</span></span>
+              <span class="w-roi-lbl" data-fr="par page — tarif Pro" data-en="per page — Pro plan">par page — tarif Pro</span><br><span class="w-roi-sublbl" data-fr="vs ~4–8 € chez une agence" data-en="vs ~€4–8 at an agency">vs ~4–8 € chez une agence</span>
             </div>
             <div class="w-roi-sep"></div>
             <div class="w-roi-item">
               <span class="w-roi-num">−80<span class="w-roi-sfx">%</span></span>
-              <span class="w-roi-lbl">de coût de production</span>
+              <span class="w-roi-lbl" data-fr="de coût de production" data-en="production cost savings">de coût de production</span>
             </div>
             <div class="w-roi-sep"></div>
             <div class="w-roi-item">
               <span class="w-roi-num">12<span class="w-roi-sfx">×</span></span>
-              <span class="w-roi-lbl">plus rapide qu'une agence</span>
+              <span class="w-roi-lbl" data-fr="plus rapide qu'une agence" data-en="faster than an agency">plus rapide qu'une agence</span>
             </div>
             <div class="w-roi-sep"></div>
             <div class="w-roi-item">
               <span class="w-roi-num">94<span class="w-roi-sfx">%</span></span>
-              <span class="w-roi-lbl">taux de compréhension opérateur</span>
+              <span class="w-roi-lbl" data-fr="taux de compréhension opérateur" data-en="operator comprehension rate">taux de compréhension opérateur</span>
             </div>
             <div class="w-roi-sep"></div>
             <div class="w-roi-item">
               <span class="w-roi-num">&lt;48<span class="w-roi-sfx">h</span></span>
-              <span class="w-roi-lbl">de mise en production</span>
+              <span class="w-roi-lbl" data-fr="de mise en production" data-en="to go live">de mise en production</span>
             </div>
           </div>
         </div>
@@ -1974,20 +2026,20 @@
     <section class="w-section w-trust">
       <div class="w-container w-trust-inner">
         <div class="w-trust-text">
-          <span class="w-tag">011 / Sécurité &amp; Conformité</span>
-          <h2 class="w-section-title">Vos données industrielles restent sous votre contrôle.</h2>
-          <p class="w-trust-body">Infrastructure hébergée en Europe (Paris / Francfort). Conformité RGPD native.
+          <span class="w-tag" data-fr="011 / Sécurité &amp; Conformité" data-en="011 / Security &amp; Compliance">011 / Sécurité &amp; Conformité</span>
+          <h2 class="w-section-title" data-fr="Vos données industrielles restent sous votre contrôle." data-en="Your industrial data stays under your control.">Vos données industrielles restent sous votre contrôle.</h2>
+          <p class="w-trust-body" data-fr="Infrastructure hébergée en Europe (Paris / Francfort). Conformité RGPD native. Chiffrement AES-256 au repos et en transit. Audit logs complets. SSO disponible. Contrats DPA sur demande." data-en="Infrastructure hosted in Europe (Paris / Frankfurt). Native GDPR compliance. AES-256 encryption at rest and in transit. Full audit logs. SSO available. DPA contracts on request.">Infrastructure hébergée en Europe (Paris / Francfort). Conformité RGPD native.
             Chiffrement AES-256 au repos et en transit. Audit logs complets. SSO disponible. Contrats DPA sur demande.
           </p>
         </div>
         <div class="w-trust-badges">
           <div class="w-trust-badge">
             <span class="w-badge-title">RGPD</span>
-            <span class="w-badge-sub">Conformité native</span>
+            <span class="w-badge-sub" data-fr="Conformité native" data-en="Native compliance">Conformité native</span>
           </div>
           <div class="w-trust-badge">
             <span class="w-badge-title">ISO 27001</span>
-            <span class="w-badge-sub">En cours de certification</span>
+            <span class="w-badge-sub" data-fr="En cours de certification" data-en="Certification in progress">En cours de certification</span>
           </div>
           <div class="w-trust-badge">
             <span class="w-badge-title">SOC 2</span>
@@ -1995,7 +2047,7 @@
           </div>
           <div class="w-trust-badge">
             <span class="w-badge-title">EU</span>
-            <span class="w-badge-sub">Hébergé en Europe</span>
+            <span class="w-badge-sub" data-fr="Hébergé en Europe" data-en="Hosted in Europe">Hébergé en Europe</span>
           </div>
         </div>
       </div>
@@ -2005,11 +2057,11 @@
     <section class="w-cta-final">
       <div class="w-container">
         <div class="w-cta-inner">
-          <span class="w-tag w-tag-inv">012 / Contact</span>
-          <h2 class="w-cta-h">Parlons de votre projet.</h2>
-          <p class="w-cta-sub">Démo de 30 minutes. Nous analysons un extrait de votre documentation et vous montrons le
+          <span class="w-tag w-tag-inv" data-fr="012 / Contact" data-en="012 / Contact">012 / Contact</span>
+          <h2 class="w-cta-h" data-fr="Parlons de votre projet." data-en="Let's talk about your project.">Parlons de votre projet.</h2>
+          <p class="w-cta-sub" data-fr="Démo de 30 minutes. Nous analysons un extrait de votre documentation et vous montrons le résultat en direct. Gratuit, sans engagement." data-en="30-minute demo. We analyse a sample of your documentation and show you the result live. Free, no commitment.">Démo de 30 minutes. Nous analysons un extrait de votre documentation et vous montrons le
             résultat en direct. Gratuit, sans engagement.</p>
-          <button class="w-cta-btn" onclick="openModal()">Réserver une démo</button>
+          <button class="w-cta-btn" onclick="openModal()" data-fr="Réserver une démo" data-en="Book a demo">Réserver une démo</button>
         </div>
       </div>
     </section>
@@ -3153,12 +3205,43 @@
     // ════════════════════════════════════════════════════════════
     //  LANGUAGE
     // ════════════════════════════════════════════════════════════
+    // ── Smooth scroll nav links
+    document.querySelectorAll('.nav-links a[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => {
+        const target = document.querySelector(a.getAttribute('href'));
+        if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth' }); }
+      });
+    });
+
+    // ── Header on-white detection
+    const siteHeader = document.getElementById('site-header');
+    const siteContent = document.getElementById('site-content');
+    function updateHeaderTheme() {
+      if (!siteContent) return;
+      const rect = siteContent.getBoundingClientRect();
+      if (rect.top <= 64) {
+        siteHeader.classList.add('on-white');
+      } else {
+        siteHeader.classList.remove('on-white');
+      }
+    }
+    window.addEventListener('scroll', updateHeaderTheme, { passive: true });
+    updateHeaderTheme();
+
     let lang = 'fr';
     function setLang(l) {
       lang = l;
+      // Simple text elements
       document.querySelectorAll('[data-fr]').forEach(el => {
         el.textContent = l === 'fr' ? el.dataset.fr : el.dataset.en;
       });
+      // HTML-rich elements (deux versions FR/EN)
+      document.querySelectorAll('[data-lang-show]').forEach(el => {
+        el.style.display = el.dataset.langShow === l ? '' : 'none';
+      });
+      // Langue HTML du document
+      document.documentElement.lang = l;
+      // Boutons actifs
       document.querySelectorAll('.lang-btn').forEach(b => {
         b.classList.toggle('active', b.textContent === l.toUpperCase());
       });
